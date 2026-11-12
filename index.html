@@ -175,6 +175,11 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
 <strong id="schoolApprovalTitle">School approval pending</strong>
 <div id="schoolApprovalText" class="small" style="color:#684800;margin-top:5px">You can prepare your timetable setup. Generation unlocks after approval.</div>
 </div>
+<div id="schoolQuotaBanner" class="panel hidden" role="status" aria-live="polite" style="border-left:5px solid #1769aa;background:#eef5ff;margin-bottom:14px">
+<strong>Weekly timetable generation allowance</strong>
+<div id="schoolQuotaText" class="small" style="margin-top:5px">Checking this school's weekly allowance…</div>
+<button type="button" id="refreshQuotaBtn" class="secondary" style="margin-top:9px;padding:7px 11px;font-size:12px">↻ Refresh allowance</button>
+</div>
 <div id="status" class="status" role="status" aria-live="polite"></div>
 <section id="schoolProfile" class="tabpage hidden">
 <div class="panel"><h2>School identity and logo</h2><p class="small">Upload your official school badge/logo and confirm the school name. These details will appear at the top of every teacher, class/grade and master timetable, including printed copies and PDFs.</p>
@@ -413,13 +418,7 @@ async function generate(){
   const hasGrade46=gs.some(isGrade46);
   if(set.duration<20||set.duration>90||set.periods<1||set.periods>10){showStatus('Check lesson duration and number of lessons.','err');return;}
 
-  timetable=null;lastChecks=[];save();
-  $('timetableTitle').textContent='Generating a new timetable…';
-  $('timetable').innerHTML='<p class="muted">The adaptive placement engine is allocating lessons across the whole school…</p>';
-  $('summary').textContent='Previous timetable cleared. Preparing lesson placement.';
-  $('checks').textContent='Checking assignments and teacher availability…';
-  showStatus('Adaptive scheduling engine started. Previous timetable cleared.');
-  await new Promise(resolve=>setTimeout(resolve,0));
+  // Keep the previously generated timetable intact until the secure weekly allowance is reserved.
 
   rules.cutoff=+$('morningCutoff').value;rules.strictDouble=$('strictDouble').checked;rules.avoidSameDay=true;
   const slotSettings=hasGrade46?{...set,gamesTiming:'after'}:set;
@@ -445,6 +444,16 @@ async function generate(){
   const tasks=[];
   gs.forEach(g=>assignments.filter(a=>a.grade===g&&!/^ppi$/i.test(String(a.subject||'').trim())).forEach(a=>{for(let i=0;i<a.weekly;i++)tasks.push({grade:g,subject:a.subject,teacher:a.teacher,idx:i,weekly:a.weekly});}));
   if(!tasks.length){showStatus('No lessons were found for the selected grades.','err');return;}
+  if(typeof window.rasmReserveGeneration!=='function')throw new Error('The secure weekly generation service is not available. Please contact the RASM 360 administrator.');
+  const reservedQuota=await window.rasmReserveGeneration();
+  if(!reservedQuota?.allowed)throw new Error(`WEEKLY_QUOTA_EXHAUSTED: You have used ${reservedQuota.used} of ${reservedQuota.limit} timetable generations this week. Your weekly plan is exhausted. Contact the Super Admin for additional generations.`);
+  timetable=null;lastChecks=[];save();
+  $('timetableTitle').textContent='Generating a new timetable…';
+  $('timetable').innerHTML='<p class="muted">The adaptive placement engine is allocating lessons across the whole school…</p>';
+  $('summary').textContent='Weekly allowance reserved. Preparing lesson placement.';
+  $('checks').textContent='Checking assignments and teacher availability…';
+  showStatus('Adaptive scheduling engine started. Weekly generation allowance reserved.');
+  await new Promise(resolve=>setTimeout(resolve,0));
 
   // Convert stroked lessons and selected doubles into indivisible placement units.
   const consumed=new Set(),units=[];
@@ -1007,7 +1016,13 @@ function download(content,name,type){let blob=new Blob([content],{type}),url=URL
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tabpage').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab));}));
 $('registerTeacherBtn').onclick=registerTeacher;$('assignGrade').onchange=()=>{activeAssignSubject='';subjectAssignQueue=[];selectedAssignSubjects.clear();renderSubjectPicker();renderSubjectAssignPanel();save();};$('startSubjectAssignments').onclick=startSelectedSubjectAssignments;$('clearSubjectSelection').onclick=()=>{selectedAssignSubjects.clear();subjectAssignQueue=[];activeAssignSubject='';renderSubjectPicker();renderSubjectAssignPanel();};$('assignTeacher').onchange=()=>{};$('addGradeBtn').onclick=addCustomGrade;$('newGradeName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addCustomGrade();}});$('addAssignment').onclick=addAssignment;$('addSamples').onclick=loadSamples;$('clearAssignments').onclick=async()=>{if(await askConfirm('Clear assignments?','All teacher-subject assignments will be removed.','Clear assignments')){assignments=[];timetable=null;renderAll();save();showStatus('Assignments cleared.');}};
 $('addStrokedGroup').onclick=()=>{const chosen=[...document.querySelectorAll('[data-stroke-pick]:checked')].map(x=>x.value);if(chosen.length<2){showStatus('Select at least two subjects to create a stroked group.','err');return;}if(!rules.stroked)rules.stroked=[];if(rules.stroked.some(g=>g.length===chosen.length&&g.every(x=>chosen.includes(x)))){showStatus('That stroked group already exists.','err');return;}if(chosen.some(x=>rules.stroked.some(g=>g.includes(x)))){showStatus('A subject can belong to only one stroked group. Remove its existing group first.','err');return;}rules.stroked.push(chosen);renderRules();save();showStatus(`Stroked group added: ${chosen.join(' + ')}. These subjects will share a period wherever all are assigned in the same grade.`);};
-$('generateBtn').onclick=async()=>{const b=$('generateBtn');if(window.__rasmSchoolApproved!==true){showStatus('Timetable generation is locked until your school is approved.','err');return;}if(b.disabled)return;b.disabled=true;b.textContent='⏳ Generating…';try{await generate();}catch(err){console.error('RASM360 timetable generation error:',err);finishGenerationProgress(false);showStatus(`Generation stopped safely: ${err?.message||err}. Check the assignments and try again.`, 'err');}finally{b.disabled=false;b.textContent='⚡ Generate new timetable';}};$('deleteTimetableBtn').onclick=async()=>{if(!timetable){showStatus('There is no generated timetable to delete.','err');return;}if(!await askConfirm('Delete old timetable?','The generated timetable will be deleted. Teachers, assignments, grades and scheduling rules will be preserved.','Delete timetable'))return;timetable=null;lastChecks=[];save();$('timetableTitle').textContent='Generated timetable';$('timetable').innerHTML='<p class="muted">The old timetable has been deleted. Your teachers, assignments, grades and scheduling rules are preserved.</p>';$('summary').textContent='Old timetable deleted. Setup and scheduling rules remain unchanged.';$('checks').textContent='No timetable generated yet.';showStatus('Old timetable deleted. All setup data and scheduling rules were preserved.');};
+$('generateBtn').onclick=async()=>{const b=$('generateBtn');if(window.__rasmSchoolApproved!==true){showStatus('Timetable generation is locked until your school is approved.','err');return;}if(b.disabled)return;
+if(!assignments.length){showStatus('Add teacher, subject and grade assignments before generating a timetable.','err');return;}
+if($('generationMode').value==='teacher'&&!String($('viewTeacher').value||'').trim()){showStatus('Choose a teacher before generating an individual timetable.','err');return;}
+b.disabled=true;window.__rasmGenerationBusy=true;b.textContent='⏳ Preparing timetable…';
+try{await generate();}
+catch(err){console.error('RASM360 timetable generation error:',err);finishGenerationProgress(false);const msg=String(err?.message||err);showStatus(msg.includes('WEEKLY_QUOTA_EXHAUSTED')?msg.replace('WEEKLY_QUOTA_EXHAUSTED: ',''):String(err?.code||'').includes('resource-exhausted')?msg:msg.includes('functions/')?'Could not verify or reserve your weekly timetable allowance. Check your connection or contact the Super Admin. Details: '+msg:`Generation stopped safely: ${msg}. Check the assignments and try again.`, 'err');}
+finally{window.__rasmGenerationBusy=false;if(typeof window.rasmRefreshQuota==='function'){try{await window.rasmRefreshQuota();}catch(e){console.warn('Could not refresh weekly quota:',e);}}b.textContent=window.__rasmQuotaRemaining>0?'⚡ Generate new timetable':'🔒 Weekly allowance exhausted';b.disabled=!window.__rasmSchoolApproved||window.__rasmQuotaRemaining<=0;}};$('deleteTimetableBtn').onclick=async()=>{if(!timetable){showStatus('There is no generated timetable to delete.','err');return;}if(!await askConfirm('Delete old timetable?','The generated timetable will be deleted. Teachers, assignments, grades and scheduling rules will be preserved.','Delete timetable'))return;timetable=null;lastChecks=[];save();$('timetableTitle').textContent='Generated timetable';$('timetable').innerHTML='<p class="muted">The old timetable has been deleted. Your teachers, assignments, grades and scheduling rules are preserved.</p>';$('summary').textContent='Old timetable deleted. Setup and scheduling rules remain unchanged.';$('checks').textContent='No timetable generated yet.';showStatus('Old timetable deleted. All setup data and scheduling rules were preserved.');};
 $('generationMode').onchange=()=>{let m=$('generationMode').value;$('teacherPickerWrap').classList.toggle('hidden',m!=='teacher');$('gradePickerWrap').classList.toggle('hidden',m==='master'||m==='teacher');$('modeHelp').textContent=m==='master'?'Generates one coordinated timetable for every grade with registered teacher-subject assignments.':m==='selected'?'Generates a coordinated timetable only for the grades checked under Setup.':'Select a teacher to inspect their assigned lessons, grades, days, times and free periods.';if(timetable)renderTimetable();};$('viewTeacher').onchange=renderTimetable;$('viewGrade').onchange=renderTimetable;$('viewDay').onchange=renderTimetable;$('printBtn').onclick=()=>{if(!timetable){showStatus('Generate a timetable before printing.','err');return;}const mode=$('generationMode').value;if(mode==='teacher'&&!$('viewTeacher').value){showStatus('Select a teacher before printing.','err');return;}if(mode==='selected'&&!$('viewGrade').value){showStatus('Select a grade or stream before printing.','err');return;}document.body.classList.add('print-target');window.onafterprint=()=>document.body.classList.remove('print-target');window.print();};$('pdfBtn').onclick=()=>$('printBtn').click();$('csvBtn').onclick=exportCSV;
 $('backupBtn').onclick=()=>download(JSON.stringify({assignments,customGrades,customSubjectNames,localTeachers,rules,timetable,settings:getSettings(),grades:selectedGrades(),schoolBranding,adjustmentHistory,inactiveTeachers},null,2),'rasm360-timetable-backup.json','application/json');
 $('restoreFile').onchange=async e=>{try{let x=JSON.parse(await e.target.files[0].text());assignments=x.assignments||[];customGrades=x.customGrades||[];customSubjectNames=x.customSubjectNames||[];localTeachers=x.localTeachers||[];rules=x.rules||rules;rules.stroked=rules.stroked||[];rules.dailyMax=rules.dailyMax||{};rules.freeAfternoons=rules.freeAfternoons||[];rules.freeAfternoonsByDay=rules.freeAfternoonsByDay||Object.fromEntries(rules.freeAfternoons.map(n=>[n,[...DAYS]]));if(!Number.isFinite(Number(rules.cutoff))||Number(rules.cutoff)<100)rules.cutoff=780;timetable=x.timetable||null;adjustmentHistory=Array.isArray(x.adjustmentHistory)?x.adjustmentHistory:[];inactiveTeachers=Array.isArray(x.inactiveTeachers)?x.inactiveTeachers:[];if(x.settings)Object.entries(x.settings).forEach(([k,v])=>{if($(k))$(k).value=v});if(x.grades)window.__savedGradeSelection=x.grades;if(x.schoolBranding)schoolBranding={...schoolBranding,...x.schoolBranding};renderSchoolBranding();initGrades();renderAll();if(timetable){renderTimetable();renderChecks();} $('generationMode').dispatchEvent(new Event('change'));save();showStatus('Backup restored.');}catch(err){showStatus('Could not restore this file. Please choose a valid RASM timetable backup.','err');}};
@@ -1027,6 +1042,7 @@ initGrades();renderAll();if(timetable){renderTimetable();renderChecks();} $('gen
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-functions.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfabVkJydZH37sM8j8hVKNDsm2c5vGudQ",
@@ -1043,7 +1059,18 @@ const msg=document.getElementById('authMessage');
 const loginForm=document.getElementById('schoolLoginForm');
 const registerForm=document.getElementById('schoolRegisterForm');
 const pendingActions=document.getElementById('pendingActions');
-let firebaseAuth=null, firestore=null, currentUser=null;
+let firebaseAuth=null, firestore=null, currentUser=null, quotaFunctions=null, getQuotaCall=null, reserveQuotaCall=null;
+window.__rasmQuotaRemaining=0;
+function paintQuota(data){
+ const banner=document.getElementById('schoolQuotaBanner'),text=document.getElementById('schoolQuotaText'),btn=document.getElementById('generateBtn');
+ if(!banner||!text||!data)return;
+ const used=Number(data.used)||0,limit=Number(data.limit)||5,remaining=Math.max(0,Number(data.remaining??(limit-used))||0);
+ window.__rasmQuotaRemaining=remaining;
+ banner.classList.remove('hidden');
+ text.textContent=remaining>0?`This week: ${used} of ${limit} timetable generations used. ${remaining} remaining. The allowance resets every Monday.`:`This week: ${used} of ${limit} timetable generations used. Your weekly plan is exhausted. Contact the Super Admin to request additional generations.`;
+ banner.style.borderLeftColor=remaining>0?'#1769aa':'#b42318';
+ if(btn&&window.__rasmSchoolApproved){btn.disabled=remaining<=0||window.__rasmGenerationBusy===true;if(window.__rasmGenerationBusy!==true){btn.textContent=remaining>0?'⚡ Generate new timetable':'🔒 Weekly allowance exhausted';btn.title=remaining>0?`${remaining} weekly timetable generations remaining`:'Weekly timetable generation allowance exhausted';}}
+}
 function setSchoolWorkspace(school,user,approved){
   window.__rasmSchoolApproved=approved===true;
   const banner=document.getElementById('schoolApprovalBanner');
@@ -1065,6 +1092,9 @@ function setSchoolWorkspace(school,user,approved){
     generateBtn.title=approved?'Generate the school timetable':'School approval is required before timetable generation';
   }
   document.body.classList.toggle('approval-pending',!approved);
+  const quotaBanner=document.getElementById('schoolQuotaBanner');
+  if(quotaBanner)quotaBanner.classList.toggle('hidden',!approved);
+  if(!approved){window.__rasmQuotaRemaining=0;if(quotaBanner)quotaBanner.classList.add('hidden');}
 }
 function showMessage(text,type='info'){msg.textContent=text;msg.className='auth-message '+type;}
 function clearMessage(){msg.textContent='';msg.className='auth-message';}
@@ -1087,6 +1117,12 @@ try{
  const app=initializeApp(firebaseConfig);
  firebaseAuth=getAuth(app);
  firestore=getFirestore(app);
+ quotaFunctions=getFunctions(app);
+ getQuotaCall=httpsCallable(quotaFunctions,'getTimetableQuota');
+ reserveQuotaCall=httpsCallable(quotaFunctions,'reserveTimetableGeneration');
+ window.rasmRefreshQuota=async()=>{if(!currentUser||!getQuotaCall)return null;const result=await getQuotaCall();paintQuota(result.data);return result.data;};
+ window.rasmReserveGeneration=async()=>{if(!currentUser||!reserveQuotaCall)throw new Error('Please sign in again to check the school generation allowance.');const result=await reserveQuotaCall();paintQuota(result.data);return result.data;};
+ document.getElementById('refreshQuotaBtn')?.addEventListener('click',async()=>{try{const b=document.getElementById('refreshQuotaBtn');b.disabled=true;await window.rasmRefreshQuota();}catch(e){showMessage('Could not refresh the weekly allowance: '+(e?.message||e),'error');}finally{const b=document.getElementById('refreshQuotaBtn');if(b)b.disabled=false;}});
  document.getElementById('showLogin').addEventListener('click',showLogin);
  document.getElementById('showRegister').addEventListener('click',showRegister);
 
@@ -1157,6 +1193,10 @@ try{
    const approved=school.status==='approved';
    unlockApp();
    setSchoolWorkspace(school,user,approved);
+   if(approved){
+    try{await window.rasmRefreshQuota();}
+    catch(quotaError){const qb=document.getElementById('schoolQuotaBanner');if(qb){qb.classList.remove('hidden');document.getElementById('schoolQuotaText').textContent='Weekly allowance could not be verified. Timetable generation is locked until the secure quota service is available.';}const gb=document.getElementById('generateBtn');if(gb)gb.disabled=true;window.__rasmQuotaRemaining=0;showMessage('The secure weekly timetable allowance could not be checked. Please contact the Super Admin or try again when connected. Details: '+(quotaError?.message||quotaError),'error');}
+   }
    if(!approved)showMessage('Your email is verified and your school workspace is now available. You may prepare grades, teachers, subjects and scheduling rules. Timetable generation remains locked until the Super Admin approves your school. Sign out and log in again after approval.','pending');
   }catch(err){showMessage(friendlyError(err),'error');}
  }
@@ -1166,11 +1206,11 @@ try{
   try{await sendEmailVerification(currentUser);showMessage('A new verification email has been sent. Check your inbox and spam folder.','info');}
   catch(e){showMessage(friendlyError(e),'error');}
  });
- async function doSignOut(){try{window.__rasmSchoolApproved=false;setSchoolWorkspace({}, {email:''}, false);await signOut(firebaseAuth);currentUser=null;lockApp();showLogin();}catch(e){showMessage(friendlyError(e),'error');}}
+ async function doSignOut(){try{window.__rasmSchoolApproved=false;window.__rasmQuotaRemaining=0;const qb=document.getElementById('schoolQuotaBanner');if(qb)qb.classList.add('hidden');setSchoolWorkspace({}, {email:''}, false);await signOut(firebaseAuth);currentUser=null;lockApp();showLogin();}catch(e){showMessage(friendlyError(e),'error');}}
  document.getElementById('pendingSignOut').addEventListener('click',doSignOut);
  const logout=document.getElementById('schoolLogoutBtn');if(logout)logout.addEventListener('click',doSignOut);
  onAuthStateChanged(firebaseAuth,async user=>{
-  if(!user){currentUser=null;lockApp();showLogin();return;}
+  if(!user){currentUser=null;window.__rasmQuotaRemaining=0;const qb=document.getElementById('schoolQuotaBanner');if(qb)qb.classList.add('hidden');lockApp();showLogin();return;}
   await checkSchoolAccess(user);
  });
 }catch(err){lockApp();showMessage('Firebase could not initialise. Confirm the Firebase project configuration and that Authentication and Cloud Firestore are enabled. Details: '+(err?.message||err),'error');}
