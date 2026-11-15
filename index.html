@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RASM 360 Timetable Generator</title>
+<title>RASM 360 PRO Timetable Generator — Management Suite</title>
 <style>
 :root{--navy:#073b78;--blue:#0866d9;--pale:#eef5ff;--line:#cbd8ec;--green:#13864b;--red:#b42318;--ink:#172b4d}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f3f6fb;color:var(--ink)}
@@ -40,6 +40,22 @@ button{transition:transform .12s ease,filter .12s ease,box-shadow .12s ease}butt
 @keyframes sectionIn{from{opacity:.7;transform:translateY(3px)}to{opacity:1;transform:none}}
 .swal2-popup{font-family:Arial,Helvetica,sans-serif!important;border-radius:16px!important}.swal2-title{color:#12345b!important}.swal2-html-container{color:#43566f!important}.swal2-confirm{background:#0866d9!important;border-radius:8px!important;font-weight:700!important}.swal2-cancel{background:#e8eef7!important;color:#18385f!important;border-radius:8px!important;font-weight:700!important}
 @media(max-width:600px){.wrap{padding:10px}header{padding:15px}.panel{padding:12px}.row>*{min-width:100%}.tabs button{flex:1 1 calc(50% - 8px)}}
+
+/* Colour-coded organisation for Special scheduling rules */
+.rules-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.rules-layout>.settings-group{min-width:0}
+.rule-double{--settings-accent:#1769c2;--settings-border:#b9d5f4;--settings-bg:#f4f8ff;--settings-head:#e3efff;--settings-title:#104b89}
+.rule-morning{--settings-accent:#16834a;--settings-border:#b9e0c9;--settings-bg:#f2fbf5;--settings-head:#def4e6;--settings-title:#12633a}
+.rule-frequency{--settings-accent:#d97706;--settings-border:#f3d2a5;--settings-bg:#fffaf1;--settings-head:#fff0d8;--settings-title:#9a5100}
+.rule-stroked{--settings-accent:#7651b5;--settings-border:#d6c7ef;--settings-bg:#faf7ff;--settings-head:#eee6fb;--settings-title:#59358f}
+.rule-stroked .settings-group-content>p{margin-top:0}
+.rules-panel>.rules-layout .panel{background:#fff;border-color:var(--settings-border)}
+@media(max-width:760px){.rules-layout{grid-template-columns:1fr}}
+
+/* Teacher workload preview before timetable generation */
+.teacher-load-tools{margin:12px 0;padding:14px;border:1px solid #c8d9ee;border-radius:12px;background:linear-gradient(120deg,#f4f8ff,#f8fbff)}
+.teacher-load-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.teacher-load-heading p{margin:4px 0 0}.teacher-workload-preview{margin-top:12px}.teacher-workload-summary{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}.teacher-workload-stat{flex:1 1 150px;padding:10px 12px;background:#fff;border:1px solid #d6e2f1;border-radius:9px}.teacher-workload-stat strong{display:block;font-size:21px;color:#123f72}.teacher-workload-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}.teacher-workload-card{background:#fff;border:1px solid #d4e1f0;border-left:4px solid #1769c2;border-radius:10px;padding:12px;min-width:0}.teacher-workload-card:nth-child(4n+2){border-left-color:#16834a}.teacher-workload-card:nth-child(4n+3){border-left-color:#d97706}.teacher-workload-card:nth-child(4n+4){border-left-color:#7651b5}.teacher-workload-card h3{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 9px;color:#173b67}.teacher-workload-total{white-space:nowrap;background:#e8f1ff;color:#104b89;border-radius:99px;padding:4px 8px;font-size:12px}.teacher-workload-card ul{list-style:none;padding:0;margin:0}.teacher-workload-card li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid #edf1f7;font-size:12px}.teacher-workload-card li span:first-child{min-width:0;overflow-wrap:anywhere}.teacher-workload-card li strong{white-space:nowrap;color:#173b67}.teacher-workload-empty{padding:14px;background:#fff;border:1px dashed #c5d4e6;border-radius:9px;color:#526780}
+@media(max-width:600px){.teacher-load-heading{align-items:stretch}.teacher-load-heading button{width:100%}.teacher-workload-grid{grid-template-columns:1fr}}
 
 /* A4 print: print only the currently selected timetable target */
 @page{size:A4 landscape;margin:2.5mm}
@@ -118,9 +134,13 @@ button{transition:transform .12s ease,filter .12s ease,box-shadow .12s ease}butt
 }
 
 
-/* Approval-pending schools may prepare setup, but cannot generate. */
-#generateBtn:disabled{background:#8795a8!important;color:#fff!important;cursor:not-allowed!important;filter:none!important;opacity:1!important}
+/* Payment approval gate: generation is always available; Tuesday-Friday are visually locked until payment approval. */
+#generateBtn:disabled{background:#8795a8!important;color:#fff!important;cursor:wait!important;filter:none!important;opacity:1!important}
 body.approval-pending #schoolApprovalBanner{display:block!important}
+.payment-locked-cell{position:relative!important;filter:blur(6px)!important;user-select:none!important;pointer-events:none!important}
+.payment-lock-notice{margin:12px 0;padding:14px 16px;border:1px solid #edcf8a;border-left:5px solid #d99a16;border-radius:10px;background:#fff8e8;color:#704b00;font-size:13px;line-height:1.55}
+.payment-lock-notice strong{display:block;font-size:15px;margin-bottom:4px}
+.payment-unlocked-note{margin:10px 0;padding:10px 13px;border:1px solid #b8e0c8;border-radius:9px;background:#effaf3;color:#12633a;font-size:12px}
 /* Firebase school registration and approval gate */
 body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
 #schoolAuthGate{position:fixed;inset:0;z-index:99999;overflow:auto;background:linear-gradient(135deg,#062d5c,#0876df);display:grid;place-items:center;padding:22px;font-family:Arial,Helvetica,sans-serif}
@@ -133,6 +153,27 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
 #schoolAuthGate .auth-note{font-size:11px;color:#687b91;line-height:1.5;margin-top:14px}#schoolAuthGate .hidden{display:none!important}#schoolAuthGate .auth-footer{text-align:center;color:#eaf3ff;font-size:11px;margin-top:12px}
 @media(max-width:520px){#schoolAuthGate{padding:12px}#schoolAuthGate .auth-card{padding:20px}}
 
+
+/* Colour-coded organisation for School timetable settings */
+.settings-panel>.settings-layout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.settings-group{min-width:0;border:1px solid var(--settings-border);border-left:5px solid var(--settings-accent);border-radius:12px;background:var(--settings-bg);overflow:hidden}
+.settings-group-title{display:flex;align-items:center;gap:11px;padding:13px 15px;background:var(--settings-head);border-bottom:1px solid var(--settings-border)}
+.settings-group-title h3{margin:0;color:var(--settings-title);font-size:15px;font-weight:800}
+.settings-group-title p{margin:4px 0 0;color:#53677f;font-size:12px;line-height:1.4}
+.settings-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:10px;background:#fff;font-size:20px;box-shadow:0 1px 4px #183b6815}
+.settings-group-content{padding:14px}.settings-group-content>label{color:var(--settings-title)}
+.settings-fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.settings-fields>div{min-width:0}.settings-fields input,.settings-fields select{background:#fff}
+.settings-grades{--settings-accent:#1769c2;--settings-border:#b9d5f4;--settings-bg:#f4f8ff;--settings-head:#e3efff;--settings-title:#104b89}
+.settings-day{--settings-accent:#16834a;--settings-border:#b9e0c9;--settings-bg:#f2fbf5;--settings-head:#def4e6;--settings-title:#12633a}
+.settings-breaks{--settings-accent:#d97706;--settings-border:#f3d2a5;--settings-bg:#fffaf1;--settings-head:#fff0d8;--settings-title:#9a5100}
+.settings-games{--settings-accent:#7651b5;--settings-border:#d6c7ef;--settings-bg:#faf7ff;--settings-head:#eee6fb;--settings-title:#59358f}
+.settings-release{--settings-accent:#07838a;--settings-border:#b5e0e1;--settings-bg:#f1fbfb;--settings-head:#dcf3f3;--settings-title:#08656a;grid-column:1/-1}
+@media(max-width:760px){.settings-panel>.settings-layout{grid-template-columns:1fr}.settings-release{grid-column:auto}}
+
+
+/* Management suite */
+#management .settings-group{padding:0}#management .table-wrap{overflow:auto}#management .data-table{min-width:620px}#management .mode-note{white-space:normal}#management .panel h2{margin-bottom:10px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
@@ -173,7 +214,7 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
 </div>
 <div id="schoolApprovalBanner" class="panel hidden" role="status" aria-live="polite" style="border-left:5px solid #d99a16;background:#fff9e9;color:#684800;margin-bottom:14px">
 <strong id="schoolApprovalTitle">School approval pending</strong>
-<div id="schoolApprovalText" class="small" style="color:#684800;margin-top:5px">You can prepare your timetable setup. Generation unlocks after approval.</div>
+<div id="schoolApprovalText" class="small" style="color:#684800;margin-top:5px">You can prepare your timetable setup. Generation is available immediately. Tuesday-Friday unlock after the KSh 2,000 school payment is approved.</div>
 </div>
 <div id="status" class="status" role="status" aria-live="polite"></div>
 <section id="schoolProfile" class="tabpage hidden">
@@ -182,21 +223,23 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
 <div class="brand-upload-row" style="margin-top:14px"><img id="schoolLogoPreview" class="logo-preview" alt="School logo preview"><div><strong id="logoStatus">No school logo uploaded yet.</strong><div class="actions"><button type="button" class="secondary" id="removeSchoolLogo">Remove logo</button><button type="button" id="saveSchoolBranding">Save school profile</button></div></div></div></div>
 </section>
 <section id="setup" class="tabpage">
-<div class="panel"><h2>School timetable settings</h2><div class="grid">
-<div><label>Grades to include</label><div class="small">Add any grade or stream name, for example 9 Red, 7A, 8 East or 6 Blue, then tick the grades to generate.</div><div class="row" style="margin-top:8px"><div><input id="newGradeName" placeholder="e.g. 9 Red or 7A" aria-label="New grade name"></div><div style="flex:0 0 auto;min-width:0"><button type="button" id="addGradeBtn">＋ Add grade</button></div></div><div id="grades" class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px"></div></div>
-<div><label>School day starts</label><input id="startTime" type="time" value="08:20"></div>
-<div><label>Lesson duration (minutes)</label><input id="duration" type="number" min="20" max="90" value="40"></div>
-<div><label>Lessons per day</label><select id="periods"><option>8</option><option>6</option><option>7</option><option>9</option></select></div>
-<div><label>Health break duration (minutes)</label><input id="breakMins" type="number" min="5" max="45" value="10"></div>
-<div><label>Preferred first short break start</label><input id="breakTime" type="time" value="09:40"></div>
-<div><label>Preferred later short break start (optional)</label><input id="breakTime2" type="time" value="13:50"></div>
-<div><label>Lunch / mid-day break duration (minutes)</label><input id="lunchMins" type="number" min="20" max="120" value="60"></div>
-<div><label>Lunch after lesson</label><select id="lunchAfter"><option>4</option><option>3</option><option>5</option><option>6</option></select></div>
-<div><label>Preferred lunch start (optional)</label><input id="lunchTime" type="time" value="11:30"></div>
-<div><label>Games duration (minutes)</label><input id="gamesMins" type="number" min="20" max="120" value="40"></div>
-<div><label>Games timing</label><select id="gamesTiming"><option value="after">After the last lesson</option><option value="before">Before the first lesson</option></select></div>
-<div><label>Preferred games start (optional)</label><input id="gamesTime" type="time" value=""></div>
-<div style="grid-column:1/-1;border:1px solid #b9cfee;background:#f8fbff;border-radius:9px;padding:12px"><label>Teachers to be free during the last 2 lessons (from 2:00 PM onwards) — select days</label><p class="small">For each teacher, tick the weekdays when they must be free during the final two lesson periods beginning at or after 2:00 PM. Their classes must still be taught by other available teachers; a class lesson will never be marked free just to release a teacher.</p><div id="teacherFreePicker" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:7px"><span class="muted small">Register teachers or assign subjects to display names here.</span></div><div class="small" id="teacherFreeNote" style="margin-top:7px">No teachers selected for afternoon release.</div></div>
+<div class="panel settings-panel"><h2>School timetable settings</h2>
+<div class="settings-layout">
+ <section class="settings-group settings-grades"><div class="settings-group-title"><span class="settings-icon">🏫</span><div><h3>1. Grades and streams</h3><p>Add the grades or streams that your school will timetable.</p></div></div>
+  <div class="settings-group-content"><label>Grades to include</label><div class="small">Add any grade or stream name, for example 9 Red, 7A, 8 East or 6 Blue, then tick the grades to generate.</div><div class="row" style="margin-top:8px"><div><input id="newGradeName" placeholder="e.g. 9 Red or 7A" aria-label="New grade name"></div><div style="flex:0 0 auto;min-width:0"><button type="button" id="addGradeBtn">＋ Add grade</button></div></div><div id="grades" class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px"></div></div>
+ </section>
+ <section class="settings-group settings-day"><div class="settings-group-title"><span class="settings-icon">⏰</span><div><h3>2. Daily lesson structure</h3><p>Set the opening time and the length of each teaching period.</p></div></div>
+  <div class="settings-group-content settings-fields"><div><label>School day starts</label><input id="startTime" type="time" value="08:20"></div><div><label>Lesson duration (minutes)</label><input id="duration" type="number" min="20" max="90" value="40"></div><div><label>Lessons per day</label><select id="periods"><option>8</option><option>6</option><option>7</option><option>9</option></select></div></div>
+ </section>
+ <section class="settings-group settings-breaks"><div class="settings-group-title"><span class="settings-icon">☕</span><div><h3>3. Health breaks and lunch</h3><p>Configure short breaks and the main mid-day break.</p></div></div>
+  <div class="settings-group-content settings-fields"><div><label>Health break duration (minutes)</label><input id="breakMins" type="number" min="5" max="45" value="10"></div><div><label>Preferred first short break start</label><input id="breakTime" type="time" value="09:40"></div><div><label>Preferred later short break start (optional)</label><input id="breakTime2" type="time" value="13:50"></div><div><label>Lunch / mid-day break duration (minutes)</label><input id="lunchMins" type="number" min="20" max="120" value="60"></div><div><label>Lunch after lesson</label><select id="lunchAfter"><option>4</option><option>3</option><option>5</option><option>6</option></select></div><div><label>Preferred lunch start (optional)</label><input id="lunchTime" type="time" value="11:30"></div></div>
+ </section>
+ <section class="settings-group settings-games"><div class="settings-group-title"><span class="settings-icon">⚽</span><div><h3>4. Games and activities</h3><p>Choose the duration and position of games in the school day.</p></div></div>
+  <div class="settings-group-content settings-fields"><div><label>Games duration (minutes)</label><input id="gamesMins" type="number" min="20" max="120" value="40"></div><div><label>Games timing</label><select id="gamesTiming"><option value="after">After the last lesson</option><option value="before">Before the first lesson</option></select></div><div><label>Preferred games start (optional)</label><input id="gamesTime" type="time" value=""></div></div>
+ </section>
+ <section class="settings-group settings-release"><div class="settings-group-title"><span class="settings-icon">👩‍🏫</span><div><h3>5. Teacher afternoon release</h3><p>Select teachers and weekdays when they must be free during the final two lesson periods.</p></div></div>
+  <div class="settings-group-content"><label>Teachers to be free during the last 2 lessons (from 2:00 PM onwards) — select days</label><p class="small">For each teacher, tick the weekdays when they must be free during the final two lesson periods beginning at or after 2:00 PM. Their classes must still be taught by other available teachers; a class lesson will never be marked free just to release a teacher.</p><div id="teacherFreePicker" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:7px"><span class="muted small">Register teachers or assign subjects to display names here.</span></div><div class="small" id="teacherFreeNote" style="margin-top:7px">No teachers selected for afternoon release.</div></div>
+ </section>
 </div><p class="small">Health breaks are inserted after instructional blocks (normally every two lessons). Set the first break, lunch and games start times and durations to match your school's tier and daily programme. If a preferred start time would overlap a lesson or an earlier activity, the generator places the activity at the next safe time. Creative Arts is prioritised immediately before a break or lunch where possible. Similar learning areas—including all languages and Mathematics with Physics—must not be scheduled in consecutive periods. Morning/afternoon lesson loads are balanced across the week. For Grades 4–6, the weekly target is exactly 35 lessons including Friday Lesson 1 PPI: 34 assigned subject lessons plus PPI. All 35 must be scheduled by 2:40 PM; later periods are reserved for informal lessons and activities.</p></div>
 <div class="panel"><h2>Teachers, subjects and grade assignments</h2>
 <div class="panel" style="margin:0 0 12px;padding:12px;border:1px solid #b9cfee;background:#f8fbff"><h3>＋ Register a teacher</h3><div class="grid"><div><label>Teacher full name</label><input id="newTeacherName" placeholder="Enter teacher name"></div><div><label>Teaching subject(s)</label><input id="newTeacherSubjects" placeholder="e.g. Mathematics, Science"></div></div><div class="actions"><button type="button" id="registerTeacherBtn">Register teacher</button></div><div id="registeredTeacherNote" class="small">Teachers registered here are saved in this browser and become available for subject assignment.</div></div>
@@ -209,28 +252,38 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
 </div>
 </section>
 <section id="rules" class="tabpage hidden">
-<div class="panel"><h2>Special scheduling rules</h2><p class="small">Choose subjects that should be prioritised early in the day and subjects that must be taught in two consecutive lessons. Double lessons can start at any valid consecutive pair from Lesson 1 through the final lesson pair of the day; they are balanced across the week rather than restricted to morning periods. Subjects with related concepts or skills must not follow one another in consecutive periods across any grade. This includes language-to-language lessons, related sciences and Mathematics with Physics. Creative Arts receives a strong preference for the period immediately before a break or lunch, without making otherwise valid timetables impossible. The solver also balances each grade’s morning and afternoon lesson load across the week.</p>
-<div class="grid">
-<div><label>Subjects that require double lessons</label><div id="doubleList" class="panel" style="margin:0;padding:10px;max-height:300px;overflow:auto"><span class="muted small">Add assignments first.</span></div></div>
-<div><label>Subjects to prioritise in morning hours</label><div id="morningList" class="panel" style="margin:0;padding:10px;max-height:300px;overflow:auto"><span class="muted small">Add assignments first.</span></div></div>
-<div style="grid-column:1/-1"><label>Maximum daily frequency by subject</label><p class="small">Automatic rule: a subject assigned 6 or more lessons per week in a grade may appear twice that day, in separate non-consecutive lesson times. This applies to every grade. You can override the daily limit below.</p><div id="dailyFrequencyList" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:7px"></div></div>
-<div><label>Morning means lessons before</label><select id="morningCutoff"><option value="780" selected>1:00 PM</option></select><p class="small">Selected subjects are scheduled first and strongly prioritised for periods ending before the chosen cutoff. The solver may use later periods for these subjects only when needed to complete all assignments. Mathematics is never scheduled in a lesson ending after 2:00 PM.</p>
-<label class="checkline"><input type="checkbox" id="strictDouble" checked> One consecutive double per selected subject each week; doubles may be scheduled from the first lesson to the last lesson</label>
-<label class="checkline"><input type="checkbox" id="avoidSameDay" checked disabled> HARD RULE: subjects with fewer than 6 weekly lessons appear once per day; subjects with 6 or more may appear twice at separate times</label>
+<div class="panel rules-panel"><h2>Special scheduling rules</h2>
+<p class="small">Choose subjects that should be prioritised early in the day and subjects that must be taught in two consecutive lessons. Double lessons can start at any valid consecutive pair from Lesson 1 through the final lesson pair of the day; they are balanced across the week rather than restricted to morning periods. Subjects with related concepts or skills must not follow one another in consecutive periods across any grade. This includes language-to-language lessons, related sciences and Mathematics with Physics. Creative Arts receives a strong preference for the period immediately before a break or lunch, without making otherwise valid timetables impossible. The solver also balances each grade’s morning and afternoon lesson load across the week.</p>
+<div class="rules-layout">
+ <section class="settings-group rule-double"><div class="settings-group-title"><span class="settings-icon">🔁</span><div><h3>1. Double lessons</h3><p>Select subjects that need one consecutive double lesson each week.</p></div></div>
+  <div class="settings-group-content"><label>Subjects that require double lessons</label><div id="doubleList" class="panel" style="margin:0;padding:10px;max-height:300px;overflow:auto"><span class="muted small">Add assignments first.</span></div>
+  <label class="checkline" style="margin-top:12px"><input type="checkbox" id="strictDouble" checked> One consecutive double per selected subject each week; doubles may be scheduled from the first lesson to the last lesson</label></div>
+ </section>
+ <section class="settings-group rule-morning"><div class="settings-group-title"><span class="settings-icon">🌅</span><div><h3>2. Morning priority</h3><p>Choose subjects that should receive priority in earlier lessons.</p></div></div>
+  <div class="settings-group-content"><label>Subjects to prioritise in morning hours</label><div id="morningList" class="panel" style="margin:0;padding:10px;max-height:300px;overflow:auto"><span class="muted small">Add assignments first.</span></div>
+  <div style="margin-top:12px"><label for="morningCutoff">Morning means lessons before</label><select id="morningCutoff"><option value="780" selected>1:00 PM</option></select><p class="small">Selected subjects are scheduled first and strongly prioritised for periods ending before the chosen cutoff. The solver may use later periods for these subjects only when needed to complete all assignments. Mathematics is never scheduled in a lesson ending after 2:00 PM.</p></div></div>
+ </section>
+ <section class="settings-group rule-frequency"><div class="settings-group-title"><span class="settings-icon">📅</span><div><h3>3. Daily subject frequency</h3><p>Control how often a subject may appear in one school day.</p></div></div>
+  <div class="settings-group-content"><label>Maximum daily frequency by subject</label><p class="small">Automatic rule: a subject assigned 6 or more lessons per week in a grade may appear twice that day, in separate non-consecutive lesson times. This applies to every grade. You can override the daily limit below.</p><div id="dailyFrequencyList" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:7px"></div>
+  <label class="checkline" style="margin-top:12px"><input type="checkbox" id="avoidSameDay" checked disabled> HARD RULE: subjects with fewer than 6 weekly lessons appear once per day; subjects with 6 or more may appear twice at separate times</label></div>
+ </section>
+ <section class="settings-group rule-stroked"><div class="settings-group-title"><span class="settings-icon">🤝</span><div><h3>4. Stroked subjects</h3><p>Combine two or more subjects so they are taught at the same time.</p></div></div>
+  <div class="settings-group-content"><p class="small">For each grade that has all selected subjects assigned, they will be scheduled in the same period and shown together in one timetable cell. The school chooses which subjects to combine.</p><div id="strokedSubjectList" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px"></div><div class="actions"><button type="button" class="secondary" id="addStrokedGroup">＋ Add selected stroked group</button></div><div id="strokedGroups" class="small" style="margin-top:8px"></div></div>
+ </section>
 </div></div>
-<div class="panel" style="margin-top:12px"><h3>Subjects that can be stroked (taught at the same time)</h3><p class="small">Select two or more subjects and add them as a stroked group. For each grade that has all selected subjects assigned, they will be scheduled in the same period and shown together in one timetable cell. The school chooses which subjects to combine.</p><div id="strokedSubjectList" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px"></div><div class="actions"><button type="button" class="secondary" id="addStrokedGroup">＋ Add selected stroked group</button></div><div id="strokedGroups" class="small" style="margin-top:8px"></div></div></div>
 </section>
 <section id="generate" class="tabpage hidden">
-<div class="panel no-print"><h2>Generate and inspect</h2><div class="grid"><div><label>Timetable mode</label><select id="generationMode"><option value="master">Master Whole-School Timetable</option><option value="selected">Selected Grades Timetable</option><option value="teacher">Individual Teacher Timetable</option></select></div><div id="teacherPickerWrap" class="hidden"><label>Select teacher</label><select id="viewTeacher"><option value="">Select a teacher</option></select></div><div id="gradePickerWrap"><label>View grade</label><select id="viewGrade"></select></div><div><label>View day</label><select id="viewDay"><option value="-1">Full week</option><option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option><option value="3">Thursday</option><option value="4">Friday</option></select></div></div><div class="mode-note small" id="modeHelp">Master mode coordinates every grade with assignments and prevents a teacher from being booked in two classes at the same time.</div><div class="actions"><button class="green" id="generateBtn" disabled title="School approval is required before timetable generation">🔒 Awaiting school approval</button><button class="danger" id="deleteTimetableBtn">🗑 Delete old timetable</button><button id="printBtn">🖨 Print</button><button id="csvBtn" class="secondary">Export CSV</button><button id="pdfBtn" class="secondary">Save / Print PDF</button></div><div id="generationProgress" class="generation-progress hidden" aria-live="polite"><div class="generation-progress-top"><strong id="generationPhase">Preparing timetable…</strong><strong id="generationCountdown">Estimating time…</strong></div><div class="generation-track"><div id="generationBar"></div></div><div class="generation-progress-bottom"><span id="generationPercent">0%</span><span id="generationElapsed">Elapsed 0s</span></div></div><div id="summary" class="small" style="margin-top:10px"></div></div>
+<div class="panel no-print"><h2>Generate and inspect</h2><div class="grid"><div><label>Timetable mode</label><select id="generationMode"><option value="master">Master Whole-School Timetable</option><option value="selected">Selected Grades Timetable</option><option value="teacher">Individual Teacher Timetable</option></select></div><div id="teacherPickerWrap" class="hidden"><label>Select teacher</label><select id="viewTeacher"><option value="">Select a teacher</option></select></div><div id="gradePickerWrap"><label>View grade</label><select id="viewGrade"></select></div><div><label>View day</label><select id="viewDay"><option value="-1">Full week</option><option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option><option value="3">Thursday</option><option value="4">Friday</option></select></div></div><div class="mode-note small" id="modeHelp">Master mode coordinates every grade with assignments and prevents a teacher from being booked in two classes at the same time.</div><div class="teacher-load-tools"><div class="teacher-load-heading"><div><strong>Teacher workload check</strong><p class="small">Review each teacher’s total weekly lessons and the exact subject-grade assignments before generating.</p></div><button type="button" id="toggleTeacherWorkload" class="secondary">👥 View teacher lesson totals</button></div><div id="teacherWorkloadPreview" class="teacher-workload-preview hidden" aria-live="polite"></div></div><div class="actions"><button class="green" id="generateBtn" disabled title="School approval is required before timetable generation">🔒 Awaiting school approval</button><button class="danger" id="deleteTimetableBtn">🗑 Delete old timetable</button><button id="printBtn">🖨 Print</button><button id="csvBtn" class="secondary">Export CSV</button><button id="pdfBtn" class="secondary">Save / Print PDF</button></div><div id="generationProgress" class="generation-progress hidden" aria-live="polite"><div class="generation-progress-top"><strong id="generationPhase">Preparing timetable…</strong><strong id="generationCountdown">Estimating time…</strong></div><div class="generation-track"><div id="generationBar"></div></div><div class="generation-progress-bottom"><span id="generationPercent">0%</span><span id="generationElapsed">Elapsed 0s</span></div></div><div id="summary" class="small" style="margin-top:10px"></div></div>
 <div class="panel no-print" id="timetableAdjustmentPanel">
  <h2>🛠 Timetable Adjustment Mode</h2>
- <p class="small">Use this when a teacher leaves, transfers or becomes unavailable during the term. It changes only that teacher’s existing lesson assignments. Other teachers’ days and periods remain unchanged. The system checks for replacement-teacher clashes before applying anything.</p>
+ <p class="small">Use this when a teacher leaves, transfers or becomes unavailable. Save the updated teacher-subject assignments first, then generate a fresh timetable. Existing timetable periods are not edited or used to block the change; clashes are checked during new timetable generation.</p>
  <div class="grid">
   <div><label for="departingTeacher">Teacher leaving / being replaced</label><select id="departingTeacher"><option value="">Select affected teacher</option></select></div>
   <div><label for="replacementTeacher">Replacement teacher</label><select id="replacementTeacher"><option value="">Select replacement teacher</option></select></div>
+  <div id="transferSubjectWrap" class="hidden"><label for="transferSubject">Subject and grade to transfer</label><select id="transferSubject"><option value="">Select subject and grade</option></select><p class="small">Each option represents one specific subject in one grade or stream, for example Kiswahili — 9A, Kiswahili — 5Red or Biology — Grade 9. Transfer each assignment separately.</p></div>
  </div>
- <div class="actions"><button type="button" id="previewTeacherChange" class="secondary">🔎 Preview affected lessons</button><button type="button" id="applyTeacherChange" class="green" disabled>Apply limited changes</button><button type="button" id="undoTeacherChange" class="secondary" disabled>↶ Undo last adjustment</button></div>
- <div id="teacherChangePreview" class="small" style="margin-top:10px" aria-live="polite">Generate a timetable first, then select the teacher who is leaving.</div>
+ <div class="actions"><button type="button" id="previewTeacherChange" class="secondary">🔎 Preview affected lessons</button><button type="button" id="applyTeacherChange" class="green" disabled>💾 Save Changes</button><button type="button" id="undoTeacherChange" class="secondary" disabled>↶ Undo last adjustment</button></div>
+ <div id="teacherChangePreview" class="small" style="margin-top:10px" aria-live="polite">Select the affected teacher, replacement teacher and subject. Save the changes, then generate a new timetable.</div>
  <div id="teacherChangeHistory" class="small" style="margin-top:8px"></div>
 </div>
 <div class="panel teacher-print-panel"><div id="printBranding" class="school-print-brand"><div><div class="brand-school-name" id="printSchoolName">School Name</div><div class="brand-caption">OFFICIAL SCHOOL TIMETABLE</div></div></div><h2 id="timetableTitle">Generated timetable</h2><div id="timetable" class="table-wrap"><p class="muted">Set up teacher assignments, then select Generate timetable.</p></div></div>
@@ -320,7 +373,22 @@ function renderSubjectAssignPanel(){
  $('cancelSubjectAssign').onclick=()=>{subjectAssignQueue=[];activeAssignSubject='';selectedAssignSubjects.clear();renderSubjectPicker();renderSubjectAssignPanel();showStatus('Subject assignment batch cancelled.');};
 }
 
-function renderAll(){const selectedTeacher=$('viewTeacher')?.value||'';const selectedAssignTeacher=$('assignTeacher')?.value||'';const selectedAssignGrade=$('assignGrade')?.value||'';const selectedViewGrade=$('viewGrade')?.value||'';renderAssignments();let all=gradeListFromRecords(),gs=selectedGrades();$('assignGrade').innerHTML=all.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');if(all.includes(selectedAssignGrade))$('assignGrade').value=selectedAssignGrade;else if(all.length)$('assignGrade').value=all[0];$('viewGrade').innerHTML=all.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');if(all.includes(selectedViewGrade))$('viewGrade').value=selectedViewGrade;else $('viewGrade').value=(gs[0]||all[0]||'');let ts=registeredTeacherNames();$('assignTeacher').innerHTML='<option value="">Select registered teacher</option>'+ts.map((t,i)=>`<option value="${esc(t)}">${String(i+1).padStart(2,'0')} — ${esc(t)}</option>`).join('');if(ts.includes(selectedAssignTeacher))$('assignTeacher').value=selectedAssignTeacher;$('teacherCountNote').textContent=`${ts.length} registered teacher(s) available in the subject assignment pop-up.`;$('viewTeacher').innerHTML='<option value="">Select a teacher</option>'+ts.map((t,i)=>`<option value="${esc(t)}">${String(i+1).padStart(2,'0')} — ${esc(t)}</option>`).join('');if(ts.includes(selectedTeacher))$('viewTeacher').value=selectedTeacher;renderSubjectPicker();renderSubjectAssignPanel();renderTeacherFreePicker();refreshAdjustmentControls();}
+function renderTeacherWorkloadPreview(){
+ const host=$('teacherWorkloadPreview');if(!host)return;
+ const grouped=new Map();
+ assignments.forEach(a=>{
+  const teacher=String(a.teacher||'').trim();if(!teacher)return;
+  const key=teacher.toLocaleLowerCase();
+  if(!grouped.has(key))grouped.set(key,{teacher,lessons:0,items:[]});
+  const entry=grouped.get(key),weekly=Math.max(0,Number(a.weekly)||0);
+  entry.lessons+=weekly;entry.items.push({subject:String(a.subject||'Unspecified subject'),grade:String(a.grade||'Unspecified grade'),weekly});
+ });
+ const teachers=[...grouped.values()].sort((a,b)=>b.lessons-a.lessons||a.teacher.localeCompare(b.teacher));
+ const totalLessons=teachers.reduce((n,t)=>n+t.lessons,0);
+ if(!teachers.length){host.innerHTML='<div class="teacher-workload-empty">No teacher-subject assignments have been added yet. Add assignments under Setup to see the workload breakdown here.</div>';return;}
+ host.innerHTML=`<div class="teacher-workload-summary"><div class="teacher-workload-stat"><span class="small">Teachers with assignments</span><strong>${teachers.length}</strong></div><div class="teacher-workload-stat"><span class="small">Total assigned lessons per week</span><strong>${totalLessons}</strong></div><div class="teacher-workload-stat"><span class="small">Subject-grade assignments</span><strong>${assignments.length}</strong></div></div><div class="teacher-workload-grid">${teachers.map(t=>`<article class="teacher-workload-card"><h3><span>${esc(t.teacher)}</span><span class="teacher-workload-total">${t.lessons} lessons/week</span></h3><ul>${t.items.sort((a,b)=>a.grade.localeCompare(b.grade,undefined,{numeric:true})||a.subject.localeCompare(b.subject)).map(x=>`<li><span>${esc(x.subject)} — ${esc(x.grade)}</span><strong>${x.weekly} ${x.weekly===1?'lesson':'lessons'}</strong></li>`).join('')}</ul></article>`).join('')}</div>`;
+}
+function renderAll(){renderTeacherWorkloadPreview();const selectedTeacher=$('viewTeacher')?.value||'';const selectedAssignTeacher=$('assignTeacher')?.value||'';const selectedAssignGrade=$('assignGrade')?.value||'';const selectedViewGrade=$('viewGrade')?.value||'';renderAssignments();let all=gradeListFromRecords(),gs=selectedGrades();$('assignGrade').innerHTML=all.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');if(all.includes(selectedAssignGrade))$('assignGrade').value=selectedAssignGrade;else if(all.length)$('assignGrade').value=all[0];$('viewGrade').innerHTML=all.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');if(all.includes(selectedViewGrade))$('viewGrade').value=selectedViewGrade;else $('viewGrade').value=(gs[0]||all[0]||'');let ts=registeredTeacherNames();$('assignTeacher').innerHTML='<option value="">Select registered teacher</option>'+ts.map((t,i)=>`<option value="${esc(t)}">${String(i+1).padStart(2,'0')} — ${esc(t)}</option>`).join('');if(ts.includes(selectedAssignTeacher))$('assignTeacher').value=selectedAssignTeacher;$('teacherCountNote').textContent=`${ts.length} registered teacher(s) available in the subject assignment pop-up.`;$('viewTeacher').innerHTML='<option value="">Select a teacher</option>'+ts.map((t,i)=>`<option value="${esc(t)}">${String(i+1).padStart(2,'0')} — ${esc(t)}</option>`).join('');if(ts.includes(selectedTeacher))$('viewTeacher').value=selectedTeacher;renderSubjectPicker();renderSubjectAssignPanel();renderTeacherFreePicker();refreshAdjustmentControls();}
 function renderTeacherFreePicker(){
  const box=$('teacherFreePicker');if(!box)return;
  const names=registeredTeacherNames();
@@ -427,13 +495,11 @@ async function generate(){
   const isPracticalActivity=sub=>/\b(physical education|\bp\.?e\.?\b|sports?|games|agriculture|pre[- ]?technical|home science|food and nutrition|cooking|design and technology|woodwork|metalwork|art and craft|creative arts|music|performing arts|drama)\b/i.test(String(sub||''));
   const isMath=sub=>/\bmaths?\b|mathematics/i.test(String(sub||''));
   const isPhysics=sub=>/\bphysics\b/i.test(String(sub||''));
-  // Hard adjacency rule: keep related learning areas out of neighbouring periods.
-  // This includes all languages, related subject families, and Mathematics/Physics.
-  const areSimilarSubjects=(a,b)=>{
-    const fa=subjectFamily(a),fb=subjectFamily(b);
-    if(fa&&fa===fb)return true;
-    return (isMath(a)&&isPhysics(b))||(isPhysics(a)&&isMath(b));
-  };
+  // Hard adjacency rule requested by the school: language subjects must not
+  // be consecutive. Do not block unrelated subjects merely because they share
+  // a broad family (e.g. Science/Geography); that over-restricts the timetable
+  // and can leave otherwise placeable lessons unscheduled.
+  const areSimilarSubjects=(a,b)=>isLanguage(a)&&isLanguage(b);
   const mathAllowed=(sub,p)=>{if(!isMath(sub))return true;const sl=lessonByPeriod.get(p);return !!sl&&sl.end<=mins('14:00');};
 
   const tasks=[];
@@ -552,7 +618,7 @@ async function generate(){
 
   let best=null,bestCount=-1,totalAttempts=0;
   const totalUnits=meta.length;
-  generationProgressMax=Math.max(1,totalUnits*4);
+  generationProgressMax=Math.max(1,totalUnits*13);
   updateGenerationProgress('Building legal lesson slots…',0,generationProgressMax,generationStartedAt);
   const makeState=()=>{
     const grid={};gs.forEach(g=>{grid[g]={};for(let d=0;d<5;d++){grid[g][d]={};lessons.forEach(x=>grid[g][d][x.period]=null);}});
@@ -630,7 +696,7 @@ async function generate(){
       const occupied=st.gradeSlot.get(slotKey(u.grade,c.d,p));if(occupied!==undefined&&occupied!==id)blockers.add(occupied);
       for(const t of m.teachers){const hit=st.teacherSlot.get(teacherKey(t,c.d,p));if(hit!==undefined&&hit!==id)blockers.add(hit);}
     }
-    // Similar learning areas are kept apart for every grade to reduce cognitive monotony.
+    // Language subjects are kept apart for every grade, as required by the school.
     for(const p of c.periods)for(const q of [p-1,p+1]){
       if(q<1||q>set.periods)continue;
       const cell=st.grid[u.grade][c.d][q];if(!cell)continue;
@@ -684,6 +750,7 @@ async function generate(){
     const hash=((id+1)*73856093+(c.d+1)*19349663+(c.p+1)*83492791+seed*2654435761)>>>0;
     return score+(hash%100000)/100000;
   };
+  // Expandable search budget: difficult feasible timetables receive progressively more repair work.
   let repairBudget=0,repairLimit=12000;
   // Cooperative search: yield periodically so the browser can repaint, update
   // the progress display and accept user input during deep backtracking.
@@ -692,7 +759,7 @@ async function generate(){
     // place it twice: doing so would overwrite its old slot and corrupt indexes.
     if(st.placements[id])return true;
     if(++repairBudget>repairLimit)return false;
-    if(repairBudget%1000===0) await new Promise(resolve=>setTimeout(resolve,0));
+    if(repairBudget%500===0) await new Promise(resolve=>setTimeout(resolve,0));
     if(visited.has(id))return false;
     const nextVisited=new Set(visited);nextVisited.add(id);
     const options=meta[id].domain.map(c=>({c,score:candidateScore(st,id,c,seed)})).sort((a,b)=>b.score-a.score).map(x=>x.c);
@@ -718,11 +785,14 @@ async function generate(){
     return false;
   };
   const copyIntoState=(target,source)=>{Object.keys(target).forEach(k=>delete target[k]);Object.assign(target,source);};
-  const attemptCount=Math.min(7,Math.max(4,Math.ceil(meta.length/55)+3));
-  generationProgressMax=Math.max(1,totalUnits*(attemptCount+3));
-  const passRepairLimit=Math.min(36000,Math.max(14000,meta.length*170));
+  const attemptCount=10;
+  const recoveryRounds=5;
+  generationProgressMax=Math.max(1,totalUnits*(attemptCount+recoveryRounds));
+  const passRepairLimit=Math.min(60000,Math.max(18000,meta.length*90));
   const runAttempt=async attempt=>{
-    state=makeState();repairBudget=0;repairLimit=passRepairLimit;
+    state=makeState();repairBudget=0;
+    // Escalate the node budget on every pass instead of repeating the same shallow search.
+    repairLimit=Math.min(180000,passRepairLimit*(1+attempt));
     const seed=(generationSeed+attempt*104729)>>>0;
     const remaining=meta.map(m=>m.id);
     // Scarcity-first ordering: doubles, Maths, restricted teachers and small
@@ -738,7 +808,9 @@ async function generate(){
     let placedCount=0;
     for(let k=0;k<remaining.length;k++){
       const id=remaining[k];
-      await augment(state,id,2,new Set(),seed);
+      const searchDepth=Math.min(6,2+Math.floor(attempt/2));
+      const branchWidth=Math.min(9,5+Math.floor(attempt/2));
+      await augment(state,id,searchDepth,new Set(),seed,null,branchWidth);
       // Count the live state, not successful top-level calls: a repair chain
       // can place several displaced units in one operation.
       placedCount=state.placedCount;
@@ -765,10 +837,10 @@ async function generate(){
     // partial state and focuses deeper ejection chains on the remaining units.
     // The budget scales with timetable size but is capped to keep the UI responsive.
     if(bestCount<totalUnits){
-      const recoveryRounds=3;
-      const recoveryRepairLimit=Math.min(42000,Math.max(18000,meta.length*220));
+      const recoveryRepairLimit=Math.min(240000,Math.max(60000,meta.length*240));
       for(let recovery=0;recovery<recoveryRounds&&bestCount<totalUnits;recovery++){
-        state=rebuild(best||[]);repairBudget=0;repairLimit=recoveryRepairLimit;
+        state=rebuild(best||[]);repairBudget=0;
+        repairLimit=Math.min(300000,recoveryRepairLimit*(recovery+1));
         const missing=meta.map(m=>m.id).filter(id=>!state.placements[id]);
         missing.sort((a,b)=>meta[a].domain.length-meta[b].domain.length||meta[a].unit.grade.localeCompare(meta[b].unit.grade,undefined,{numeric:true}));
         const seed=(generationSeed+900001+recovery*130363)>>>0;
@@ -777,7 +849,7 @@ async function generate(){
           if(state.placements[id])continue;
           // Deeper, slightly wider ejection chains are reserved for the
           // remaining unscheduled units; normal passes stay fast and bounded.
-          if(await augment(state,id,4,new Set(),seed,null,6)){
+          if(await augment(state,id,Math.min(8,5+recovery),new Set(),seed,null,Math.min(10,7+recovery))){
             const count=state.placedCount;
             if(count>bestCount){bestCount=count;best=state.placements.slice();}
             if(bestCount===totalUnits)break;
@@ -805,9 +877,9 @@ async function generate(){
     const missing=[];
     for(let i=0;i<meta.length;i++)if(!state.placements[i]){
       const u=meta[i].unit;
-      missing.push(`${u.grade} — ${u.members.map(t=>`${t.subject} (${t.teacher})`).join(' + ')}: not placed after ${attemptCount} adaptive matching-and-repair passes and targeted deeper recovery; review teacher overlap, daily subject limits, language spacing and available periods.`);
+      missing.push(`${u.grade} — ${u.members.map(t=>`${t.subject} (${t.teacher})`).join(' + ')}: not placed after ${attemptCount} adaptive matching-and-repair passes and focused recovery; review teacher overlap, daily subject limits, language spacing and available periods.`);
     }
-    failed.push(`Placement incomplete: ${bestCount} of ${totalUnits} lesson units placed (${tasks.length} individual lessons requested). Search used ${repairBudget.toLocaleString()} repair nodes in its final recovery round.`);
+    failed.push(`Placement incomplete: ${bestCount} of ${totalUnits} lesson units placed (${tasks.length} individual lessons requested). The timetable is NOT certified. The solver completed ${attemptCount} progressively deeper adaptive passes and up to ${recoveryRounds} focused recovery rounds; the final recovery used ${repairBudget.toLocaleString()} repair nodes.`);
     failed.push(`Unplaced lesson diagnostics (${missing.length}):\n${missing.slice(0,80).join('\n')}${missing.length>80?`\n…and ${missing.length-80} more.`:''}`);
   }
   // Grade 4–6 certification: exactly 34 assigned subject lessons plus the fixed
@@ -868,7 +940,7 @@ async function generate(){
     const conflict=leftSubjects.find(a=>rightSubjects.some(b=>areSimilarSubjects(a,b)));
     if(conflict){
       const other=rightSubjects.find(b=>areSimilarSubjects(conflict,b));
-      failed.push(`${g}: similar learning areas ${conflict} and ${other} are consecutive on ${DAYS[d]} Lessons ${p}–${p+1}; related subjects must be separated by another lesson or break.`);
+      failed.push(`${g}: similar learning areas ${conflict} and ${other} are consecutive on ${DAYS[d]} Lessons ${p}–${p+1}; language subjects must be separated by another lesson or break.`);
     }
   }
   const teacherBusy=new Map();
@@ -891,7 +963,7 @@ async function generate(){
     let n=0;for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){const c=grid[t.grade]?.[d]?.[p];if(c&&(c.members||[]).some(m=>norm(m.teacher)===norm(t.teacher)&&norm(m.subject)===norm(t.subject)))n++;}
     return n===0;
   }).length:0);
-  timetable={grades:gs,slots,grid,settings:set,gradeLessonCounts:Object.fromEntries(gs.map(g=>[g,(gradeLoad[g]||0)+(reservedPpiGrades.has(g)?1:0)])),teacherWorkload:Object.values(teacherWorkload),unplacedDiagnostics:[],generated:new Date().toISOString(),generationId,failed,mode,teacher:chosenTeacher,resultStatus,searchNodes:repairBudget,searchLimit:300000,searchBudgetMs:0};
+  timetable={grades:gs,slots,grid,settings:set,gradeLessonCounts:Object.fromEntries(gs.map(g=>[g,(gradeLoad[g]||0)+(reservedPpiGrades.has(g)?1:0)])),teacherWorkload:Object.values(teacherWorkload),unplacedDiagnostics:[],generated:new Date().toISOString(),generationId,failed,mode,teacher:chosenTeacher,resultStatus,searchNodes:repairBudget,searchLimit:Math.min(16000,Math.max(6000,meta.length*90)),searchBudgetMs:Date.now()-generationStartedAt};
   if(gs.length&&$('viewGrade')&&!gs.includes($('viewGrade').value))$('viewGrade').value=gs[0];
   lastChecks=checkCollisions();renderTimetable();renderChecks();save();refreshAdjustmentControls();
   const scheduled=state.placements.filter(Boolean).length;
@@ -899,7 +971,7 @@ async function generate(){
     ?`SOLVED: all ${tasks.length} assigned lessons were placed and independently checked across ${gs.length} grade(s), including the 35-lesson (PPI-inclusive) rule for Grades 4–6.`
     :`INCOMPLETE: ${scheduled} of ${totalUnits} placement units were placed. The generator did not certify this timetable; inspect the unplaced lesson diagnostics and constraints.`;
   showStatus(resultMessage,resultStatus==='SOLVED'?'ok':'err');
-  finishGenerationProgress(true);
+  finishGenerationProgress(resultStatus==='SOLVED');
   document.querySelector('[data-tab="generate"]').click();
 }
 function checkCollisions(){let out=[];if(!timetable)return out;let busy={};for(let g of timetable.grades)for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++){let x=timetable.grid[g][d][p];if(!x)continue;const names=(x.members||[{teacher:x.teacher}]).map(m=>m.teacher);for(const teacher of names){let k=String(teacher).toLowerCase()+'|'+d+'|'+p;if(busy[k])out.push(`Teacher collision: ${teacher}, ${DAYS[d]} lesson ${p} (Grades ${busy[k]} and ${g}).`);else busy[k]=g;}}return out;}
@@ -910,11 +982,31 @@ $('saveSchoolBranding').onclick=saveSchoolBranding;
 $('removeSchoolLogo').onclick=()=>{schoolBranding.logo='';renderSchoolBranding();save();showStatus('School logo removed.');};
 $('schoolPrintName').addEventListener('change',saveSchoolBranding);
 $('schoolLogoFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(!file)return;if(!/^image\/(png|jpeg|webp)$/.test(file.type)){showStatus('Please choose a PNG, JPG or WEBP image.','err');e.target.value='';return;}if(file.size>8*1024*1024){showStatus('Please choose a logo smaller than 8 MB.','err');e.target.value='';return;}const reader=new FileReader();reader.onload=()=>{const image=new Image();image.onload=()=>{const canvas=document.createElement('canvas'),scale=Math.min(1,700/Math.max(image.width,image.height));canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);schoolBranding.logo=canvas.toDataURL('image/jpeg',.86);renderSchoolBranding();save();showStatus('School logo uploaded and saved.');};image.onerror=()=>showStatus('The selected image could not be opened.','err');image.src=reader.result;};reader.readAsDataURL(file);});
-function renderTimetable(){if(!timetable)return;renderSchoolBranding();if($('generationMode').value==='teacher'){renderTeacherTimetable();return;}if($('generationMode').value==='master'){renderMasterTimetable();return;}let g=$('viewGrade').value;if(!timetable.grades.includes(g))g=timetable.grades[0];let day=+$('viewDay').value;let days=day<0?[0,1,2,3,4]:[day];$('timetableTitle').textContent=`Grade ${g} — ${day<0?'Weekly Timetable':DAYS[day]}`;
+function applyPaymentBlur(){
+ const host=$('timetable');if(!host)return;
+ host.querySelectorAll('.payment-lock-notice,.payment-unlocked-note').forEach(n=>n.remove());
+ if(window.__rasmPaymentApproved===true){
+   host.querySelectorAll('.payment-locked-cell').forEach(cell=>{
+     cell.classList.remove('payment-locked-cell');
+     cell.removeAttribute('aria-label');
+   });
+   const note=document.createElement('div');note.className='payment-unlocked-note';note.textContent='Payment approved by RASM 360. All five school days are now visible.';host.appendChild(note);return;
+ }
+ const matrix=host.querySelector('.timetable-matrix');if(!matrix)return;
+ const dayRows=matrix.querySelectorAll('tbody tr');let locked=0;
+ dayRows.forEach(row=>{
+   const dayName=String(row.querySelector('th')?.textContent||'').trim().toLowerCase();
+   if(['tuesday','wednesday','thursday','friday'].includes(dayName)){
+     row.querySelectorAll('td').forEach(cell=>{cell.classList.add('payment-locked-cell');cell.setAttribute('aria-label','Hidden until KSh 2,000 payment is approved');});locked++;
+   }
+ });
+ if(locked){const notice=document.createElement('div');notice.className='payment-lock-notice';notice.innerHTML='<strong>🔒 Tuesday–Friday are locked</strong>Your timetable has been generated, but Tuesday, Wednesday, Thursday and Friday remain blurred. A school payment of <b>KSh 2,000</b> is required. Once the RASM 360 administrator verifies and approves the payment, all five days become visible automatically in this open session.';host.appendChild(notice);}
+}
+function renderTimetable(){if(!timetable)return;renderSchoolBranding();if($('generationMode').value==='teacher'){renderTeacherTimetable();applyPaymentBlur();return;}if($('generationMode').value==='master'){renderMasterTimetable();applyPaymentBlur();return;}let g=$('viewGrade').value;if(!timetable.grades.includes(g))g=timetable.grades[0];let day=+$('viewDay').value;let days=day<0?[0,1,2,3,4]:[day];$('timetableTitle').textContent=`Grade ${g} — ${day<0?'Weekly Timetable':DAYS[day]}`;
 let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';
 for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind==='lesson'){let x=timetable.grid[g]?.[d]?.[sl.period];const expected=timetable.gradeLessonCounts?.[g]??0;const reserved=(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0);const fullLoad=isGrade46(g)?expected>=35:expected>=5*timetable.settings.periods;const emptyLabel=fullLoad?'UNPLACED':'FREE';const post240=isGrade46(g)&&sl.end>mins('14:40');const emptyContent=post240?'<span class="pill" style="background:#e9e2ff;color:#45278a">NON-FORMAL FROM 2:40</span><span class="teacher">Clubs · Co-curricular · Games</span>':`<span class="pill">${emptyLabel}</span>`;html+=`<td class="subject-cell ${x?.stroked?'stroked-cell':''} ${x?.activity?'special':''}">${x?.stroked?'<span class="stroked-tag">STROKED</span><br>':''}${x?.double?'<span class="stroked-tag">DOUBLE</span><br>':''}${x?esc(x.subject):emptyContent}${x?.teacher?`<span class="teacher">${esc(x.teacher)}</span>`:''}</td>`;}else{let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${activityCellLabel(sl.label,d)}</td>`;}}html+='</tr>'; }html+='</tbody></table>';$('timetable').innerHTML=html;
 let empty=0;for(let gg of timetable.grades)for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++)if(!timetable.grid[gg][d][p])empty++;
-const fullLoadGrades=timetable.grades.filter(gg=>isGrade46(gg)?(timetable.gradeLessonCounts?.[gg]||0)>=35:(timetable.gradeLessonCounts?.[gg]||0)>=5*timetable.settings.periods);const missing=fullLoadGrades.reduce((n,gg)=>n+Array.from({length:5},(_,d)=>Array.from({length:timetable.settings.periods},(_,i)=>timetable.grid[gg]?.[d]?.[i+1]?0:1).reduce((a,b)=>a+b,0)).reduce((a,b)=>a+b,0),0);$('summary').textContent=`Grades: ${timetable.grades.join(', ')} · ${timetable.settings.periods} lessons/day · ${timetable.settings.duration} minutes/lesson · ${empty-missing} genuinely free periods · ${missing} unplaced periods in fully loaded grades.`;
+const fullLoadGrades=timetable.grades.filter(gg=>isGrade46(gg)?(timetable.gradeLessonCounts?.[gg]||0)>=35:(timetable.gradeLessonCounts?.[gg]||0)>=5*timetable.settings.periods);const missing=fullLoadGrades.reduce((n,gg)=>n+Array.from({length:5},(_,d)=>Array.from({length:timetable.settings.periods},(_,i)=>timetable.grid[gg]?.[d]?.[i+1]?0:1).reduce((a,b)=>a+b,0)).reduce((a,b)=>a+b,0),0);$('summary').textContent=`Grades: ${timetable.grades.join(', ')} · ${timetable.settings.periods} lessons/day · ${timetable.settings.duration} minutes/lesson · ${empty-missing} genuinely free periods · ${missing} unplaced periods in fully loaded grades.`;applyPaymentBlur();
 }
 function renderMasterTimetable(){
  const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day];
@@ -932,6 +1024,7 @@ function renderMasterTimetable(){
 }
 function renderTeacherTimetable(){const teacher=$('viewTeacher').value;if(!teacher){$('timetableTitle').textContent='Individual Teacher Timetable';$('timetable').innerHTML='<p class="muted">Select a teacher to view their timetable.</p>';return;}const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day],set=timetable.settings;$('timetableTitle').textContent=`${teacher} — ${day<0?'Weekly Timetable':DAYS[day]}`;let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${sl.label}</td>`;continue;}let found=null;for(const g of timetable.grades){let x=timetable.grid[g]?.[d]?.[sl.period];if(x&&(x.teacher===teacher||(x.members||[]).some(m=>m.teacher===teacher))){const m=(x.members||[]).find(m=>m.teacher===teacher);found={subject:m?m.subject:x.subject,grade:g};break;}}let cellX=null;if(found){for(const gg of timetable.grades){const z=timetable.grid[gg]?.[d]?.[sl.period];if(z&&(z.teacher===teacher||(z.members||[]).some(m=>m.teacher===teacher))){cellX=z;break;}}}html+=found?`<td class="subject-cell ${cellX?.stroked?'stroked-cell':''}">${cellX?.stroked?'<span class="stroked-tag">STROKED</span><br>':''}${esc(found.subject)}<span class="teacher">Grade ${esc(found.grade)}</span></td>`:'<td><span class="pill">FREE</span></td>';}html+='</tr>';}html+='</tbody></table>';$('timetable').innerHTML=html;let assigned=0,free=0;for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){let hit=timetable.grades.some(g=>{let x=timetable.grid[g]?.[d]?.[p];return x&&(x.teacher===teacher||(x.members||[]).some(m=>m.teacher===teacher));});if(hit)assigned++;else free++;}$('summary').textContent=`Teacher: ${teacher} · ${assigned} teaching periods · ${free} free periods across the generated school week.`;}
 function renderChecks(){
+ if(!timetable){$('checks').textContent='No timetable generated yet. Clash and scheduling checks will run when a new timetable is generated.';return;}
  let c=checkCollisions(),txt=[];
  txt.push(c.length?`❌ ${c.length} teacher collision(s) found.`:'✅ No teacher collision detected.');
  if(timetable.failed.length)txt.push(`⛔ Complete timetable not certified — ${timetable.failed.length} scheduling issue(s):\n• `+timetable.failed.slice(0,30).join('\n• '));
@@ -941,7 +1034,7 @@ function renderChecks(){
  if(Object.values(rules.freeAfternoonsByDay||{}).some(days=>(days||[]).length))txt.push(`ℹ️ Day-specific afternoon release: ${Object.entries(rules.freeAfternoonsByDay||{}).filter(([t,days])=>(days||[]).length).map(([t,days])=>`${t} (${days.join(', ')})`).join('; ')}.`);
  txt.push('ℹ️ Subject limits, hard consecutive similar-subject separation, Creative Arts pre-break preference, consecutive doubles for other grades, the Mathematics 2:00 PM cutoff and the Grades 4–6 35-lesson/PPI/2:40 PM/Creative Arts rules are checked as scheduling constraints.');
  const workloads=timetable.teacherWorkload||[];
- const workloadHtml=`<div style="margin-top:14px"><h3>Teacher weekly workload and cross-grade assignments</h3><div class="table-wrap"><table class="data-table" style="min-width:680px"><thead><tr><th>Teacher</th><th>Total assigned lessons/week</th><th>Grades / streams</th><th>Subjects</th><th>Cross-grade?</th></tr></thead><tbody>${workloads.sort((a,b)=>b.weekly-a.weekly).map(t=>`<tr><td>${esc(t.teacher)}</td><td><b>${t.weekly}</b></td><td>${t.grades.map(esc).join(', ')}</td><td>${t.subjects.map(esc).join(', ')}</td><td>${t.grades.length>1?'YES':'No'}</td></tr>`).join('')}</tbody></table></div><p class="small">Workload totals combine every assignment for the same teacher across all selected grades. The adaptive matching-and-repair engine prioritises the tightest lesson domains, precomputes subject limits, rolls back only changed lessons, and uses deeper targeted recovery for remaining lessons.</p></div>`;
+ const workloadHtml=`<div style="margin-top:14px"><h3>Teacher weekly workload and cross-grade assignments</h3><div class="table-wrap"><table class="data-table" style="min-width:680px"><thead><tr><th>Teacher</th><th>Total assigned lessons/week</th><th>Grades / streams</th><th>Subjects</th><th>Cross-grade?</th></tr></thead><tbody>${workloads.sort((a,b)=>b.weekly-a.weekly).map(t=>`<tr><td>${esc(t.teacher)}</td><td><b>${t.weekly}</b></td><td>${t.grades.map(esc).join(', ')}</td><td>${t.subjects.map(esc).join(', ')}</td><td>${t.grades.length>1?'YES':'No'}</td></tr>`).join('')}</tbody></table></div><p class="small">Workload totals combine every assignment for the same teacher across all selected grades. The placement engine prioritises the tightest lesson domains, keeps language subjects apart, avoids over-restricting unrelated subject families, and uses deeper targeted recovery for remaining lessons.</p></div>`;
  $('checks').innerHTML=`<div style="white-space:pre-wrap">${esc(txt.join('\n\n'))}</div>${workloadHtml}`;
 }
 function refreshAdjustmentControls(){
@@ -950,57 +1043,71 @@ function refreshAdjustmentControls(){
  old.innerHTML='<option value="">Select affected teacher</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
  rep.innerHTML='<option value="">Select replacement teacher</option>'+names.map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('');
  if(names.includes(previousOld))old.value=previousOld;if(names.includes(previousRep))rep.value=previousRep;
+ refreshTransferSubjectOptions();
  $('undoTeacherChange').disabled=!adjustmentHistory.length;
  $('teacherChangeHistory').textContent=adjustmentHistory.length?`Adjustment history: ${adjustmentHistory.length} saved change(s). Latest: ${esc(adjustmentHistory[adjustmentHistory.length-1].label||'Teacher reassignment')}.`:'No timetable adjustments have been made yet.';
 }
+function refreshTransferSubjectOptions(){
+ const wrap=$('transferSubjectWrap'),sel=$('transferSubject');if(!wrap||!sel)return;
+ const old=$('departingTeacher').value,previous=sel.value;
+ const pairs=[];const seen=new Set();
+ assignments.filter(a=>String(a.teacher||'').trim().toLowerCase()===String(old||'').trim().toLowerCase()).forEach(a=>{
+  const subject=String(a.subject||'').trim(),grade=String(a.grade||'').trim();if(!subject||!grade)return;
+  const value=JSON.stringify([subject,grade]);if(seen.has(value))return;seen.add(value);pairs.push({subject,grade,value});
+ });
+ pairs.sort((a,b)=>a.subject.localeCompare(b.subject,undefined,{sensitivity:'base'})||a.grade.localeCompare(b.grade,undefined,{numeric:true,sensitivity:'base'}));
+ wrap.classList.toggle('hidden',!old);
+ sel.innerHTML='<option value="">Select subject and grade</option>'+pairs.map(x=>`<option value="${esc(x.value)}">${esc(x.subject)} — ${esc(x.grade)}</option>`).join('');
+ if(pairs.some(x=>x.value===previous))sel.value=previous;else if(pairs.length===1)sel.value=pairs[0].value;
+}
+function selectedTransferPair(){try{const pair=JSON.parse($('transferSubject').value||'null');return Array.isArray(pair)&&pair.length===2?{subject:String(pair[0]),grade:String(pair[1])}:null;}catch(_){return null;}}
 function getTeacherLessons(teacher){
- const out=[];if(!timetable||!teacher)return out;
- for(const grade of timetable.grades||[])for(let day=0;day<5;day++)for(let period=1;period<=timetable.settings.periods;period++){
-  const cell=timetable.grid?.[grade]?.[day]?.[period];if(!cell||cell.activity)continue;
-  const members=cell.members||[{teacher:cell.teacher,subject:cell.subject}];
-  members.forEach((m,index)=>{if(String(m.teacher||'').trim().toLowerCase()===teacher.trim().toLowerCase())out.push({grade,day,period,subject:m.subject||cell.subject||'Lesson',memberIndex:index,cell});});
- }
- return out;
+ return assignments.filter(a=>String(a.teacher||'').trim().toLowerCase()===String(teacher||'').trim().toLowerCase());
 }
 function previewTeacherReplacement(){
- if(!timetable){$('teacherChangePreview').textContent='Generate a timetable before making adjustments.';$('applyTeacherChange').disabled=true;return;}
- const old=$('departingTeacher').value,rep=$('replacementTeacher').value;
- if(!old||!rep){$('teacherChangePreview').textContent='Select both the teacher leaving and the replacement teacher.';$('applyTeacherChange').disabled=true;return;}
+ refreshTransferSubjectOptions();
+ const old=$('departingTeacher').value,rep=$('replacementTeacher').value,pair=selectedTransferPair();
+ if(!old||!rep||!pair){$('teacherChangePreview').textContent='Select the affected teacher, replacement teacher and the exact subject-and-grade assignment to transfer.';$('applyTeacherChange').disabled=true;return;}
+ const {subject,grade}=pair;
  if(old.toLowerCase()===rep.toLowerCase()){$('teacherChangePreview').textContent='Choose two different teachers.';$('applyTeacherChange').disabled=true;return;}
- const lessons=getTeacherLessons(old);if(!lessons.length){$('teacherChangePreview').textContent=`No scheduled lessons were found for ${old} in the current timetable.`;$('applyTeacherChange').disabled=true;return;}
- const conflicts=[];
- for(const lesson of lessons){
-  for(const grade of timetable.grades||[]){const cell=timetable.grid?.[grade]?.[lesson.day]?.[lesson.period];if(!cell||cell.activity)continue;
-   const members=cell.members||[{teacher:cell.teacher,subject:cell.subject}];
-   if(members.some((m,i)=>String(m.teacher||'').trim().toLowerCase()===rep.toLowerCase()&&!(grade===lesson.grade&&lesson.memberIndex===i)))conflicts.push(`${DAYS[lesson.day]} Lesson ${lesson.period}: ${rep} is already assigned to ${grade}${grade===lesson.grade?' (another subject)':''}.`);
-  }
- }
- const unique=[...new Set(conflicts)];
- const rows=lessons.map(x=>`<tr><td>${DAYS[x.day]}</td><td>${x.period}</td><td>${esc(x.grade)}</td><td>${esc(x.subject)}</td><td>${esc(old)} → ${esc(rep)}</td></tr>`).join('');
- $('teacherChangePreview').innerHTML=`<strong>${lessons.length} affected lesson(s) found.</strong>${unique.length?`<p style="color:#a3261d"><b>Cannot apply yet: ${unique.length} clash(es) detected.</b> No changes will be made. Choose another replacement teacher or adjust their existing assignments first.</p><ul>${unique.slice(0,20).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'<p style="color:#147345"><b>Availability check passed.</b> The replacement teacher is free at every affected lesson time. Applying this change will preserve the existing days and periods.</p>'}<div class="table-wrap"><table class="data-table" style="min-width:620px"><thead><tr><th>Day</th><th>Lesson</th><th>Grade</th><th>Subject</th><th>Teacher change</th></tr></thead><tbody>${rows}</tbody></table></div>`;
- $('applyTeacherChange').disabled=unique.length>0;
+ const rows=assignments.filter(a=>String(a.teacher||'').trim().toLowerCase()===old.toLowerCase()&&String(a.subject||'').trim().toLowerCase()===subject.toLowerCase()&&String(a.grade)===grade);
+ if(!rows.length){$('teacherChangePreview').textContent=`No ${subject} assignment was found for ${old} in ${grade}.`;$('applyTeacherChange').disabled=true;return;}
+ const weekly=rows.reduce((n,a)=>n+(Number(a.weekly)||0),0);
+ $('teacherChangePreview').innerHTML=`<strong>${weekly} weekly ${esc(subject)} lesson(s) will be reassigned.</strong><p>From: ${esc(old)} → To: ${esc(rep)} · Assignment: ${esc(subject)} — ${esc(grade)}</p><p style="color:#147345"><b>Ready to save.</b> Existing timetable clashes will not block this change. The old timetable will be cleared and users must generate a fresh timetable using the updated assignments.</p>`;
+ $('applyTeacherChange').disabled=false;
 }
 async function applyTeacherReplacement(){
  previewTeacherReplacement();if($('applyTeacherChange').disabled)return;
- const old=$('departingTeacher').value,rep=$('replacementTeacher').value,lessons=getTeacherLessons(old);
- if(!await askConfirm('Apply limited timetable changes?',`${lessons.length} lesson(s) for ${old} will be reassigned to ${rep}. Their existing days and periods will stay the same. All unrelated timetable entries will remain unchanged.`,'Apply changes'))return;
- // Save a complete rollback snapshot before mutating anything.
- adjustmentHistory.push({label:`${old} → ${rep}`,timetable:JSON.parse(JSON.stringify(timetable)),assignments:JSON.parse(JSON.stringify(assignments)),inactiveTeachers:JSON.parse(JSON.stringify(inactiveTeachers)),at:new Date().toISOString()});
- lessons.forEach(l=>{const cell=timetable.grid[l.grade][l.day][l.period];if(Array.isArray(cell.members)){cell.members.forEach(m=>{if(String(m.teacher||'').trim().toLowerCase()===old.toLowerCase())m.teacher=rep;});}if(String(cell.teacher||'').trim().toLowerCase()===old.toLowerCase())cell.teacher=rep;});
- // Update the setup assignments for future term regeneration without creating duplicate subject/grade rows.
- const next=[];assignments.forEach(a=>{if(String(a.teacher||'').trim().toLowerCase()!==old.toLowerCase()){next.push(a);return;}const existing=assignments.find(b=>b!==a&&String(b.teacher||'').trim().toLowerCase()===rep.toLowerCase()&&String(b.grade)===String(a.grade)&&String(b.subject||'').trim().toLowerCase()===String(a.subject||'').trim().toLowerCase());if(!existing)next.push({...a,teacher:rep});});assignments=next;if(!inactiveTeachers.some(n=>String(n).toLowerCase()===old.toLowerCase()))inactiveTeachers.push(old);
- const workloadMap={};assignments.forEach(a=>{const key=String(a.teacher).toLowerCase();if(!workloadMap[key])workloadMap[key]={teacher:a.teacher,weekly:0,grades:new Set(),subjects:new Set()};workloadMap[key].weekly+=Number(a.weekly)||0;workloadMap[key].grades.add(a.grade);workloadMap[key].subjects.add(a.subject);});timetable.teacherWorkload=Object.values(workloadMap).map(x=>({teacher:x.teacher,weekly:x.weekly,grades:[...x.grades].sort((a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true})),subjects:[...x.subjects].sort()}));
- timetable.adjustments=Array.isArray(timetable.adjustments)?timetable.adjustments:[];timetable.adjustments.push({from:old,to:rep,lessons:lessons.length,at:new Date().toISOString()});
- lastChecks=checkCollisions();renderAll();renderTimetable();renderChecks();save();refreshAdjustmentControls();$('departingTeacher').value=old;$('replacementTeacher').value=rep;$('teacherChangePreview').innerHTML=`<strong style="color:#147345">Changes applied successfully.</strong><p>${lessons.length} lessons now belong to ${esc(rep)}. Other teachers' scheduled periods were not moved.</p>`;$('applyTeacherChange').disabled=true;showStatus(`${lessons.length} lesson(s) reassigned from ${old} to ${rep}. The rest of the timetable was preserved.`);
+ const old=$('departingTeacher').value,rep=$('replacementTeacher').value,pair=selectedTransferPair();if(!pair)return;const {subject,grade}=pair;
+ const rows=assignments.filter(a=>String(a.teacher||'').trim().toLowerCase()===old.toLowerCase()&&String(a.subject||'').trim().toLowerCase()===subject.toLowerCase()&&String(a.grade)===grade);
+ const weekly=rows.reduce((n,a)=>n+(Number(a.weekly)||0),0);
+ if(!await askConfirm('Save teacher assignment changes?',`${weekly} weekly ${subject} lesson(s) in ${grade} for ${old} will be assigned to ${rep}. Other grades and subjects will remain unchanged. The existing timetable will be cleared. Generate a new timetable after saving.`,'Save Changes'))return;
+ adjustmentHistory.push({label:`${old} — ${subject} (${grade}) → ${rep}`,timetable:timetable?JSON.parse(JSON.stringify(timetable)):null,assignments:JSON.parse(JSON.stringify(assignments)),inactiveTeachers:JSON.parse(JSON.stringify(inactiveTeachers)),at:new Date().toISOString()});
+ const next=[];
+ assignments.forEach(a=>{
+  if(String(a.teacher||'').trim().toLowerCase()!==old.toLowerCase()||String(a.subject||'').trim().toLowerCase()!==subject.toLowerCase()||String(a.grade)!==grade){next.push(a);return;}
+  const existing=next.find(b=>String(b.teacher||'').trim().toLowerCase()===rep.toLowerCase()&&String(b.grade)===String(a.grade)&&String(b.subject||'').trim().toLowerCase()===subject.toLowerCase());
+  if(existing)existing.weekly=(Number(existing.weekly)||0)+(Number(a.weekly)||0);else next.push({...a,teacher:rep});
+ });
+ assignments=next;
+ const remaining=assignments.some(a=>String(a.teacher||'').trim().toLowerCase()===old.toLowerCase());
+ if(!remaining&&!inactiveTeachers.some(n=>String(n).toLowerCase()===old.toLowerCase()))inactiveTeachers.push(old);
+ else if(remaining)inactiveTeachers=inactiveTeachers.filter(n=>String(n).toLowerCase()!==old.toLowerCase());
+ timetable=null;lastChecks=[];
+ renderAll();save();refreshAdjustmentControls();$('departingTeacher').value=remaining?old:'';$('replacementTeacher').value='';$('transferSubject').value='';refreshTransferSubjectOptions();
+ $('teacherChangePreview').innerHTML=`<strong style="color:#147345">Changes saved successfully.</strong><p>${weekly} weekly ${esc(subject)} lesson(s) in ${esc(grade)} have been reassigned from ${esc(old)} to ${esc(rep)}. Other grades and subjects remain unchanged. ${remaining?'Other subjects remain assigned to '+esc(old)+' and can be transferred separately.':'No assignments remain under the affected teacher.'}</p><p><b>Next step:</b> Open Generate and inspect, then click Generate Timetable. A new timetable will be created from the saved assignments.</p>`;
+ $('applyTeacherChange').disabled=true;$('timetable').innerHTML='<p class="muted">Teacher assignments have changed. Generate a new timetable to see the updated schedule.</p>';$('timetableTitle').textContent='New timetable required';$('summary').textContent='Assignment changes saved. Generate a fresh timetable to apply them.';$('checks').textContent='Clash and scheduling checks will run when the new timetable is generated.';
+ showStatus(`${subject} assignment changes saved. Generate a new timetable.`);
 }
 async function undoTeacherReplacement(){if(!adjustmentHistory.length)return;const snapshot=adjustmentHistory[adjustmentHistory.length-1];if(!await askConfirm('Undo last timetable adjustment?',`Restore the timetable and teacher assignments from before ${snapshot.label}.`,'Undo adjustment'))return;adjustmentHistory.pop();timetable=snapshot.timetable;assignments=snapshot.assignments;inactiveTeachers=snapshot.inactiveTeachers||[];lastChecks=checkCollisions();renderAll();renderTimetable();renderChecks();save();refreshAdjustmentControls();$('teacherChangePreview').textContent=`Restored the previous timetable before ${snapshot.label}.` ;showStatus('Last timetable adjustment has been undone.');}
 $('previewTeacherChange')?.addEventListener('click',previewTeacherReplacement);
 $('applyTeacherChange')?.addEventListener('click',applyTeacherReplacement);
 $('undoTeacherChange')?.addEventListener('click',undoTeacherReplacement);
-$('departingTeacher')?.addEventListener('change',previewTeacherReplacement);
+$('departingTeacher')?.addEventListener('change',()=>{refreshTransferSubjectOptions();previewTeacherReplacement();});
 $('replacementTeacher')?.addEventListener('change',previewTeacherReplacement);
+$('transferSubject')?.addEventListener('change',previewTeacherReplacement);
 
-function exportCSV(){if(!timetable){showStatus('Generate a timetable first.','err');return;}
+function exportCSV(){if(!timetable){showStatus('Generate a timetable first.','err');return;}if(window.__rasmPaymentApproved!==true){showStatus('CSV export is locked until the RASM 360 administrator approves the KSh 2,000 school payment.','err');return;}
  if($('generationMode').value==='teacher'){let teacher=$('viewTeacher').value;if(!teacher){showStatus('Select a teacher first.','err');return;}let rows=[['Time',...DAYS]];for(let sl of timetable.slots){let row=[sl.time+(sl.kind==='lesson'?' Lesson '+sl.period:' '+sl.label)];for(let d=0;d<5;d++){let hit=[];for(let g of timetable.grades){let x=timetable.grid[g]?.[d]?.[sl.period];if(x&&(x.teacher===teacher||(x.members||[]).some(m=>m.teacher===teacher))){const mine=(x.members||[{teacher:x.teacher,subject:x.subject}]).filter(m=>m.teacher===teacher);mine.forEach(m=>hit.push(`${g}: ${m.subject}${x.stroked?' [STROKED]':''}`));}}row.push(hit.join(' | ')||(sl.kind==='lesson'?'FREE':sl.label||''));}rows.push(row);}download(rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n'),`${teacher.replace(/[^a-z0-9]+/gi,'_')}_Timetable.csv`,'text/csv;charset=utf-8');return;}
  if($('generationMode').value==='master'){let rows=[['Time',...DAYS]];for(let sl of timetable.slots){let row=[sl.time+(sl.kind==='lesson'?' Lesson '+sl.period:' '+sl.label)];for(let d=0;d<5;d++){let cell=[];for(let g of timetable.grades){let x=timetable.grid[g]?.[d]?.[sl.period];if(x)cell.push(`${g}: ${x.subject} (${x.teacher})`);else if(sl.kind==='lesson'&&isGrade46(g)&&sl.end>mins('14:40'))cell.push(`${g}: NON-FORMAL / CLUBS / CO-CURRICULAR / GAMES`);else if(sl.kind==='lesson'&&(timetable.gradeLessonCounts?.[g]||0)>=5*timetable.settings.periods-(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0))cell.push(`${g}: UNPLACED — assigned period missing`);}row.push(cell.join(' | ')||(sl.kind==='lesson'?'No class assigned':sl.label||''));}rows.push(row);}download(rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n'),'RASM360_Master_Whole_School_Timetable.csv','text/csv;charset=utf-8');return;}
  let g=$('viewGrade').value,rows=[['Time',...DAYS]];for(let sl of timetable.slots){let row=[sl.time+(sl.kind==='lesson'?' Lesson '+sl.period:' '+sl.label)];for(let d=0;d<5;d++){let x=sl.kind==='lesson'?timetable.grid[g][d][sl.period]:null;row.push(x?`${x.subject} (${x.teacher})`:(sl.kind==='lesson'&&isGrade46(g)&&sl.end>mins('14:40')?'NON-FORMAL / CLUBS / CO-CURRICULAR / GAMES':sl.label||''));}rows.push(row);}let csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');download(csv,`Grade_${g}_Timetable.csv`,'text/csv;charset=utf-8');}
@@ -1008,15 +1115,16 @@ function download(content,name,type){let blob=new Blob([content],{type}),url=URL
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tabpage').forEach(x=>x.classList.toggle('hidden',x.id!==b.dataset.tab));}));
 $('registerTeacherBtn').onclick=registerTeacher;$('assignGrade').onchange=()=>{activeAssignSubject='';subjectAssignQueue=[];selectedAssignSubjects.clear();renderSubjectPicker();renderSubjectAssignPanel();save();};$('startSubjectAssignments').onclick=startSelectedSubjectAssignments;$('clearSubjectSelection').onclick=()=>{selectedAssignSubjects.clear();subjectAssignQueue=[];activeAssignSubject='';renderSubjectPicker();renderSubjectAssignPanel();};$('assignTeacher').onchange=()=>{};$('addGradeBtn').onclick=addCustomGrade;$('newGradeName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addCustomGrade();}});$('addAssignment').onclick=addAssignment;$('addSamples').onclick=loadSamples;$('clearAssignments').onclick=async()=>{if(await askConfirm('Clear assignments?','All teacher-subject assignments will be removed.','Clear assignments')){assignments=[];timetable=null;renderAll();save();showStatus('Assignments cleared.');}};
 $('addStrokedGroup').onclick=()=>{const chosen=[...document.querySelectorAll('[data-stroke-pick]:checked')].map(x=>x.value);if(chosen.length<2){showStatus('Select at least two subjects to create a stroked group.','err');return;}if(!rules.stroked)rules.stroked=[];if(rules.stroked.some(g=>g.length===chosen.length&&g.every(x=>chosen.includes(x)))){showStatus('That stroked group already exists.','err');return;}if(chosen.some(x=>rules.stroked.some(g=>g.includes(x)))){showStatus('A subject can belong to only one stroked group. Remove its existing group first.','err');return;}rules.stroked.push(chosen);renderRules();save();showStatus(`Stroked group added: ${chosen.join(' + ')}. These subjects will share a period wherever all are assigned in the same grade.`);};
-$('generateBtn').onclick=async()=>{const b=$('generateBtn');if(window.__rasmSchoolApproved!==true){showStatus('Timetable generation is locked until your school is approved.','err');return;}if(b.disabled)return;
+$('generateBtn').onclick=async()=>{const b=$('generateBtn');if(b.disabled)return;
 if(!assignments.length){showStatus('Add teacher, subject and grade assignments before generating a timetable.','err');return;}
 if($('generationMode').value==='teacher'&&!String($('viewTeacher').value||'').trim()){showStatus('Choose a teacher before generating an individual timetable.','err');return;}
 b.disabled=true;window.__rasmGenerationBusy=true;b.textContent='⏳ Preparing timetable…';
 try{await generate();}
 catch(err){console.error('RASM360 timetable generation error:',err);finishGenerationProgress(false);const msg=String(err?.message||err);showStatus(`Generation stopped safely: ${msg}. Check the assignments and try again.`, 'err');}
-finally{window.__rasmGenerationBusy=false;b.textContent=window.__rasmSchoolApproved?'⚡ Generate new timetable':'🔒 Awaiting school approval';b.disabled=!window.__rasmSchoolApproved;}};$('deleteTimetableBtn').onclick=async()=>{if(!timetable){showStatus('There is no generated timetable to delete.','err');return;}if(!await askConfirm('Delete old timetable?','The generated timetable will be deleted. Teachers, assignments, grades and scheduling rules will be preserved.','Delete timetable'))return;timetable=null;lastChecks=[];save();$('timetableTitle').textContent='Generated timetable';$('timetable').innerHTML='<p class="muted">The old timetable has been deleted. Your teachers, assignments, grades and scheduling rules are preserved.</p>';$('summary').textContent='Old timetable deleted. Setup and scheduling rules remain unchanged.';$('checks').textContent='No timetable generated yet.';showStatus('Old timetable deleted. All setup data and scheduling rules were preserved.');};
-$('generationMode').onchange=()=>{let m=$('generationMode').value;$('teacherPickerWrap').classList.toggle('hidden',m!=='teacher');$('gradePickerWrap').classList.toggle('hidden',m==='master'||m==='teacher');$('modeHelp').textContent=m==='master'?'Generates one coordinated timetable for every grade with registered teacher-subject assignments.':m==='selected'?'Generates a coordinated timetable only for the grades checked under Setup.':'Select a teacher to inspect their assigned lessons, grades, days, times and free periods.';if(timetable)renderTimetable();};$('viewTeacher').onchange=renderTimetable;$('viewGrade').onchange=renderTimetable;$('viewDay').onchange=renderTimetable;$('printBtn').onclick=()=>{if(!timetable){showStatus('Generate a timetable before printing.','err');return;}const mode=$('generationMode').value;if(mode==='teacher'&&!$('viewTeacher').value){showStatus('Select a teacher before printing.','err');return;}if(mode==='selected'&&!$('viewGrade').value){showStatus('Select a grade or stream before printing.','err');return;}document.body.classList.add('print-target');window.onafterprint=()=>document.body.classList.remove('print-target');window.print();};$('pdfBtn').onclick=()=>$('printBtn').click();$('csvBtn').onclick=exportCSV;
-$('backupBtn').onclick=()=>download(JSON.stringify({assignments,customGrades,customSubjectNames,localTeachers,rules,timetable,settings:getSettings(),grades:selectedGrades(),schoolBranding,adjustmentHistory,inactiveTeachers},null,2),'rasm360-timetable-backup.json','application/json');
+finally{window.__rasmGenerationBusy=false;b.textContent='⚡ Generate new timetable';b.disabled=false;}};$('deleteTimetableBtn').onclick=async()=>{if(!timetable){showStatus('There is no generated timetable to delete.','err');return;}if(!await askConfirm('Delete old timetable?','The generated timetable will be deleted. Teachers, assignments, grades and scheduling rules will be preserved.','Delete timetable'))return;timetable=null;lastChecks=[];save();$('timetableTitle').textContent='Generated timetable';$('timetable').innerHTML='<p class="muted">The old timetable has been deleted. Your teachers, assignments, grades and scheduling rules are preserved.</p>';$('summary').textContent='Old timetable deleted. Setup and scheduling rules remain unchanged.';$('checks').textContent='No timetable generated yet.';showStatus('Old timetable deleted. All setup data and scheduling rules were preserved.');};
+$('toggleTeacherWorkload').onclick=()=>{const panel=$('teacherWorkloadPreview'),btn=$('toggleTeacherWorkload');const opening=panel.classList.contains('hidden');if(opening)renderTeacherWorkloadPreview();panel.classList.toggle('hidden',!opening);btn.textContent=opening?'✖ Hide teacher lesson totals':'👥 View teacher lesson totals';};
+$('generationMode').onchange=()=>{let m=$('generationMode').value;$('teacherPickerWrap').classList.toggle('hidden',m!=='teacher');$('gradePickerWrap').classList.toggle('hidden',m==='master'||m==='teacher');$('modeHelp').textContent=m==='master'?'Generates one coordinated timetable for every grade with registered teacher-subject assignments.':m==='selected'?'Generates a coordinated timetable only for the grades checked under Setup.':'Select a teacher to inspect their assigned lessons, grades, days, times and free periods.';if(timetable)renderTimetable();};$('viewTeacher').onchange=renderTimetable;$('viewGrade').onchange=renderTimetable;$('viewDay').onchange=renderTimetable;$('printBtn').onclick=()=>{if(!timetable){showStatus('Generate a timetable before printing.','err');return;}if(window.__rasmPaymentApproved!==true){showStatus('Printing and PDF export unlock after the RASM 360 administrator approves the KSh 2,000 school payment.','err');return;}const mode=$('generationMode').value;if(mode==='teacher'&&!$('viewTeacher').value){showStatus('Select a teacher before printing.','err');return;}if(mode==='selected'&&!$('viewGrade').value){showStatus('Select a grade or stream before printing.','err');return;}document.body.classList.add('print-target');window.onafterprint=()=>document.body.classList.remove('print-target');window.print();};$('pdfBtn').onclick=()=>$('printBtn').click();$('csvBtn').onclick=exportCSV;
+$('backupBtn').onclick=()=>{if(window.__rasmPaymentApproved!==true){showStatus('A full timetable backup is available after the RASM 360 administrator approves the KSh 2,000 school payment.','err');return;}download(JSON.stringify({assignments,customGrades,customSubjectNames,localTeachers,rules,timetable,settings:getSettings(),grades:selectedGrades(),schoolBranding,adjustmentHistory,inactiveTeachers},null,2),'rasm360-timetable-backup.json','application/json');};
 $('restoreFile').onchange=async e=>{try{let x=JSON.parse(await e.target.files[0].text());assignments=x.assignments||[];customGrades=x.customGrades||[];customSubjectNames=x.customSubjectNames||[];localTeachers=x.localTeachers||[];rules=x.rules||rules;rules.stroked=rules.stroked||[];rules.dailyMax=rules.dailyMax||{};rules.freeAfternoons=rules.freeAfternoons||[];rules.freeAfternoonsByDay=rules.freeAfternoonsByDay||Object.fromEntries(rules.freeAfternoons.map(n=>[n,[...DAYS]]));if(!Number.isFinite(Number(rules.cutoff))||Number(rules.cutoff)<100)rules.cutoff=780;timetable=x.timetable||null;adjustmentHistory=Array.isArray(x.adjustmentHistory)?x.adjustmentHistory:[];inactiveTeachers=Array.isArray(x.inactiveTeachers)?x.inactiveTeachers:[];if(x.settings)Object.entries(x.settings).forEach(([k,v])=>{if($(k))$(k).value=v});if(x.grades)window.__savedGradeSelection=x.grades;if(x.schoolBranding)schoolBranding={...schoolBranding,...x.schoolBranding};renderSchoolBranding();initGrades();renderAll();if(timetable){renderTimetable();renderChecks();} $('generationMode').dispatchEvent(new Event('change'));save();showStatus('Backup restored.');}catch(err){showStatus('Could not restore this file. Please choose a valid RASM timetable backup.','err');}};
 $('resetAll').onclick=async()=>{if(await askConfirm('Reset all timetable data?','This deletes all saved assignments, rules and the timetable from this browser. Download a backup first if needed.','Reset everything')){assignments=[];customGrades=[];customSubjectNames=[];localTeachers=[];timetable=null;adjustmentHistory=[];inactiveTeachers=[];rules={double:[],morning:[],stroked:[],freeAfternoons:[],freeAfternoonsByDay:{},cutoff:780,strictDouble:true,avoidSameDay:true,dailyMax:{}};localStorage.removeItem('rasm360_timetable_v1');renderAll();$('timetable').innerHTML='<p class="muted">No timetable generated.</p>';$('checks').textContent='No timetable generated yet.';showStatus('All local timetable data reset.');}};
 $('morningCutoff').onchange=()=>{rules.cutoff=+$('morningCutoff').value;save();};$('strictDouble').onchange=()=>{rules.strictDouble=$('strictDouble').checked;save();};$('avoidSameDay').onchange=()=>{rules.avoidSameDay=true;$('avoidSameDay').checked=true;$('avoidSameDay').disabled=true;save();};
@@ -1029,11 +1137,65 @@ renderSchoolBranding();
 if(!hadSavedSetup)syncRegisteredRecords();
 initGrades();renderAll();if(timetable){renderTimetable();renderChecks();} $('generationMode').dispatchEvent(new Event('change'));
 </script>
+<script>
+/* RASM 360 PRO Management Suite: local analytics, versions, controlled editing and room allocation. */
+(function(){
+ const $id=id=>document.getElementById(id);
+ const escHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const VERSION_KEY='rasm360_timetable_versions_v1', ROOM_KEY='rasm360_room_allocations_v1';
+ let versions=[];try{versions=JSON.parse(localStorage.getItem(VERSION_KEY)||'[]')}catch(e){}
+ let rooms={};try{rooms=JSON.parse(localStorage.getItem(ROOM_KEY)||'{}')}catch(e){}
+ const persist=()=>{try{localStorage.setItem(VERSION_KEY,JSON.stringify(versions.slice(-20)));localStorage.setItem(ROOM_KEY,JSON.stringify(rooms))}catch(e){if(typeof showStatus==='function')showStatus('Browser storage is full. Download a backup before adding more versions or room records.','err')}};
+ const panel=`<section id="management" class="tabpage hidden"><div class="panel"><h2>RASM 360 Management & Analytics Centre</h2><p class="small">Operational reports, timetable versions, manual adjustments and classroom allocation. These records are currently stored in this browser and included in the extended backup below.</p><div id="mgmtKpis" class="kpis"></div></div>
+ <div class="panel"><h2>1. Teacher workload & free-period analysis</h2><div class="actions"><button type="button" id="mgmtRefresh">Refresh analysis</button><button type="button" class="secondary" id="mgmtExport">Export analytics CSV</button></div><div id="mgmtWorkload" class="table-wrap" style="margin-top:12px"></div><div id="mgmtFree" class="table-wrap" style="margin-top:12px"></div></div>
+ <div class="panel"><h2>2. Timetable version history</h2><p class="small">Save named checkpoints before major changes. Restore replaces the current generated timetable; teacher and subject setup remains unchanged.</p><div class="row"><div><label for="versionName">Version description</label><input id="versionName" maxlength="80" placeholder="e.g. Approved Term 1 timetable"></div><div style="flex:0 0 auto"><button type="button" id="saveVersion">Save version</button></div></div><div id="versionList" style="margin-top:12px"></div></div>
+ <div class="panel"><h2>3. Controlled manual timetable editor</h2><p class="small">Select a grade, day and lesson to adjust a generated cell. Manual changes are flagged for a fresh independent check; they do not bypass the certification rules.</p><div class="grid"><div><label>Grade / stream</label><select id="editGrade"></select></div><div><label>Day</label><select id="editDay"><option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option><option value="3">Thursday</option><option value="4">Friday</option></select></div><div><label>Lesson number</label><select id="editPeriod"></select></div><div><label>Subject</label><select id="editSubject"></select></div><div><label>Teacher</label><select id="editTeacher"></select></div></div><div class="actions"><button type="button" id="loadEditCell" class="secondary">Load selected cell</button><button type="button" id="applyEditCell">Apply manual change</button><button type="button" id="clearEditCell" class="danger">Clear selected cell</button></div><div id="editCellInfo" class="small" style="margin-top:10px">Generate a timetable to enable manual editing.</div></div>
+ <div class="panel"><h2>4. Classroom allocation & room-clash checks</h2><div class="grid"><div><label for="roomGrade">Grade / stream</label><select id="roomGrade"></select></div><div><label for="roomDay">Day</label><select id="roomDay"><option value="0">Monday</option><option value="1">Tuesday</option><option value="2">Wednesday</option><option value="3">Thursday</option><option value="4">Friday</option></select></div><div><label for="roomPeriod">Lesson number</label><select id="roomPeriod"></select></div><div><label for="roomName">Room / classroom</label><input id="roomName" maxlength="60" placeholder="e.g. Science Lab 1"></div></div><div class="actions"><button type="button" id="saveRoom">Allocate room</button><button type="button" class="secondary" id="checkRooms">Check room clashes</button></div><div id="roomReport" style="margin-top:12px"></div></div>
+ <div class="panel"><h2>5. Certification and publication controls</h2><div id="certReport" class="mode-note">Generate a timetable to view certification.</div><p class="small">Publishing remains blocked whenever the generator reports unplaced lessons, teacher clashes or rule violations. Manual edits require the checks to be rerun.</p><button type="button" id="runCert">Run independent checks</button></div>
+ <div class="panel"><h2>6. Advanced platform roadmap</h2><div class="grid"><div class="settings-group settings-grades"><div class="settings-group-title"><span class="settings-icon">☁️</span><div><h3>Cloud timetable sync</h3><p>Requires Firestore school-scoped collections, security rules, migration and conflict handling.</p></div></div></div><div class="settings-group settings-day"><div class="settings-group-title"><span class="settings-icon">👩‍🏫</span><div><h3>Teacher portal</h3><p>Requires teacher identity, invitation flow and read-only access policies.</p></div></div></div><div class="settings-group settings-breaks"><div class="settings-group-title"><span class="settings-icon">✨</span><div><h3>AI scheduling assistant</h3><p>Requires a protected server-side AI endpoint; API keys must never be placed in this HTML.</p></div></div></div><div class="settings-group settings-games"><div class="settings-group-title"><span class="settings-icon">📅</span><div><h3>Academic calendar & sharing</h3><p>Requires secure publishing permissions and school-controlled public links.</p></div></div></div></div></div></section>`;
+ const nav=document.querySelector('.tabs');if(nav&&!$id('management')){nav.insertAdjacentHTML('beforeend','<button class="tab" data-tab="management">6. Management & Analytics</button>');document.querySelector('.wrap').insertAdjacentHTML('beforeend',panel);}
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-tab="management"]');if(b){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tabpage').forEach(x=>x.classList.toggle('hidden',x.id!=='management'));setTimeout(refresh,0)}});
+ const days=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+ function listTeachers(){return [...new Set((assignments||[]).map(a=>a.teacher).filter(Boolean))].sort((a,b)=>a.localeCompare(b))}
+ function fillSelect(id,values,first){const el=$id(id);if(!el)return;const old=el.value;el.innerHTML=(first?`<option value="">${first}</option>`:'')+values.map(v=>`<option value="${escHtml(v)}">${escHtml(v)}</option>`).join('');if(values.includes(old))el.value=old;}
+ function populate(){const gs=timetable?.grades||[...new Set((assignments||[]).map(a=>a.grade))];fillSelect('editGrade',gs,'Select grade');fillSelect('roomGrade',gs,'Select grade');fillSelect('editPeriod',Array.from({length:timetable?.settings?.periods||8},(_,i)=>String(i+1)),'Select lesson');fillSelect('roomPeriod',Array.from({length:timetable?.settings?.periods||8},(_,i)=>String(i+1)),'Select lesson');fillSelect('editSubject',[...new Set((assignments||[]).map(a=>a.subject))].sort(),'Select subject');fillSelect('editTeacher',listTeachers(),'Select teacher');}
+ function currentMetrics(){const teachers=listTeachers(),grades=timetable?.grades||[],periods=timetable?.settings?.periods||0;let scheduled=0,free=0,issues=timetable?.failed?.length||0;for(const g of grades)for(let d=0;d<5;d++)for(let p=1;p<=periods;p++){const c=timetable?.grid?.[g]?.[d]?.[p];if(c&&!c.activity)scheduled++;else if(!c)free++;}return {teachers:teachers.length,grades:grades.length,scheduled,free,issues,status:timetable?.resultStatus||'NOT GENERATED'};}
+ function renderAnalytics(){const k=currentMetrics();$id('mgmtKpis').innerHTML=[['Teachers',k.teachers],['Grades / streams',k.grades],['Placed lesson blocks',k.scheduled],['Free grade periods',k.free],['Reported issues',k.issues]].map(([l,v])=>`<div class="kpi"><strong>${v}</strong><span>${l}</span></div>`).join('');let rows=[];for(const t of listTeachers()){let total=0,slots=[];for(const g of (timetable?.grades||[]))for(let d=0;d<5;d++)for(let p=1;p<=(timetable?.settings?.periods||0);p++){const c=timetable?.grid?.[g]?.[d]?.[p];if(c&&(c.teacher===t||(c.members||[]).some(m=>m.teacher===t))){total++;slots.push(`${g}: ${days[d]} L${p}`)}}const expected=(assignments||[]).filter(a=>a.teacher===t&&(!timetable||timetable.grades.includes(a.grade))).reduce((n,a)=>n+(+a.weekly||0),0);rows.push({t,total,expected,slots});} $id('mgmtWorkload').innerHTML='<h3>Teacher weekly workload</h3><table class="data-table"><thead><tr><th>Teacher</th><th>Assigned lessons</th><th>Placed</th><th>Difference</th><th>Grades / subjects</th></tr></thead><tbody>'+rows.map(r=>`<tr><td>${escHtml(r.t)}</td><td>${r.expected}</td><td>${r.total}</td><td>${r.total-r.expected}</td><td>${(assignments||[]).filter(a=>a.teacher===r.t).map(a=>`${escHtml(a.subject)} (${escHtml(a.grade)})`).join('<br>')}</td></tr>`).join('')+'</tbody></table>';
+ let freeRows=[];const periods=timetable?.settings?.periods||0;for(const t of listTeachers()){let free=0,assigned=0;for(let d=0;d<5;d++)for(let p=1;p<=periods;p++){const hit=(timetable?.grades||[]).some(g=>{const c=timetable?.grid?.[g]?.[d]?.[p];return c&&(c.teacher===t||(c.members||[]).some(m=>m.teacher===t))});if(hit)assigned++;else free++;}freeRows.push({t,assigned,free})}$id('mgmtFree').innerHTML='<h3>Teacher teaching and free periods (generated timetable)</h3><table class="data-table"><thead><tr><th>Teacher</th><th>Teaching periods</th><th>Free periods</th></tr></thead><tbody>'+freeRows.map(r=>`<tr><td>${escHtml(r.t)}</td><td>${r.assigned}</td><td>${r.free}</td></tr>`).join('')+'</tbody></table>';}
+ function saveVersion(){if(!timetable){showStatus('Generate a timetable before saving a version.','err');return;}const name=$id('versionName').value.trim()||`Timetable ${new Date().toLocaleString()}`;versions.push({id:Date.now(),name,created:new Date().toISOString(),timetable:JSON.parse(JSON.stringify(timetable))});versions=versions.slice(-20);persist();renderVersions();showStatus('Timetable version saved in this browser.');}
+ function renderVersions(){$id('versionList').innerHTML=versions.length?'<table class="data-table"><thead><tr><th>Version</th><th>Saved</th><th>Action</th></tr></thead><tbody>'+versions.slice().reverse().map(v=>`<tr><td>${escHtml(v.name)}</td><td>${new Date(v.created).toLocaleString()}</td><td><button type="button" data-restore-version="${v.id}">Restore</button> <button type="button" class="danger" data-delete-version="${v.id}">Delete</button></td></tr>`).join('')+'</tbody></table>':'<p class="small">No saved versions yet.</p>';}
+ function loadCell(){const g=$id('editGrade').value,d=+$id('editDay').value,p=+$id('editPeriod').value,c=timetable?.grid?.[g]?.[d]?.[p];$id('editCellInfo').textContent=c?`Current: ${c.subject||'Combined lesson'} — ${c.teacher||((c.members||[]).map(m=>m.teacher).join(', '))}`:'Selected cell is empty.';if(c){if(c.subject)$id('editSubject').value=c.subject;if(c.teacher)$id('editTeacher').value=c.teacher;}}
+ function applyCell(clear){if(!timetable){showStatus('Generate a timetable first.','err');return;}const g=$id('editGrade').value,d=+$id('editDay').value,p=+$id('editPeriod').value;if(!g||!p){showStatus('Select grade, day and lesson.','err');return;}const subject=$id('editSubject').value,teacher=$id('editTeacher').value;if(!clear&&(!subject||!teacher)){showStatus('Choose both a subject and a teacher.','err');return;}const old=timetable.grid[g]?.[d]?.[p];if(old?.activity){showStatus('Fixed PPI and activity cells cannot be overwritten here.','err');return;}if(!timetable.grid[g])timetable.grid[g]=[];if(!timetable.grid[g][d])timetable.grid[g][d]=[];timetable.grid[g][d][p]=clear?null:{subject,teacher,members:[{subject,teacher}],manual:true};timetable.resultStatus='MANUALLY MODIFIED — RECHECK REQUIRED';timetable.failed=[...(timetable.failed||[]),'Manual timetable edit: independent lesson-count, teacher and subject-rule certification is required.'];if(typeof save==='function')save();renderTimetable();renderChecks();refresh();showStatus(clear?'Selected cell cleared. Timetable requires recertification.':'Manual change applied. Timetable requires recertification.','err');}
+ function saveRoom(){const g=$id('roomGrade').value,d=+$id('roomDay').value,p=+$id('roomPeriod').value,r=$id('roomName').value.trim();if(!g||!p||!r){showStatus('Select grade, day, lesson and enter a room.','err');return;}rooms[`${g}|${d}|${p}`]=r;persist();renderRoomReport();showStatus('Room allocation saved.');}
+ function renderRoomReport(){const items=Object.entries(rooms);$id('roomReport').innerHTML=items.length?'<table class="data-table"><thead><tr><th>Grade</th><th>Day</th><th>Lesson</th><th>Room</th></tr></thead><tbody>'+items.map(([k,r])=>{const [g,d,p]=k.split('|');return `<tr><td>${escHtml(g)}</td><td>${days[+d]}</td><td>${p}</td><td>${escHtml(r)}</td></tr>`}).join('')+'</tbody></table>':'<p class="small">No room allocations saved.</p>';}
+ function checkRooms(){const seen=new Map(),clashes=[];for(const [k,r] of Object.entries(rooms)){const [g,d,p]=k.split('|'),key=`${r.toLowerCase()}|${d}|${p}`;if(seen.has(key))clashes.push(`${r}: ${days[+d]} Lesson ${p} is assigned to both ${seen.get(key)} and ${g}.`);else seen.set(key,g);} $id('roomReport').insertAdjacentHTML('afterbegin',`<div class="mode-note">${clashes.length?'❌ Room clashes found:<br>'+clashes.map(escHtml).join('<br>'):'✅ No room clashes detected among saved room allocations.'}</div>`);}
+ function cert(){if(!timetable){$id('certReport').textContent='No timetable generated.';return;}const collisions=typeof checkCollisions==='function'?checkCollisions():[];const failed=timetable.failed||[];const ok=!collisions.length&&!failed.length&&timetable.resultStatus==='SOLVED';$id('certReport').innerHTML=`<strong>${ok?'PASS — SOLVED':'FAIL — NOT CERTIFIED'}</strong><p>Teacher clashes: ${collisions.length}. Generator / manual-edit issues: ${failed.length}.</p>${[...collisions,...failed].slice(0,20).map(escHtml).join('<br>')}`;}
+ function refresh(){if(!$id('management'))return;populate();renderAnalytics();renderVersions();renderRoomReport();cert();}
+ $id('mgmtRefresh').onclick=refresh;$id('saveVersion').onclick=saveVersion;$id('loadEditCell').onclick=loadCell;$id('applyEditCell').onclick=()=>applyCell(false);$id('clearEditCell').onclick=()=>applyCell(true);$id('saveRoom').onclick=saveRoom;$id('checkRooms').onclick=checkRooms;$id('runCert').onclick=()=>{if(timetable){renderChecks();cert();showStatus('Independent timetable checks have been refreshed.');}};
+ $id('versionList').addEventListener('click',e=>{const r=e.target.closest('[data-restore-version]'),d=e.target.closest('[data-delete-version]');if(r){const v=versions.find(x=>x.id===+r.dataset.restoreVersion);if(v&&confirm(`Restore ${v.name}? Current timetable will be replaced.`)){timetable=JSON.parse(JSON.stringify(v.timetable));if(typeof save==='function')save();renderTimetable();renderChecks();refresh();showStatus('Saved timetable version restored.');}}if(d){versions=versions.filter(x=>x.id!==+d.dataset.deleteVersion);persist();renderVersions();}});
+ $id('mgmtExport').onclick=()=>{const lines=[['Teacher','Expected lessons','Placed lessons','Difference','Assignments']];for(const t of listTeachers()){let placed=0;for(const g of (timetable?.grades||[]))for(let d=0;d<5;d++)for(let p=1;p<=(timetable?.settings?.periods||0);p++){const c=timetable?.grid?.[g]?.[d]?.[p];if(c&&(c.teacher===t||(c.members||[]).some(m=>m.teacher===t)))placed++;}const exp=(assignments||[]).filter(a=>a.teacher===t&&(!timetable||timetable.grades.includes(a.grade))).reduce((n,a)=>n+(+a.weekly||0),0);lines.push([t,exp,placed,placed-exp,(assignments||[]).filter(a=>a.teacher===t).map(a=>`${a.subject} ${a.grade}`).join('; ')]);}const csv=lines.map(row=>row.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='RASM360_teacher_analytics.csv';a.click();URL.revokeObjectURL(a.href);};
+ // Keep timetable generation responsive: do not deep-clone and stringify the
+ // entire previous timetable in the click-capture phase. That synchronous work
+ // blocked the Generate button before the solver could even start. Users can
+ // create a named checkpoint from Timetable version history when needed.
+ const gen=$id('generateBtn');if(gen)gen.addEventListener('click',()=>{
+   // Refresh management analytics after the generator has completed.
+   setTimeout(()=>{if(timetable)refresh();},0);
+ },false);
+ // Include management data in the existing JSON backup without changing its established schema.
+ const backup=$id('backupBtn');if(backup)backup.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();const data={assignments,customGrades,customSubjectNames,localTeachers,rules,timetable,settings:getSettings(),grades:selectedGrades(),schoolBranding,adjustmentHistory,inactiveTeachers,managementVersions:versions,roomAllocations:rooms};const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));a.download='rasm360-timetable-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);},true);
+ // Restore extended backup fields whenever the original restore flow completes.
+ const restore=$id('restoreFile');if(restore)restore.addEventListener('change',async e=>{try{const x=JSON.parse(await e.target.files[0].text());if(Array.isArray(x.managementVersions))versions=x.managementVersions;if(x.roomAllocations&&typeof x.roomAllocations==='object')rooms=x.roomAllocations;persist();setTimeout(refresh,100);}catch(e){} });
+ const originalReset=$id('resetAll');if(originalReset)originalReset.addEventListener('click',()=>{setTimeout(()=>{if(!localStorage.getItem('rasm360_timetable_v1')){versions=[];rooms={};persist();refresh();}},500)});
+ window.RASM360Management={refresh,checkRooms,versions:()=>versions.length};
+})();
+
+</script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAfabVkJydZH37sM8j8hVKNDsm2c5vGudQ",
@@ -1050,28 +1212,32 @@ const msg=document.getElementById('authMessage');
 const loginForm=document.getElementById('schoolLoginForm');
 const registerForm=document.getElementById('schoolRegisterForm');
 const pendingActions=document.getElementById('pendingActions');
-let firebaseAuth=null, firestore=null, currentUser=null;
-function setSchoolWorkspace(school,user,approved){
-  window.__rasmSchoolApproved=approved===true;
+let firebaseAuth=null, firestore=null, currentUser=null, schoolUnsubscribe=null;
+let lastPaymentState=null;
+
+function setSchoolWorkspace(school,user,paymentApproved){
+  window.__rasmSchoolApproved=!!user?.uid;
+  window.__rasmPaymentApproved=paymentApproved===true;
   const banner=document.getElementById('schoolApprovalBanner');
   const title=document.getElementById('schoolApprovalTitle');
   const detail=document.getElementById('schoolApprovalText');
   const generateBtn=document.getElementById('generateBtn');
   const label=document.getElementById('schoolAccountLabel');
-  if(label)label.textContent=(school.schoolName||user.email)+(approved?' · Approved':' · Approval pending');
+  if(label)label.textContent=(school.schoolName||user?.email||'School account')+(window.__rasmPaymentApproved?' · Payment approved':' · Payment pending');
   if(banner){
-    banner.classList.toggle('hidden',approved);
-    if(!approved){
-      title.textContent='School approval pending';
-      detail.textContent='Your email is verified. You can prepare grades, register teachers, assign subjects and configure scheduling rules. Timetable generation unlocks automatically after RASM 360 approves this school and you log in again.';
+    banner.classList.toggle('hidden',window.__rasmPaymentApproved);
+    if(!window.__rasmPaymentApproved){
+      title.textContent='Generate now · Unlock the full week with KSh 2,000';
+      detail.textContent='You can prepare and generate your timetable while payment is pending. Monday remains visible; Tuesday to Friday are blurred until Super Admin approves payment. Approval is detected live and unlocks this page automatically—no sign-out or refresh required.';
     }
   }
   if(generateBtn){
-    generateBtn.disabled=!approved;
-    generateBtn.textContent=approved?'⚡ Generate new timetable':'🔒 Awaiting school approval';
-    generateBtn.title=approved?'Generate the school timetable':'School approval is required before timetable generation';
+    generateBtn.disabled=false;
+    generateBtn.textContent='⚡ Generate new timetable';
+    generateBtn.title='Generate your timetable. Tuesday–Friday unlock automatically after payment approval.';
   }
-  document.body.classList.toggle('approval-pending',!approved);
+  document.body.classList.toggle('approval-pending',!window.__rasmPaymentApproved);
+  if(typeof applyPaymentBlur==='function'&&typeof timetable!=='undefined'&&timetable)applyPaymentBlur();
 }
 function showMessage(text,type='info'){msg.textContent=text;msg.className='auth-message '+type;}
 function clearMessage(){msg.textContent='';msg.className='auth-message';}
@@ -1080,6 +1246,7 @@ function showLogin(){loginForm.classList.remove('hidden');registerForm.classList
 function showRegister(){registerForm.classList.remove('hidden');loginForm.classList.add('hidden');pendingActions.classList.add('hidden');document.getElementById('showRegister').classList.add('active');document.getElementById('showLogin').classList.remove('active');clearMessage();}
 function lockApp(){document.body.classList.add('auth-locked');gate.style.display='grid';}
 function unlockApp(){document.body.classList.remove('auth-locked');gate.style.display='none';}
+function stopSchoolListener(){if(schoolUnsubscribe){schoolUnsubscribe();schoolUnsubscribe=null;}}
 function friendlyError(e){const c=e?.code||'';const map={
  'auth/email-already-in-use':'This email already has an account. Please log in instead.',
  'auth/invalid-email':'Please enter a valid email address.',
@@ -1090,6 +1257,63 @@ function friendlyError(e){const c=e?.code||'';const map={
  'permission-denied':'Firebase blocked this request. Check that the Firestore security rules supplied with this release have been published.',
  'unavailable':'Firebase is temporarily unavailable. Check your internet connection and try again.'
  };return map[c]||e?.message||'An unexpected Firebase error occurred.';}
+
+function applySchoolSnapshot(school,user,initial=false){
+  const accountStatus=String(school.status||'').toLowerCase();
+  if(accountStatus==='rejected'||accountStatus==='suspended'){
+    stopSchoolListener();
+    window.__rasmSchoolApproved=false;
+    window.__rasmPaymentApproved=false;
+    lockApp();
+    loginForm.classList.add('hidden');registerForm.classList.add('hidden');pendingActions.classList.remove('hidden');
+    showMessage('Signed in as '+(school.schoolName||user.email)+'. '+(accountStatus==='rejected'?'The registration was not approved. Please contact the platform administrator.':'This school account is suspended. Please contact the platform administrator.'),'error');
+    return;
+  }
+
+  window.__rasmSchoolName=school.schoolName||'';
+  if(!schoolBranding.name)schoolBranding.name=window.__rasmSchoolName;
+  if(schoolBranding.name){const nameInput=document.getElementById('schoolPrintName');if(nameInput)nameInput.value=schoolBranding.name;}
+  if(typeof window.renderSchoolBranding==='function')window.renderSchoolBranding();
+
+  // paymentStatus is the canonical field used by the Super Admin approval panel.
+  // Legacy paymentApproved=true is accepted for schools created by the earlier release.
+  const paymentStatus=String(school.paymentStatus||'').toLowerCase();
+  const paymentApproved=paymentStatus==='approved'||school.paymentApproved===true;
+  const previous=lastPaymentState;
+  lastPaymentState=paymentApproved?'approved':(paymentStatus||'pending');
+  unlockApp();
+  setSchoolWorkspace(school,user,paymentApproved);
+
+  if(paymentApproved && previous!=='approved' && !initial){
+    if(typeof showStatus==='function')showStatus('Payment approved. Your full timetable is now unlocked.');
+  }else if(!paymentApproved && initial){
+    showMessage('Your school workspace is ready. You can prepare and generate your timetable. Tuesday–Friday unlock automatically when Super Admin approves the KSh 2,000 payment.','pending');
+  }
+}
+
+function listenForSchoolChanges(user){
+  stopSchoolListener();
+  currentUser=user;
+  const schoolRef=doc(firestore,'schools',user.uid);
+  schoolUnsubscribe=onSnapshot(schoolRef,snap=>{
+    if(!snap.exists()){
+      stopSchoolListener();
+      lockApp();
+      loginForm.classList.add('hidden');registerForm.classList.add('hidden');pendingActions.classList.remove('hidden');
+      showMessage('Your login exists, but no school registration record was found. Please contact the platform administrator.','error');
+      return;
+    }
+    applySchoolSnapshot(snap.data()||{},user,false);
+  },err=>{
+    console.error('RASM 360 school approval listener:',err);
+    if(!window.__rasmSchoolApproved){
+      showMessage(friendlyError(err),'error');
+    }else if(typeof showStatus==='function'){
+      showStatus('Live payment status could not refresh. Check your connection and Firestore read permissions.','err');
+    }
+  });
+}
+
 try{
  const app=initializeApp(firebaseConfig);
  firebaseAuth=getAuth(app);
@@ -1114,13 +1338,14 @@ try{
    const cred=await createUserWithEmailAndPassword(firebaseAuth,email,password);
    await setDoc(doc(firestore,'schools',cred.user.uid),{
     schoolName,schoolCode,county,subCounty,adminName,email,phone,
-    status:'pending',plan:'pending',createdAt:serverTimestamp(),updatedAt:serverTimestamp(),
+    status:'pending',plan:'pending',paymentStatus:'pending',
+    paymentUpdatedAt:serverTimestamp(),createdAt:serverTimestamp(),updatedAt:serverTimestamp(),
     registrationSource:'rasm360_timetable_pro'
    });
    await sendEmailVerification(cred.user);
    currentUser=cred.user;
    loginForm.classList.add('hidden');registerForm.classList.add('hidden');pendingActions.classList.remove('hidden');
-   showMessage('Your school registration has been submitted successfully. A verification email has been sent to '+email+'. Verify your email, then wait for the RASM 360 administrator to approve your school. The timetable generator remains locked until approval.','pending');
+   showMessage('Your school registration has been submitted successfully. A verification email has been sent to '+email+'. Verify your email, then sign in. You can prepare and generate your timetable while payment is pending; full-week access unlocks automatically after Super Admin approval.','pending');
   }catch(err){showMessage(friendlyError(err),'error');}
   finally{setBusy(false);}
  });
@@ -1139,7 +1364,10 @@ try{
  async function checkSchoolAccess(user){
   currentUser=user;
   if(!user.emailVerified){
-   window.__rasmSchoolApproved=false;document.body.classList.remove('approval-pending');
+   stopSchoolListener();
+   window.__rasmSchoolApproved=false;
+   window.__rasmPaymentApproved=false;
+   document.body.classList.remove('approval-pending');
    loginForm.classList.add('hidden');registerForm.classList.add('hidden');pendingActions.classList.remove('hidden');
    showMessage('Please verify your email address before access can be considered. Check your inbox, then sign out and log in again.','pending');
    return;
@@ -1150,21 +1378,15 @@ try{
     loginForm.classList.add('hidden');registerForm.classList.add('hidden');pendingActions.classList.remove('hidden');
     showMessage('Your login exists, but no school registration record was found. Please contact the platform administrator.','error');return;
    }
-   const school=snap.data();
-   window.__rasmSchoolName=school.schoolName||'';
-   if(!schoolBranding.name)schoolBranding.name=window.__rasmSchoolName;
-   if(schoolBranding.name){const nameInput=document.getElementById('schoolPrintName');if(nameInput)nameInput.value=schoolBranding.name;}
-   if(typeof window.renderSchoolBranding==='function')window.renderSchoolBranding();
-   if(school.status==='rejected'||school.status==='suspended'){
-    loginForm.classList.add('hidden');registerForm.classList.add('hidden');pendingActions.classList.remove('hidden');
-    window.__rasmSchoolApproved=false;
-    showMessage('Signed in as '+(school.schoolName||user.email)+'. '+(school.status==='rejected'?'The registration was not approved. Please contact the platform administrator.':'This school account is suspended. Please contact the platform administrator.'),'error');
+   const school=snap.data()||{};
+   const accountStatus=String(school.status||'').toLowerCase();
+   if(accountStatus==='rejected'||accountStatus==='suspended'){
+    applySchoolSnapshot(school,user,true);
     return;
    }
-   const approved=school.status==='approved';
-   unlockApp();
-   setSchoolWorkspace(school,user,approved);
-   if(!approved)showMessage('Your email is verified and your school workspace is now available. You may prepare grades, teachers, subjects and scheduling rules. Timetable generation remains locked until the Super Admin approves your school. Sign out and log in again after approval.','pending');
+   lastPaymentState=null;
+   applySchoolSnapshot(school,user,true);
+   if(window.__rasmSchoolApproved)listenForSchoolChanges(user);
   }catch(err){showMessage(friendlyError(err),'error');}
  }
 
@@ -1173,11 +1395,22 @@ try{
   try{await sendEmailVerification(currentUser);showMessage('A new verification email has been sent. Check your inbox and spam folder.','info');}
   catch(e){showMessage(friendlyError(e),'error');}
  });
- async function doSignOut(){try{window.__rasmSchoolApproved=false;setSchoolWorkspace({}, {email:''}, false);await signOut(firebaseAuth);currentUser=null;lockApp();showLogin();}catch(e){showMessage(friendlyError(e),'error');}}
+ async function doSignOut(){
+  try{
+   stopSchoolListener();lastPaymentState=null;
+   window.__rasmSchoolApproved=false;window.__rasmPaymentApproved=false;
+   setSchoolWorkspace({}, {email:''}, false);
+   await signOut(firebaseAuth);currentUser=null;lockApp();showLogin();
+  }catch(e){showMessage(friendlyError(e),'error');}
+ }
  document.getElementById('pendingSignOut').addEventListener('click',doSignOut);
  const logout=document.getElementById('schoolLogoutBtn');if(logout)logout.addEventListener('click',doSignOut);
  onAuthStateChanged(firebaseAuth,async user=>{
-  if(!user){currentUser=null;lockApp();showLogin();return;}
+  if(!user){
+   stopSchoolListener();lastPaymentState=null;currentUser=null;
+   window.__rasmSchoolApproved=false;window.__rasmPaymentApproved=false;
+   lockApp();showLogin();return;
+  }
   await checkSchoolAccess(user);
  });
 }catch(err){lockApp();showMessage('Firebase could not initialise. Confirm the Firebase project configuration and that Authentication and Cloud Firestore are enabled. Details: '+(err?.message||err),'error');}
