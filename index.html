@@ -16,7 +16,7 @@ button:hover{filter:brightness(.94)}button.secondary{background:#e5ecf7;color:#1
 .tabs>.tab{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:9px 14px;border:1px solid transparent;border-radius:11px;color:#fff;font-weight:800;box-shadow:0 3px 8px rgba(20,45,80,.13);transition:transform .15s ease,filter .15s ease,box-shadow .15s ease}
 .tabs>.tab:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 5px 12px rgba(20,45,80,.18)}
 .tabs>.tab.active{color:#fff;filter:saturate(1.12);box-shadow:0 0 0 3px rgba(18,45,80,.13),0 4px 10px rgba(20,45,80,.16)}
-.tabs>.nav-setup{background:#1769c2;border-color:#10569f}.tabs>.nav-rules{background:#7651b5;border-color:#603d9c}.tabs>.nav-generate{background:#12834b;border-color:#0c6d3c}.tabs>.nav-data{background:#d97706;border-color:#b65f00}.tabs>.nav-school{background:#087e8b;border-color:#066773}.tabs>.nav-management{background:#c04483;border-color:#a6326d}
+.tabs>.nav-setup{background:#1769c2;border-color:#10569f}.tabs>.nav-rules{background:#7651b5;border-color:#603d9c}.tabs>.nav-generate{background:#12834b;border-color:#0c6d3c}.tabs>.nav-data{background:#d97706;border-color:#b65f00}.tabs>.nav-school{background:#087e8b;border-color:#066773}.tabs>.nav-management{background:#c04483;border-color:#a6326d}.tabs>.nav-protips{background:#0f766e;border-color:#0b5e58}
 .nav-icon{display:inline-grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border-radius:8px;background:rgba(255,255,255,.19);font-size:16px;line-height:1}
 .tabs>.tab span:last-child{white-space:normal;text-align:left}
 @media(max-width:600px){.tabs>.tab{flex:1 1 calc(50% - 8px);min-width:145px}.tabs>.tab span:last-child{font-size:12px}}
@@ -264,7 +264,7 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
     <li><b>Physical Education (PE):</b> 3 lessons per week</li><li><b>ICT Skills:</b> 2 lessons per week</li>
     <li><b>Pastoral Programme Instruction (PPI):</b> 1 lesson per week</li><li><b>Personal / Group Study:</b> 1 lesson per week</li>
    </ul>
-   <div class="mode-note"><b>Important setup instructions</b><ol><li>In the Senior School elective strokes section, place each offered elective in its correct Option Line. Do not put the same subject in more than one line.</li><li>Assign a responsible teacher to every elective offered by the school and set each elective to exactly 5 lessons per week.</li><li>Subjects in one Option Line must share the same five weekly timetable periods. They are not five separate lesson slots for every subject.</li><li>Set up the non-blocked subjects for each class stream using the weekly lesson counts above.</li><li>Check teacher clashes, class lesson loads and all validation messages before accepting the generated timetable.</li></ol></div>
+   <div class="mode-note"><b>Important setup instructions</b><ol><li>In the Senior School elective strokes section, place each offered elective in its correct Option Line. Do not put the same subject in more than one line.</li><li>Assign a responsible qualified teacher to every elective offered by the school and enter its approved weekly lesson count. Different subjects in the same stroke may have different weekly counts.</li><li>Subjects in one Option Line share the same scheduled block window. Each subject receives only its own assigned lessons; any remaining block periods are shown as supervised guided-study / elective-project activities.</li><li>Set up the non-blocked subjects for each class stream using the weekly lesson counts above.</li><li>Check teacher clashes, class lesson loads and all validation messages before accepting the generated timetable.</li></ol></div>
    <p class="small"><b>Lesson-count note:</b> The figures supplied in this guide account for 15 elective lessons plus 15 non-blocked lessons (30 lessons total). They do not specify the other 10 lessons in a 40-period week; configure those separately according to the school's approved curriculum and timetable requirements.</p>
   </div>
   <div class="guide-footer"><span class="small">RASM 360 PRO · Senior School scheduling guide</span><button type="button" id="closeTimetableGuideBottom">Close Guide</button></div>
@@ -292,7 +292,7 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
    <h3>STEP 7 — Configure Senior School combinations and resources (if used)</h3>
    <ol><li>For Senior School, open <b>Senior School: Pathways, combinations &amp; elective blocks</b>.</li><li>Where the school uses named combinations/streams, select the grade, enter the combination name and complete the available combination details, including estimated enrolment and subject choices as requested by the form.</li><li>Register the classrooms, laboratories, workshops or specialist spaces the school will use. Give each room a clear name, correct room type and realistic maximum capacity.</li><li>Check that laboratory-based or practical subjects have an appropriate compatible room and that the room capacity can accommodate the combined learners taking that lesson.</li><li>Repeat for every combination and room required by the school. Do not create combinations or rooms that the school does not actually use.</li></ol>
    <h3>STEP 8 — Configure the three Senior School elective strokes</h3>
-   <ol><li>Open <b>2. Scheduling Rules</b> and find <b>Senior School elective strokes — exactly THREE</b>.</li><li>Place each elective offered by the school into the correct Stroke A, Stroke B or Stroke C. A learner's three-elective choice can be one subject from each stroke; the timetable lines also support combinations such as three choices from one pathway or two from one pathway and one from another, provided the selected subjects are distributed across the three simultaneous option lines.</li><li>Subjects in the same stroke are taught at the same time. A learner should choose no more than one subject from each stroke.</li><li>Do not place the same elective in more than one stroke. Remove electives the school does not offer from the active stroke arrangement.</li><li>For every elective included in a stroke, confirm that its teacher assignment exists and that it is set to the required five lessons per week. Check that one teacher is not assigned to two subjects that would run simultaneously in the same stroke.</li><li>Read the stroke status and correct any warnings before generating.</li></ol>
+   <ol><li>Open <b>2. Scheduling Rules</b> and find <b>Senior School elective strokes — exactly THREE</b>.</li><li>Place each elective offered by the school into the correct Stroke A, Stroke B or Stroke C. A learner's three-elective choice can be one subject from each stroke; the timetable lines also support combinations such as three choices from one pathway or two from one pathway and one from another, provided the selected subjects are distributed across the three simultaneous option lines.</li><li>Subjects in the same stroke are taught at the same time. A learner should choose no more than one subject from each stroke.</li><li>Do not place the same elective in more than one stroke. Remove electives the school does not offer from the active stroke arrangement.</li><li>For every elective included in a stroke, confirm that its qualified teacher assignment exists and its own approved weekly lesson count is correct. Select subjects requiring a consecutive double in Scheduling Rules → Double lessons. Check that one teacher is not assigned to two subjects that would run simultaneously in the same stroke.</li><li>Read the stroke status and correct any warnings before generating.</li></ol>
    <h3>STEP 9 — Set the scheduling rules</h3>
    <ol><li>In <b>Double lessons</b>, select the subjects that require a consecutive double lesson each week. Enable the strict double rule if that is the school's requirement.</li><li>In <b>Morning priority</b>, select subjects that should be prioritised earlier in the day and confirm the morning cutoff.</li><li>Review <b>Daily subject frequency</b>. The application applies its displayed weekly-load and daily-frequency rules; check any overrides carefully.</li><li>Review the Senior School strokes again and confirm that the three blocks are correct.</li><li>Return to Setup and, if required, select teachers and weekdays for <b>Teacher afternoon release</b>. Only select release days that reflect the actual staffing arrangement.</li></ol>
    <h3>STEP 10 — Perform a complete pre-generation check</h3>
@@ -309,9 +309,37 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
  </div>
 </div>
 
+
+<div id="proTipsModal" class="guide-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="proTipsTitle">
+ <div class="guide-dialog">
+  <div class="guide-top"><div><span class="pill">GRADE 10 · PRACTICAL TIMETABLING</span><h2 id="proTipsTitle">💡 Pro Tips: Planning Weekly Double Lessons</h2><p class="small">Guidance for allocating uninterrupted practical, workshop, fieldwork and studio time.</p></div><button type="button" id="closeProTips" class="secondary" aria-label="Close Pro Tips">✕ Close</button></div>
+  <div class="guide-content">
+   <div class="mode-note"><b>22 Grade 10 subjects require double lessons (80 minutes each)</b> per week to give learners enough uninterrupted time for laboratory experiments, workshop fabrication, field projects, or studio rehearsals. For a standard <b>5-lesson subject</b>, allocate <b>1 double lesson (2 periods) + 3 single lessons (3 periods)</b> per week.</div>
+   <h3>1. Science &amp; Applied STEM Subjects (8 Subjects)</h3>
+   <p>These require setup, practical experiments, specimen observation, or farm fieldwork:</p>
+   <ul><li><b>Biology</b> (1 double + 3 singles)</li><li><b>Chemistry</b> (1 double + 3 singles)</li><li><b>Physics</b> (1 double + 3 singles)</li><li><b>General Science</b> (1 double + 3 singles)</li><li><b>Agriculture</b> (1 double + 3 singles)</li><li><b>Home Science</b> (1 double + 3 singles)</li><li><b>Computer Studies</b> (1 double + 3 singles)</li><li><b>Media Technology</b> (1 double + 3 singles)</li></ul>
+   <h3>2. Technical &amp; Engineering Subjects (7 Subjects)</h3>
+   <p>Workshop-based subjects need continuous blocks for machine setup, safety checks, and tool cleanup:</p>
+   <ul><li><b>Aviation</b> (1 double + 3 singles)</li><li><b>Building Construction</b> (1 double + 3 singles)</li><li><b>Electricity</b> (1 double + 3 singles)</li><li><b>Metalwork</b> (1 double + 3 singles)</li><li><b>Power Mechanics</b> (1 double + 3 singles)</li><li><b>Woodwork</b> (1 double + 3 singles)</li><li><b>Marine and Fisheries Technology</b> (1 double + 3 singles)</li></ul>
+   <h3>3. Arts &amp; Sports Science Subjects (4 Subjects)</h3>
+   <p>Creative and physical electives need extended time for studio work, rehearsals, and warm-up/cool-down routines:</p>
+   <ul><li><b>Fine Arts</b> (1 double + 3 singles)</li><li><b>Music and Dance</b> (1 double + 3 singles)</li><li><b>Theatre and Film</b> (1 double + 3 singles)</li><li><b>Sports and Recreation</b> (1 double + 3 singles)</li></ul>
+   <h3>4. Compulsory / Support Areas (3 Subjects)</h3>
+   <p>Even though these have fewer total lessons per week, scheduling a double allows practical execution:</p>
+   <ul><li><b>Community Service Learning (CSL)</b> – 3 lessons/week (1 double + 1 single for field/community activities)</li><li><b>Physical Education (PE)</b> – 3 lessons/week (1 double + 1 single to allow changing into sports kit and playing full sessions)</li><li><b>ICT Skills</b> – 2 lessons/week (1 double per week for hands-on computer lab practice)</li></ul>
+   <h3>Quick Tip for Plotting Doubles on Your Timetable</h3>
+   <ul><li><b>Pair Doubles Within the Same Option Line:</b> Since all subjects in <b>Option Line 1</b> run at the exact same time, schedule <b>Option Line 1's double lesson on the same day</b> (for example, Tuesday Lessons 3 &amp; 4) so Physics, Woodwork, Fine Arts, and General Science get their double simultaneously while History or Literature teachers use those two periods for extended writing or seminar work.</li><li><b>Best Time Slots:</b> Place double lessons right <b>before break</b>, <b>before lunch</b>, or during the <b>last two lessons of the afternoon</b> so practical cleanup does not delay the next class.</li></ul>
+   <h3>How RASM 360 handles mixed subjects in one elective stroke</h3>
+   <ul><li><b>Double-required subjects:</b> A selected subject receives one genuine consecutive pair, followed by its remaining single lessons. The same qualified teacher and compatible room are reserved for both periods of the double.</li><li><b>Subjects with a lower weekly allocation:</b> The subject receives exactly its assigned number of lessons. If the shared stroke has additional periods, the learner remains in the block for a supervised <b>Guided Independent Study / Elective Project</b> activity linked to that subject. The subject teacher supervises it and the appropriate room capacity is checked.</li><li><b>Five single lessons alongside a double:</b> All five single periods are preserved. The two periods occupied by the other subject's double remain two separate single lessons for this subject; they are not labelled as a double. Language adjacency rules still apply and may make some mixed arrangements incompatible.</li></ul>
+   <div class="mode-note"><b>Implementation reminder:</b> Use the Double Lessons settings to select the subjects that need consecutive periods, then verify that the generated timetable places each double in adjacent periods and that no teacher, learner combination, or specialist room is double-booked. Review the guided-study / project periods in each combination timetable and teacher timetable before publishing.</div>
+  </div>
+  <div class="guide-footer"><span class="small">RASM 360 PRO · Grade 10 practical lesson planning tips</span><button type="button" id="closeProTipsBottom">Close Pro Tips</button></div>
+ </div>
+</div>
+
 <div class="wrap">
 <div class="tabs no-print">
-<button class="tab nav-setup active" data-tab="setup"><span class="nav-icon" aria-hidden="true">⚙️</span><span>1. Setup</span></button><button class="tab nav-rules" data-tab="rules"><span class="nav-icon" aria-hidden="true">🧩</span><span>2. Scheduling Rules</span></button><button class="tab nav-generate" data-tab="generate"><span class="nav-icon" aria-hidden="true">🚀</span><span>3. Generate &amp; View</span></button><button class="tab nav-data" data-tab="data"><span class="nav-icon" aria-hidden="true">💾</span><span>4. Backup &amp; Restore</span></button><button class="tab nav-school" data-tab="schoolProfile"><span class="nav-icon" aria-hidden="true">🏫</span><span>5. School Profile &amp; Logo</span></button>
+<button class="tab nav-setup active" data-tab="setup"><span class="nav-icon" aria-hidden="true">⚙️</span><span>1. Setup</span></button><button class="tab nav-rules" data-tab="rules"><span class="nav-icon" aria-hidden="true">🧩</span><span>2. Scheduling Rules</span></button><button class="tab nav-generate" data-tab="generate"><span class="nav-icon" aria-hidden="true">🚀</span><span>3. Generate &amp; View</span></button><button class="tab nav-data" data-tab="data"><span class="nav-icon" aria-hidden="true">💾</span><span>4. Backup &amp; Restore</span></button><button class="tab nav-school" data-tab="schoolProfile"><span class="nav-icon" aria-hidden="true">🏫</span><span>5. School Profile &amp; Logo</span></button><button type="button" class="tab nav-protips" id="openProTips"><span class="nav-icon" aria-hidden="true">💡</span><span>Pro Tips</span></button>
 <details class="help-menu"><summary>❔ Help &amp; Guides</summary><div class="help-menu-items"><button type="button" id="openTimetableGuide" class="secondary">📘 How to Use This Timetable</button><button type="button" id="openSetupWorkflowGuide" class="green">🧭 Setup-to-Generation Steps</button></div></details>
 </div>
 <div id="schoolApprovalBanner" class="panel hidden" role="status" aria-live="polite" style="border-left:5px solid #d99a16;background:#fff9e9;color:#684800;margin-bottom:14px">
@@ -377,8 +405,8 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
 <p class="small">Choose subjects that should be prioritised early in the day and subjects that must be taught in two consecutive lessons. Double lessons can start at any valid consecutive pair from Lesson 1 through the final lesson pair of the day; they are balanced across the week rather than restricted to morning periods. Subjects with related concepts or skills must not follow one another in consecutive periods across any grade. This includes language-to-language lessons, related sciences and Mathematics with Physics. Creative Arts receives a strong preference for the period immediately before a break or lunch, without making otherwise valid timetables impossible. The solver also balances each grade’s morning and afternoon lesson load across the week.</p>
 <div class="rules-layout">
  <section class="settings-group rule-double"><div class="settings-group-title"><span class="settings-icon">🔁</span><div><h3>1. Double lessons</h3><p>Select subjects that need one consecutive double lesson each week.</p></div></div>
-  <div class="settings-group-content"><label>Subjects that require double lessons</label><div id="doubleList" class="panel" style="margin:0;padding:10px;max-height:300px;overflow:auto"><span class="muted small">Add assignments first.</span></div>
-  <label class="checkline" style="margin-top:12px"><input type="checkbox" id="strictDouble" checked> One consecutive double per selected subject each week; doubles may be scheduled from the first lesson to the last lesson</label></div>
+  <div class="settings-group-content"><label>Set the weekly lesson pattern for each subject</label><p class="small">Choose <b>Requires one double</b> only for subjects that must have one pair of consecutive lessons every week. Leave other subjects as <b>Singles only</b>. This setting is individual to each subject, even when subjects share Stroke A, B or C.</p><div id="doubleList" class="panel" style="margin:0;padding:10px;max-height:300px;overflow:auto"><span class="muted small">Add assignments first.</span></div>
+  <label class="checkline" style="margin-top:12px"><input type="checkbox" id="strictDouble" checked> Enforce exactly one consecutive double per selected subject each week; all remaining lessons for that subject are singles</label></div>
  </section>
  <section class="settings-group rule-morning"><div class="settings-group-title"><span class="settings-icon">🌅</span><div><h3>2. Morning priority</h3><p>Choose subjects that should receive priority in earlier lessons.</p></div></div>
   <div class="settings-group-content"><label>Subjects to prioritise in morning hours</label><div id="morningList" class="panel" style="margin:0;padding:10px;max-height:300px;overflow:auto"><span class="muted small">Add assignments first.</span></div>
@@ -389,7 +417,7 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
   <label class="checkline" style="margin-top:12px"><input type="checkbox" id="avoidSameDay" checked disabled> HARD RULE: subjects with fewer than 6 weekly lessons appear once per day; subjects with 6 or more may appear twice at separate times</label></div>
  </section>
  <section class="settings-group rule-stroked"><div class="settings-group-title"><span class="settings-icon">🤝</span><div><h3>4. Senior School elective strokes — exactly THREE</h3><p>Subjects in the same stroke are taught simultaneously.</p></div></div>
-  <div class="settings-group-content"><p class="small"><b>Three option blocks only:</b> Stroke A, Stroke B and Stroke C. A learner selects one subject from each stroke. Every selected elective must be assigned 5 lessons per week; all subjects in a stroke share the same five timetable periods. You may edit the suggested allocation below. The generator checks lesson counts and ensures one teacher is not assigned to two subjects in the same stroke.</p><div id="seniorStrokeBlocks" class="senior-grid" style="margin-top:10px"></div><div class="actions"><button type="button" class="secondary" id="resetSeniorStrokes">↺ Restore suggested three-stroke arrangement</button></div><div class="small" id="strokeStatus" style="margin-top:8px">Choose the elective subjects your school offers. Unassigned catalogue subjects are ignored during generation.</div></div>
+  <div class="settings-group-content"><p class="small"><b>Three option blocks only:</b> Stroke A, Stroke B and Stroke C. A learner selects one subject from each stroke. Each elective keeps its own weekly lesson count and its own double/single setting. For example, Chemistry can be set to <b>Requires one double</b> while CRE in the same stroke remains <b>Singles only</b>. The double is shared as a simultaneous stroke time-slot, but CRE is still recorded as two separate single lessons in those periods. A double uses two of the existing 40 weekly periods; it does not add periods. Any unused periods for a lower-load subject become supervised guided-study / elective-project activities. The generator checks that each Senior combination receives exactly 40 occupied periods (8 per day × 5 days), and checks teacher and room clashes.</p><div id="seniorStrokeBlocks" class="senior-grid" style="margin-top:10px"></div><div class="actions"><button type="button" class="secondary" id="resetSeniorStrokes">↺ Restore suggested three-stroke arrangement</button></div><div class="small" id="strokeStatus" style="margin-top:8px">Choose the elective subjects your school offers. Unassigned catalogue subjects are ignored during generation.</div></div>
  </section>
 </div></div>
 </section>
@@ -450,6 +478,21 @@ const SENIOR_PATHWAYS=['STEM','Social Sciences','Arts and Sports Science'];
 function seniorGradeKey(g){return String(g).replace(/^Grade\s*/i,'').trim();}
 function seniorCombinationsFor(g){return seniorCombinations.filter(c=>String(c.grade)===String(g));}
 function seniorBlockFor(blocks,name){const key=String(name||'').trim().toLowerCase();const found=Object.keys(blocks||{}).find(k=>k.toLowerCase()===key);return found?blocks[found]:undefined;}
+/* Resolve exactly three simultaneous blocks, with UNLIMITED subjects per block.
+   Manual Stroke A/B/C selections take priority when every registered combination
+   still has exactly one elective in each block. */
+function manualSeniorStrokeMap(grade){
+ const key=x=>String(x||'').trim().toLowerCase(),combos=seniorCombinationsFor(grade),names=[...new Set(combos.flatMap(c=>c.subjects.map(x=>String(x.name||'').trim())))],map={};
+ (rules.stroked||[]).slice(0,3).forEach((group,i)=>(group||[]).forEach(name=>{if(names.some(n=>key(n)===key(name)))map[names.find(n=>key(n)===key(name))]='ABC'[i];}));
+ const missing=names.filter(n=>!map[n]),conflicts=combos.filter(c=>new Set(c.subjects.map(x=>map[String(x.name||'').trim()])).size!==3);
+ return {map,names,missing,conflicts,valid:names.length>0&&!missing.length&&!conflicts.length};
+}
+function resolveSeniorBlockMap(grade,pairing){
+ const manual=manualSeniorStrokeMap(grade);if(manual.valid)return manual.map;
+ const saved=seniorBlocks[seniorGradeKey(grade)]||seniorBlocks[grade];
+ const savedValid=!!saved&&Object.keys(pairing?.blocks||{}).every(n=>['A','B','C'].includes(seniorBlockFor(saved,n)))&&seniorCombinationsFor(seniorGradeKey(grade)).every(c=>new Set(c.subjects.map(x=>seniorBlockFor(saved,x.name))).size===3);
+ return savedValid?saved:(pairing?.blocks||{});
+}
 function computeSeniorPairing(grade){
  const combos=seniorCombinationsFor(grade), graph=new Map(), display=new Map(), reasons=[];
  combos.forEach(c=>{const names=c.subjects.map(x=>String(x.name||'').trim().toLowerCase());if(names.length!==3||new Set(names).size!==3){reasons.push(`${c.name}: the three elective subjects must be distinct (subject names are compared without case sensitivity).`);return;}names.forEach((key,i)=>{if(!display.has(key))display.set(key,String(c.subjects[i].name).trim());if(!graph.has(key))graph.set(key,new Set());});for(let i=0;i<3;i++)for(let j=i+1;j<3;j++){graph.get(names[i]).add(names[j]);graph.get(names[j]).add(names[i]);}});
@@ -467,7 +510,7 @@ function renderSeniorCombinations(){const list=$('seniorComboList');if(!list)ret
  list.querySelectorAll('[data-senior-edit]').forEach(b=>b.onclick=()=>{const c=seniorCombinations.find(x=>x.id===b.dataset.seniorEdit);if(!c)return;seniorEditId=c.id;$('seniorGrade').value=c.grade;$('seniorComboName').value=c.name;$('seniorEnrolment').value=c.enrolment;c.subjects.forEach((x,i)=>{$('seniorPath'+(i+1)).value=x.pathway;$('seniorSub'+(i+1)).value=x.name;});$('saveSeniorCombo').textContent='Save combination changes';});
  list.querySelectorAll('[data-senior-delete]').forEach(b=>b.onclick=async()=>{const c=seniorCombinations.find(x=>x.id===b.dataset.seniorDelete);if(!c||!await askConfirm('Delete combination?',`Delete ${c.name} from Grade ${c.grade}?`,'Delete'))return;seniorCombinations=seniorCombinations.filter(x=>x.id!==c.id);delete seniorBlocks[c.grade];timetable=null;renderSeniorModule();save();});
 }
-function renderSeniorBlocks(){const report=$('seniorPairingReport'),editor=$('seniorBlockEditor');if(!report||!editor)return;const grades=['10','11','12'].filter(g=>seniorCombinationsFor(g).length);if(!grades.length){report.textContent='Add combinations, then analyse the subject conflicts.';editor.innerHTML='';return;}const results=grades.map(g=>computeSeniorPairing(g));report.innerHTML=results.map(r=>r.ok?`<div class="senior-good">✓ Grade ${r.grade}: valid three-block allocation found (${r.visits} search nodes).</div>`:`<div class="senior-conflict">✕ Grade ${r.grade}: ${r.reasons.map(esc).join(' ')}</div>`).join('');editor.innerHTML=results.filter(r=>r.ok).map(r=>{const saved=seniorBlocks[r.grade],savedValid=saved&&Object.keys(r.blocks).every(n=>seniorBlockFor(saved,n))&&seniorCombinationsFor(r.grade).every(c=>new Set(c.subjects.map(x=>seniorBlockFor(saved,x.name))).size===3),current=savedValid?saved:r.blocks;return `<div class="senior-combo"><strong>Grade ${r.grade} elective blocks</strong><div class="senior-grid" style="margin-top:8px">${['A','B','C'].map(block=>`<div><label>Block ${block}</label><div>${Object.keys(r.blocks).filter(n=>current[n]===block).map(n=>`<span class="senior-block">${esc(n)}</span>`).join(' ')||'<span class="small muted">No subjects</span>'}</div></div>`).join('')}</div><div class="small" style="margin-top:8px">Review or adjust each subject below. Any adjustment that creates a combination conflict is rejected.</div><div class="grid" style="margin-top:8px">${Object.keys(r.blocks).sort().map(n=>`<div><label>${esc(n)}</label><select data-senior-block-grade="${r.grade}" data-senior-block-subject="${esc(n)}">${['A','B','C'].map(x=>`<option ${current[n]===x?'selected':''}>${x}</option>`).join('')}</select></div>`).join('')}</div></div>`;}).join('');
+function renderSeniorBlocks(){const report=$('seniorPairingReport'),editor=$('seniorBlockEditor');if(!report||!editor)return;const grades=['10','11','12'].filter(g=>seniorCombinationsFor(g).length);if(!grades.length){report.textContent='Add combinations, then analyse the subject conflicts.';editor.innerHTML='';return;}const results=grades.map(g=>computeSeniorPairing(g));report.innerHTML=results.map(r=>r.ok?`<div class="senior-good">✓ Grade ${r.grade}: valid three-block allocation found (${r.visits} search nodes).</div>`:`<div class="senior-conflict">✕ Grade ${r.grade}: ${r.reasons.map(esc).join(' ')}</div>`).join('');editor.innerHTML=results.filter(r=>r.ok).map(r=>{const current=resolveSeniorBlockMap(r.grade,r);return `<div class="senior-combo"><strong>Grade ${r.grade} elective blocks</strong><div class="senior-grid" style="margin-top:8px">${['A','B','C'].map(block=>`<div><label>Block ${block}</label><div>${Object.keys(r.blocks).filter(n=>current[n]===block).map(n=>`<span class="senior-block">${esc(n)}</span>`).join(' ')||'<span class="small muted">No subjects</span>'}</div></div>`).join('')}</div><div class="small" style="margin-top:8px">Review or adjust each subject below. Any adjustment that creates a combination conflict is rejected.</div><div class="grid" style="margin-top:8px">${Object.keys(r.blocks).sort().map(n=>`<div><label>${esc(n)}</label><select data-senior-block-grade="${r.grade}" data-senior-block-subject="${esc(n)}">${['A','B','C'].map(x=>`<option ${current[n]===x?'selected':''}>${x}</option>`).join('')}</select></div>`).join('')}</div></div>`;}).join('');
  editor.querySelectorAll('[data-senior-block-grade]').forEach(sel=>sel.onchange=()=>{const g=sel.dataset.seniorBlockGrade,n=sel.dataset.seniorBlockSubject,base=seniorBlocks[g]||computeSeniorPairing(g).blocks,trial={...base,[n]:sel.value};const bad=seniorCombinationsFor(g).filter(c=>new Set(c.subjects.map(x=>seniorBlockFor(trial,x.name))).size!==3);if(bad.length){showStatus(`Cannot move ${n} to Block ${sel.value}: it would conflict with another subject in ${bad[0].name}.`,'err');sel.value=base[n];return;}seniorBlocks[g]=trial;save();renderSeniorBlocks();});
 }
 function renderSeniorRooms(){const box=$('seniorRoomList');if(!box)return;box.innerHTML=seniorRooms.length?'<div class="table-wrap"><table class="data-table"><thead><tr><th>Room</th><th>Type</th><th>Capacity</th><th></th></tr></thead><tbody>'+seniorRooms.map((r,i)=>`<tr><td>${esc(r.name)}</td><td>${esc(String(r.type||'classroom').replaceAll('_',' '))}</td><td>${r.capacity}</td><td><button type="button" class="danger" data-senior-room-delete="${i}">Remove</button></td></tr>`).join('')+'</tbody></table></div>':'<span class="muted">No Senior School rooms registered. Add suitable rooms and laboratories before generation.</span>';box.querySelectorAll('[data-senior-room-delete]').forEach(b=>b.onclick=()=>{seniorRooms.splice(+b.dataset.seniorRoomDelete,1);renderSeniorRooms();save();});}
@@ -478,7 +521,7 @@ function renderSeniorModule(){renderSeniorCombinations();renderSeniorBlocks();re
 function saveSeniorCombination(){const grade=$('seniorGrade').value,name=$('seniorComboName').value.trim(),enrolment=Math.max(1,Math.min(2000,Math.floor(Number($('seniorEnrolment').value)||1))),subjects=[1,2,3].map(i=>({pathway:$('seniorPath'+i).value,name:$('seniorSub'+i).value.trim()}));if(!name){showStatus('Enter a combination or stream name.','err');return;}if(subjects.some(x=>!x.name)){showStatus('Enter all three elective subjects.','err');return;}if(new Set(subjects.map(x=>x.name.toLowerCase())).size!==3){showStatus('A combination must contain three different subjects.','err');return;}const duplicate=seniorCombinations.find(c=>c.id!==seniorEditId&&c.grade===grade&&c.name.toLowerCase()===name.toLowerCase());if(duplicate){showStatus('That combination name already exists in this grade.','err');return;}const old=seniorEditId?seniorCombinations.find(c=>c.id===seniorEditId):null;const item={id:seniorEditId||('sc_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,7)),grade,name,enrolment,subjects};if(old){seniorCombinations=seniorCombinations.map(c=>c.id===seniorEditId?item:c);if(old.grade!==grade){delete seniorBlocks[old.grade];delete seniorBlocks[grade];}}else seniorCombinations.push(item);seniorEditId=null;$('seniorComboName').value='';$('seniorEnrolment').value='30';[1,2,3].forEach(i=>{$('seniorSub'+i).value='';$('seniorPath'+i).value='STEM';});$('saveSeniorCombo').textContent='＋ Add combination';timetable=null;renderSeniorModule();save();showStatus(old?'Senior School combination updated.':'Senior School combination registered.');}
 function analyseSeniorBlocks(){let results=['10','11','12'].filter(g=>seniorCombinationsFor(g).length).map(g=>computeSeniorPairing(g));if(results.some(r=>!r.ok)){seniorBlocks={...seniorBlocks};renderSeniorBlocks();showStatus('Some grades have impossible subject conflicts. Read the diagnostic report.','err');return;}results.forEach(r=>seniorBlocks[r.grade]=r.blocks);renderSeniorBlocks();save();showStatus('Senior School subjects successfully paired into three elective blocks.');}
 
-function restoreSaved(){try{let x=JSON.parse(localStorage.getItem('rasm360_timetable_v1')||'null');if(!x)return;assignments=x.assignments||[];customGrades=x.customGrades||[];customSubjectNames=x.customSubjectNames||[];localTeachers=x.localTeachers||[];seniorCombinations=Array.isArray(x.seniorCombinations)?x.seniorCombinations:[];seniorBlocks=x.seniorBlocks&&typeof x.seniorBlocks==='object'?x.seniorBlocks:{};seniorRooms=Array.isArray(x.seniorRooms)?x.seniorRooms:[];rules=x.rules||rules;rules.stroked=rules.stroked||[];rules.dailyMax=rules.dailyMax||{};rules.freeAfternoons=rules.freeAfternoons||[];rules.freeAfternoonsByDay=rules.freeAfternoonsByDay||Object.fromEntries(rules.freeAfternoons.map(n=>[n,[...DAYS]]));if(!Number.isFinite(Number(rules.cutoff))||Number(rules.cutoff)<100)rules.cutoff=780;timetable=x.timetable||null;adjustmentHistory=Array.isArray(x.adjustmentHistory)?x.adjustmentHistory:[];inactiveTeachers=Array.isArray(x.inactiveTeachers)?x.inactiveTeachers:[];if(x.settings)Object.entries(x.settings).forEach(([k,v])=>{if($(k))$(k).value=v});if(x.grades)window.__savedGradeSelection=x.grades;if(x.schoolBranding)schoolBranding={...schoolBranding,...x.schoolBranding};}catch(e){}}
+function restoreSaved(){try{let x=JSON.parse(localStorage.getItem('rasm360_timetable_v1')||'null');if(!x)return;assignments=x.assignments||[];customGrades=x.customGrades||[];customSubjectNames=x.customSubjectNames||[];localTeachers=x.localTeachers||[];seniorCombinations=Array.isArray(x.seniorCombinations)?x.seniorCombinations:[];seniorBlocks=x.seniorBlocks&&typeof x.seniorBlocks==='object'?x.seniorBlocks:{};seniorRooms=Array.isArray(x.seniorRooms)?x.seniorRooms:[];rules=x.rules||rules;rules.double=Array.isArray(rules.double)?rules.double:[];rules.morning=Array.isArray(rules.morning)?rules.morning:[];rules.stroked=Array.isArray(rules.stroked)?rules.stroked:[];rules.dailyMax=rules.dailyMax&&typeof rules.dailyMax==='object'?rules.dailyMax:{};rules.freeAfternoons=rules.freeAfternoons||[];rules.freeAfternoonsByDay=rules.freeAfternoonsByDay||Object.fromEntries(rules.freeAfternoons.map(n=>[n,[...DAYS]]));if(!Number.isFinite(Number(rules.cutoff))||Number(rules.cutoff)<100)rules.cutoff=780;timetable=x.timetable||null;adjustmentHistory=Array.isArray(x.adjustmentHistory)?x.adjustmentHistory:[];inactiveTeachers=Array.isArray(x.inactiveTeachers)?x.inactiveTeachers:[];if(x.settings)Object.entries(x.settings).forEach(([k,v])=>{if($(k))$(k).value=v});if(x.grades)window.__savedGradeSelection=x.grades;if(x.schoolBranding)schoolBranding={...schoolBranding,...x.schoolBranding};}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function activityCellLabel(label,dayIndex){
  const key=String(label||'').trim().toUpperCase();
@@ -496,23 +539,51 @@ function ensureThreeStrokeBlocks(){
  const seen=new Set();rules.stroked=rules.stroked.map(group=>group.filter(name=>{const k=String(name).trim().toLowerCase();if(!k||seen.has(k))return false;seen.add(k);return true;}));
 }
 function effectiveWeeklyLoadForGrade(grade){
- const normName=x=>String(x||'').trim().toLowerCase(),rows=assignments.filter(a=>String(a.grade)===String(grade));let total=0;const stroked=new Set((rules.stroked||[]).flat().map(normName));
- const bySubject=new Map();rows.forEach(a=>{const k=normName(a.subject);bySubject.set(k,(bySubject.get(k)||0)+Number(a.weekly||0));});
- bySubject.forEach((count,name)=>{if(!stroked.has(name))total+=count;});
+ const normName=x=>String(x||'').trim().toLowerCase(),rows=assignments.filter(a=>String(a.grade)===String(grade));
+ const combos=seniorCombinationsFor(seniorGradeKey(grade));
+ if(combos.length){
+  const pairing=computeSeniorPairing(seniorGradeKey(grade)),blockMap=resolveSeniorBlockMap(grade,pairing),electiveNames=new Set(combos.flatMap(c=>c.subjects.map(x=>normName(x.name))));
+  let total=rows.filter(a=>!electiveNames.has(normName(a.subject))).reduce((n,a)=>n+Number(a.weekly||0),0);
+  for(const block of ['A','B','C']){
+   const names=[...new Set(combos.flatMap(c=>c.subjects.map(x=>x.name)))].filter(name=>seniorBlockFor(blockMap,name)===block);
+   const counts=names.map(name=>rows.filter(a=>normName(a.subject)===normName(name)).reduce((n,a)=>n+Number(a.weekly||0),0));
+   if(counts.length)total+=Math.max(...counts);
+  }
+  return total;
+ }
+ const stroked=new Set((rules.stroked||[]).flat().map(normName)),bySubject=new Map();
+ rows.forEach(a=>{const k=normName(a.subject);bySubject.set(k,(bySubject.get(k)||0)+Number(a.weekly||0));});
+ let total=0;bySubject.forEach((count,name)=>{if(!stroked.has(name))total+=count;});
  (rules.stroked||[]).forEach(group=>{const counts=group.map(name=>bySubject.get(normName(name))).filter(v=>v!==undefined);if(counts.length)total+=Math.max(...counts);});
  return total;
 }
 function validateSeniorStrokeAssignments(grades){
  const issues=[],normName=x=>String(x||'').trim().toLowerCase();
  for(const grade of grades.filter(g=>['10','11','12'].includes(seniorGradeKey(g)))){
+  const combos=seniorCombinationsFor(seniorGradeKey(grade));
+  if(combos.length){
+   const pairing=computeSeniorPairing(seniorGradeKey(grade)),blockMap=resolveSeniorBlockMap(grade,pairing),subjects=[...new Set(combos.flatMap(c=>c.subjects.map(x=>x.name)))],byBlock={A:[],B:[],C:[]};
+   subjects.forEach(subject=>{
+    const block=seniorBlockFor(blockMap,subject);if(!byBlock[block])return;
+    const aa=assignments.filter(a=>String(a.grade)===String(grade)&&normName(a.subject)===normName(subject));
+    const weekly=aa.reduce((n,a)=>n+Number(a.weekly||0),0),unique=[...new Set(aa.map(a=>normName(a.teacher)))];
+    if(!Number.isInteger(weekly)||weekly<1||weekly>8)issues.push(`Grade ${grade}, Block ${block}: ${subject} has ${weekly} lessons/week; enter a whole-number allocation from 1 to 8.`);
+    if(rules.double.some(x=>normName(x)===normName(subject))&&weekly<2)issues.push(`Grade ${grade}, Block ${block}: ${subject} is marked for a weekly double but has fewer than 2 lessons.`);
+    if(unique.length!==1)issues.push(`Grade ${grade}, Block ${block}: ${subject} must have one responsible teacher assignment.`);
+    if(aa[0])byBlock[block].push({subject,teacher:normName(aa[0].teacher)});
+   });
+   for(const block of ['A','B','C']){const items=byBlock[block],duplicate=items.find((x,i)=>items.some((y,j)=>j!==i&&x.teacher===y.teacher));if(duplicate)issues.push(`Grade ${grade}, Block ${block}: ${duplicate.subject} shares teacher ${duplicate.teacher} with another subject taught simultaneously in this block.`);}
+   continue;
+  }
+  // Backward-compatible validation for non-combination / legacy stroke setups.
   (rules.stroked||[]).forEach((group,index)=>{
    const active=group.filter(name=>assignments.some(a=>String(a.grade)===String(grade)&&normName(a.subject)===normName(name)));
-   if(!active.length)return;
-   const teachers=[];
+   if(!active.length)return;const teachers=[];
    active.forEach(subject=>{
     const aa=assignments.filter(a=>String(a.grade)===String(grade)&&normName(a.subject)===normName(subject));
     const weekly=aa.reduce((n,a)=>n+Number(a.weekly||0),0),unique=[...new Set(aa.map(a=>normName(a.teacher)))];
-    if(weekly!==5)issues.push(`Grade ${grade}, Stroke ${'ABC'[index]}: ${subject} has ${weekly} lessons/week; every stroked elective must have exactly 5.`);
+    if(!Number.isInteger(weekly)||weekly<1||weekly>8)issues.push(`Grade ${grade}, Stroke ${'ABC'[index]}: ${subject} has ${weekly} lessons/week; enter a whole-number allocation from 1 to 8.`);
+    if(rules.double.some(x=>normName(x)===normName(subject))&&weekly<2)issues.push(`Grade ${grade}, Stroke ${'ABC'[index]}: ${subject} is marked for a weekly double but has fewer than 2 lessons.`);
     if(unique.length!==1)issues.push(`Grade ${grade}, Stroke ${'ABC'[index]}: ${subject} must have one responsible teacher assignment.`);
     if(aa[0])teachers.push({subject,teacher:normName(aa[0].teacher)});
    });
@@ -525,11 +596,14 @@ function validateSeniorStrokeAssignments(grades){
 function renderSeniorStrokeEditor(){
  const host=$('seniorStrokeBlocks');if(!host)return;ensureThreeStrokeBlocks();
  const all=[...SENIOR_ELECTIVE_CATALOG].sort((a,b)=>a.localeCompare(b));
- host.innerHTML=['A','B','C'].map((block,i)=>{const chosen=new Set(rules.stroked[i]||[]);return `<div class="senior-combo"><strong>STROKE ${block} <span class="pill">${chosen.size} subjects</span></strong><div class="small" style="margin:5px 0 8px">Select every subject that should run at the same time in Stroke ${block}.</div><div style="max-height:310px;overflow:auto;display:grid;grid-template-columns:1fr;gap:5px">${all.map(subject=>{const owner=rules.stroked.findIndex((g,j)=>j!==i&&g.some(x=>String(x).toLowerCase()===subject.toLowerCase()));const checked=chosen.has(subject);return `<label class="checkline" style="padding:4px 2px;opacity:${owner>=0&&!checked?'.55':'1'}"><input type="checkbox" data-senior-stroke="${i}" value="${esc(subject)}" ${checked?'checked':''} ${owner>=0&&!checked?'disabled':''}> ${esc(subject)}${owner>=0&&!checked?` <span class="small muted">(Stroke ${'ABC'[owner]})</span>`:''}</label>`;}).join('')}</div></div>`;}).join('');
- host.querySelectorAll('[data-senior-stroke]').forEach(input=>input.onchange=()=>{const i=Number(input.dataset.seniorStroke),name=input.value;rules.stroked[i]=rules.stroked[i]||[];if(input.checked){if(rules.stroked.some((g,j)=>j!==i&&g.some(x=>String(x).toLowerCase()===name.toLowerCase()))){input.checked=false;showStatus(`${name} is already assigned to another stroke.`,'err');return;}if(!rules.stroked[i].some(x=>String(x).toLowerCase()===name.toLowerCase()))rules.stroked[i].push(name);}else rules.stroked[i]=rules.stroked[i].filter(x=>String(x).toLowerCase()!==name.toLowerCase());timetable=null;save();renderSeniorStrokeEditor();});
- const count=rules.stroked.map(g=>g.length);$('strokeStatus').textContent=`Stroke A: ${count[0]} subjects · Stroke B: ${count[1]} subjects · Stroke C: ${count[2]} subjects. Each subject assigned to a Grade 10–12 stream must have exactly 5 lessons/week.`;
+ host.innerHTML=['A','B','C'].map((block,i)=>{const chosen=new Set(rules.stroked[i]||[]);return `<div class="senior-combo"><strong>STROKE ${block} <span class="pill">${chosen.size} subjects</span></strong><div class="small" style="margin:5px 0 8px">Select any number of subjects to run simultaneously in Stroke ${block}. There is no three-subject limit. Checking a subject here moves it from its previous stroke.</div><div style="max-height:310px;overflow:auto;display:grid;grid-template-columns:1fr;gap:5px">${all.map(subject=>{const owner=rules.stroked.findIndex((g,j)=>j!==i&&g.some(x=>String(x).toLowerCase()===subject.toLowerCase()));const checked=chosen.has(subject);return `<label class="checkline" style="padding:4px 2px"><input type="checkbox" data-senior-stroke="${i}" value="${esc(subject)}" ${checked?'checked':''}> ${esc(subject)}${owner>=0&&!checked?` <span class="small muted">(currently Stroke ${'ABC'[owner]} — checking moves it)</span>`:''}</label>`;}).join('')}</div></div>`;}).join('');
+ host.querySelectorAll('[data-senior-stroke]').forEach(input=>input.onchange=()=>{const i=Number(input.dataset.seniorStroke),name=input.value;rules.stroked[i]=rules.stroked[i]||[];if(input.checked){rules.stroked=rules.stroked.map((g,j)=>j===i?g:g.filter(x=>String(x).toLowerCase()!==name.toLowerCase()));if(!rules.stroked[i].some(x=>String(x).toLowerCase()===name.toLowerCase()))rules.stroked[i].push(name);}else rules.stroked[i]=rules.stroked[i].filter(x=>String(x).toLowerCase()!==name.toLowerCase());timetable=null;save();renderSeniorStrokeEditor();});
+ const count=rules.stroked.map(g=>g.length),manualWarnings=['10','11','12'].filter(g=>seniorCombinationsFor(g).length&&!manualSeniorStrokeMap(g).valid);$('strokeStatus').textContent=`Unlimited subjects per stroke · Stroke A: ${count[0]} · Stroke B: ${count[1]} · Stroke C: ${count[2]}. Subjects in the same stroke run simultaneously; move any subject between A, B and C by checking it in the destination block. Each learner combination must still have one subject in each of the three blocks. Simultaneous subjects need different available teachers and suitable rooms.`+(manualWarnings.length?` Combination-specific allocation is currently being used for Grade(s) ${manualWarnings.join(', ')} because the manual A/B/C selections do not yet give every combination one subject in each block.`:' Manual A/B/C selections are valid for the registered combinations.');
 }
-function renderRules(){const ss=subjects();['doubleList','morningList'].forEach((id,j)=>{let key=j?'morning':'double';$(id).innerHTML=ss.length?ss.map(s=>`<label class="checkline" style="padding:5px 0"><input type="checkbox" data-rule="${key}" value="${esc(s)}" ${rules[key].includes(s)?'checked':''}> ${esc(s)}</label>`).join(''):'<span class="muted small">Add assignments first.</span>';});document.querySelectorAll('[data-rule]').forEach(c=>c.onchange=()=>{let k=c.dataset.rule;if(c.checked&&!rules[k].includes(c.value))rules[k].push(c.value);else rules[k]=rules[k].filter(s=>s!==c.value);save();});
+function renderRules(){const norm=x=>String(x||'').trim().toLowerCase();const ss=subjects();
+ $('doubleList').innerHTML=ss.length?ss.map(s=>{const required=rules.double.some(x=>norm(x)===norm(s));return `<label class="checkline" style="padding:7px 4px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:9px"><input type="checkbox" data-rule="double" value="${esc(s)}" ${required?'checked':''}><span style="flex:1">${esc(s)}</span><strong class="small" style="color:${required?'#176b43':'#64748b'}">${required?'Requires one double':'Singles only'}</strong></label>`;}).join(''):'<span class="muted small">Add assignments first.</span>';
+ $('morningList').innerHTML=ss.length?ss.map(s=>`<label class="checkline" style="padding:5px 0"><input type="checkbox" data-rule="morning" value="${esc(s)}" ${rules.morning.includes(s)?'checked':''}> ${esc(s)}</label>`).join(''):'<span class="muted small">Add assignments first.</span>';
+ document.querySelectorAll('[data-rule]').forEach(c=>c.onchange=()=>{const k=c.dataset.rule;rules[k]=Array.isArray(rules[k])?rules[k]:[];if(c.checked){if(!rules[k].some(s=>norm(s)===norm(c.value)))rules[k].push(c.value);}else{rules[k]=rules[k].filter(s=>norm(s)!==norm(c.value));}save();if(k==='double')renderRules();});
  const freq=$('dailyFrequencyList');
  if(freq){
    freq.innerHTML=ss.length?ss.map(sub=>`<div style="display:flex;align-items:center;gap:8px;padding:7px;border:1px solid #d5e1f1;border-radius:7px"><strong style="flex:1">${esc(sub)}</strong><select data-daily-max="${esc(sub)}" style="width:125px"><option value="auto">Auto (weekly load)</option><option value="1">Once/day</option><option value="2">Twice/day</option><option value="3">3 times/day</option></select></div>`).join(''):'<span class="muted small">Add assignments first.</span>';
@@ -581,10 +655,14 @@ function renderTeacherWorkloadPreview(){
   const entry=grouped.get(key),weekly=Math.max(0,Number(a.weekly)||0);
   entry.lessons+=weekly;entry.items.push({subject:String(a.subject||'Unspecified subject'),grade:String(a.grade||'Unspecified grade'),weekly});
  });
- const teachers=[...grouped.values()].sort((a,b)=>b.lessons-a.lessons||a.teacher.localeCompare(b.teacher));
- const totalLessons=teachers.reduce((n,t)=>n+t.lessons,0);
+ // Guided-study / project periods are real supervision duties even though they are
+ // deliberately not counted as instructional subject lessons.
+ const supervisionSeen=new Set();
+ if(timetable?.combinationGrid)Object.entries(timetable.combinationGrid).forEach(([comboId,cg])=>{const combo=seniorCombinations.find(c=>c.id===comboId);if(!combo)return;for(let d=0;d<5;d++)for(let p=1;p<=8;p++){const x=cg?.[d]?.[p];if(!x?.activity||!x.teacher)continue;const key=`${combo.grade}|${String(x.teacher).toLowerCase()}|${d}|${p}|${String(x.activityFor||'').toLowerCase()}`;if(supervisionSeen.has(key))continue;supervisionSeen.add(key);const tkey=String(x.teacher).toLowerCase();if(!grouped.has(tkey))grouped.set(tkey,{teacher:x.teacher,lessons:0,items:[],supervision:0});grouped.get(tkey).supervision=(grouped.get(tkey).supervision||0)+1;}});
+ const teachers=[...grouped.values()].sort((a,b)=>(b.lessons+(b.supervision||0))-(a.lessons+(a.supervision||0))||a.teacher.localeCompare(b.teacher));
+ const totalLessons=teachers.reduce((n,t)=>n+t.lessons,0),totalSupervision=teachers.reduce((n,t)=>n+(t.supervision||0),0);
  if(!teachers.length){host.innerHTML='<div class="teacher-workload-empty">No teacher-subject assignments have been added yet. Add assignments under Setup to see the workload breakdown here.</div>';return;}
- host.innerHTML=`<div class="teacher-workload-summary"><div class="teacher-workload-stat"><span class="small">Teachers with assignments</span><strong>${teachers.length}</strong></div><div class="teacher-workload-stat"><span class="small">Total assigned lessons per week</span><strong>${totalLessons}</strong></div><div class="teacher-workload-stat"><span class="small">Subject-grade assignments</span><strong>${assignments.length}</strong></div></div><div class="teacher-workload-grid">${teachers.map(t=>`<article class="teacher-workload-card"><h3><span>${esc(t.teacher)}</span><span class="teacher-workload-total">${t.lessons} lessons/week</span></h3><ul>${t.items.sort((a,b)=>a.grade.localeCompare(b.grade,undefined,{numeric:true})||a.subject.localeCompare(b.subject)).map(x=>`<li><span>${esc(x.subject)} — ${esc(x.grade)}</span><strong>${x.weekly} ${x.weekly===1?'lesson':'lessons'}</strong></li>`).join('')}</ul></article>`).join('')}</div>`;
+ host.innerHTML=`<div class="teacher-workload-summary"><div class="teacher-workload-stat"><span class="small">Teachers with assignments</span><strong>${teachers.length}</strong></div><div class="teacher-workload-stat"><span class="small">Instructional lessons/week</span><strong>${totalLessons}</strong></div><div class="teacher-workload-stat"><span class="small">Guided-study supervision periods</span><strong>${totalSupervision}</strong></div><div class="teacher-workload-stat"><span class="small">Subject-grade assignments</span><strong>${assignments.length}</strong></div></div><div class="teacher-workload-grid">${teachers.map(t=>`<article class="teacher-workload-card"><h3><span>${esc(t.teacher)}</span><span class="teacher-workload-total">${t.lessons} lessons/week</span></h3>${t.supervision?`<p class="small" style="margin:0 0 7px;color:#087e8b">Also supervises ${t.supervision} guided-study / project period(s) per week.</p>`:''}<ul>${t.items.sort((a,b)=>a.grade.localeCompare(b.grade,undefined,{numeric:true})||a.subject.localeCompare(b.subject)).map(x=>`<li><span>${esc(x.subject)} — ${esc(x.grade)}</span><strong>${x.weekly} ${x.weekly===1?'lesson':'lessons'}</strong></li>`).join('')}</ul></article>`).join('')}</div>`;
 }
 function renderAll(){renderTeacherWorkloadPreview();const selectedTeacher=$('viewTeacher')?.value||'';const selectedAssignTeacher=$('assignTeacher')?.value||'';const selectedAssignGrade=$('assignGrade')?.value||'';const selectedViewGrade=$('viewGrade')?.value||'';renderAssignments();let all=gradeListFromRecords(),gs=selectedGrades();$('assignGrade').innerHTML=all.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');if(all.includes(selectedAssignGrade))$('assignGrade').value=selectedAssignGrade;else if(all.length)$('assignGrade').value=all[0];$('viewGrade').innerHTML=all.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join('');if(all.includes(selectedViewGrade))$('viewGrade').value=selectedViewGrade;else $('viewGrade').value=(gs[0]||all[0]||'');let ts=registeredTeacherNames();$('assignTeacher').innerHTML='<option value="">Select registered teacher</option>'+ts.map((t,i)=>`<option value="${esc(t)}">${String(i+1).padStart(2,'0')} — ${esc(t)}</option>`).join('');if(ts.includes(selectedAssignTeacher))$('assignTeacher').value=selectedAssignTeacher;$('teacherCountNote').textContent=`${ts.length} registered teacher(s) available in the subject assignment pop-up.`;$('viewTeacher').innerHTML='<option value="">Select a teacher</option>'+ts.map((t,i)=>`<option value="${esc(t)}">${String(i+1).padStart(2,'0')} — ${esc(t)}</option>`).join('');if(ts.includes(selectedTeacher))$('viewTeacher').value=selectedTeacher;renderSubjectPicker();renderSubjectAssignPanel();renderTeacherFreePicker();refreshAdjustmentControls();}
 function renderTeacherFreePicker(){
@@ -684,7 +762,7 @@ async function generate(){
       const weekly=effectiveWeeklyLoadForGrade(g);
       if(weekly!==40)issues.push(`Grade ${g}: ${weekly} effective timetable periods; exactly 40 are required (the five lessons in each elective stroke count once, not once per subject).`);
       const combos=seniorCombinationsFor(seniorGradeKey(g));
-      if(combos.length){assignments.filter(a=>a.grade===g).forEach(a=>{const q=seniorTeacherQualifications(a.teacher);if(!q)issues.push(`Grade ${g}: qualification for ${a.teacher} (${a.subject}) is not recorded. Register the teacher with this subject before generation.`);else if(!q.some(x=>norm(x)===norm(a.subject)))issues.push(`Qualification mismatch: ${a.teacher} is not registered as qualified to teach ${a.subject} in Grade ${g}.`);});const pairing=computeSeniorPairing(seniorGradeKey(g));if(!pairing.ok)issues.push(...pairing.reasons);else{const chosen=seniorBlocks[g]||seniorBlocks[seniorGradeKey(g)]||pairing.blocks;combos.forEach(c=>c.subjects.forEach(sub=>{const aa=assignments.filter(a=>a.grade===g&&norm(a.subject)===norm(sub.name));if(!aa.length)issues.push(`Grade ${g}: ${sub.name} from ${c.name} has no teacher-subject-grade assignment.`);else if(aa.reduce((n,a)=>n+Number(a.weekly||0),0)<1)issues.push(`Grade ${g}: elective ${sub.name} must have at least one weekly lesson.`);else if(new Set(aa.map(a=>norm(a.teacher))).size!==1)issues.push(`Grade ${g}: elective ${sub.name} must have one responsible qualified teacher across its combinations.`);}));if(combos.length&&!seniorRooms.length)issues.push(`Grade ${g}: register Senior School rooms/laboratories with capacities before generating elective blocks.`);}}
+      if(combos.length){assignments.filter(a=>a.grade===g).forEach(a=>{const q=seniorTeacherQualifications(a.teacher);if(!q)issues.push(`Grade ${g}: qualification for ${a.teacher} (${a.subject}) is not recorded. Register the teacher with this subject before generation.`);else if(!q.some(x=>norm(x)===norm(a.subject)))issues.push(`Qualification mismatch: ${a.teacher} is not registered as qualified to teach ${a.subject} in Grade ${g}.`);});const pairing=computeSeniorPairing(seniorGradeKey(g)),chosen=resolveSeniorBlockMap(g,pairing),bad=combos.filter(c=>new Set(c.subjects.map(x=>seniorBlockFor(chosen,x.name))).size!==3);if(bad.length)issues.push(`Grade ${g}: ${bad[0].name} does not have exactly one elective in each of Stroke A, B and C. Move the subjects between strokes before generating.`);combos.forEach(c=>c.subjects.forEach(sub=>{const aa=assignments.filter(a=>a.grade===g&&norm(a.subject)===norm(sub.name));if(!aa.length)issues.push(`Grade ${g}: ${sub.name} from ${c.name} has no teacher-subject-grade assignment.`);else if(aa.reduce((n,a)=>n+Number(a.weekly||0),0)<1)issues.push(`Grade ${g}: elective ${sub.name} must have at least one weekly lesson.`);else if(new Set(aa.map(a=>norm(a.teacher))).size!==1)issues.push(`Grade ${g}: elective ${sub.name} must have one responsible qualified teacher across its combinations.`);}));if(combos.length&&!seniorRooms.length)issues.push(`Grade ${g}: register Senior School rooms/laboratories with capacities before generating elective blocks.`);}
     });
     issues.push(...validateSeniorStrokeAssignments(seniorGrades));
     if(issues.length){showStatus('Senior School pre-generation checks failed: '+issues.join(' | '),'err');$('checks').textContent=issues.join('\n');return;}
@@ -1115,46 +1193,138 @@ async function generate(){
     if(lateFormal)failed.push(`${g}: ${lateFormal} formal subject lesson(s) were placed after 2:40 PM; these periods must remain for informal lessons and activities.`);
     if(placedFormal+(ppi?.activity?1:0)!==35)failed.push(`${g}: weekly total is ${placedFormal+(ppi?.activity?1:0)} of 35 lessons including PPI; timetable cannot be certified.`);
   }
-  // Stream-aware Senior School elective scheduler. Core lessons are solved first;
-  // then the 15 elective periods are synchronised as five sessions for each A/B/C block.
+  // Stream-aware Senior School elective scheduler.
+  // Each subject keeps its own weekly allocation. A selected double subject
+  // receives one consecutive pair; other subjects in that stroke retain their
+  // own single-period lessons. Any remaining shared block periods become a
+  // supervised guided-study / elective-project activity for that combination.
   const combinationGrid={},seniorBlockSchedule={},seniorRoomUse=[],seniorTeacherSlotBusy=new Set(),seniorRoomSlotBusy=new Set();
   for(const g of gs.filter(x=>['10','11','12'].includes(seniorGradeKey(x)))){
     const combos=seniorCombinationsFor(seniorGradeKey(g));if(!combos.length)continue;
-    const computedPairing=computeSeniorPairing(seniorGradeKey(g));const savedBlockMap=seniorBlocks[seniorGradeKey(g)]||seniorBlocks[g];const savedBlockMapValid=!!savedBlockMap&&computedPairing.ok&&Object.keys(computedPairing.blocks).every(n=>['A','B','C'].includes(seniorBlockFor(savedBlockMap,n)))&&combos.every(c=>new Set(c.subjects.map(x=>seniorBlockFor(savedBlockMap,x.name))).size===3);const blockMap=savedBlockMapValid?savedBlockMap:(computedPairing.blocks||{});
+    const computedPairing=computeSeniorPairing(seniorGradeKey(g));const blockMap=resolveSeniorBlockMap(g,computedPairing);
     const electiveSubjects=[...new Set(combos.flatMap(c=>c.subjects.map(x=>x.name)))];
     const byBlock={A:[],B:[],C:[]};
-    electiveSubjects.forEach(subject=>{const block=seniorBlockFor(blockMap,subject);if(!byBlock[block])byBlock[block]=[];const a=assignments.find(x=>x.grade===g&&norm(x.subject)===norm(subject));if(a)byBlock[block].push({subject,teacher:a.teacher,weekly:assignments.filter(x=>x.grade===g&&norm(x.subject)===norm(subject)).reduce((n,x)=>n+Number(x.weekly||0),0),qualification:seniorTeacherQualifications(a.teacher)||[]});});
-    const busy=new Set(seniorTeacherSlotBusy);for(const gg of gs)for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){const c=grid[gg]?.[d]?.[p];for(const m of c?.members||[])if(m.teacher)busy.add(`${norm(m.teacher)}|${d}|${p}`);}
+    electiveSubjects.forEach(subject=>{
+      const block=seniorBlockFor(blockMap,subject);if(!byBlock[block])byBlock[block]=[];
+      const aa=assignments.filter(x=>x.grade===g&&norm(x.subject)===norm(subject));
+      const a=aa[0];if(a)byBlock[block].push({subject,teacher:a.teacher,weekly:aa.reduce((n,x)=>n+Number(x.weekly||0),0),qualification:seniorTeacherQualifications(a.teacher)||[]});
+    });
+    const busy=new Set(seniorTeacherSlotBusy);
+    for(const gg of gs)for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){
+      const c=grid[gg]?.[d]?.[p];for(const m of c?.members||[])if(m.teacher)busy.add(`${norm(m.teacher)}|${d}|${p}`);
+    }
     const allBlank=[];for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++)if(!grid[g]?.[d]?.[p])allBlank.push({d,p});
     const chosenSlots=[],usedRooms=seniorRoomSlotBusy;let blockFailure='';
-    for(const block of ['A','B','C']){
-      const subjects=byBlock[block]||[];if(!subjects.length){blockFailure+=`Grade ${g} Block ${block} has no assigned elective subjects. `;continue;}const sessionCounts=new Set(subjects.map(x=>Number(x.weekly)||0));const blockSessionCount=subjects[0].weekly;if(sessionCounts.size!==1||blockSessionCount<1){blockFailure+=`Grade ${g} Block ${block}: all subjects must have the same positive weekly lesson count to synchronise. `;continue;}
-      const valid=[];
-      for(const slot of allBlank.filter(x=>!chosenSlots.some(y=>y.d===x.d&&y.p===x.p))){
-        const teachers=subjects.map(x=>norm(x.teacher));if(new Set(teachers).size!==teachers.length)continue;
-        if(subjects.some(x=>busy.has(`${norm(x.teacher)}|${slot.d}|${slot.p}`)))continue;
-        if(subjects.some(x=>freeAfternoonTeacherDays.has(`${norm(x.teacher)}|${slot.d}`)&&afternoonReleasePeriods.includes(slot.p)))continue;
-        if(subjects.some(x=>!mathAllowed(x.subject,slot.p)))continue;
-        const proposed=[],proposedRoomIds=new Set();let ok=true;
-        for(const item of subjects){const enrolment=combos.filter(c=>c.subjects.some(x=>norm(x.name)===norm(item.subject))).reduce((n,c)=>n+(Number(c.enrolment)||0),0);const wanted=seniorRoomTypeFor(item.subject);const room=seniorRooms.find(r=>r.type===wanted&&Number(r.capacity)>=enrolment&&!usedRooms.has(`${r.id}|${slot.d}|${slot.p}`)&&!proposedRoomIds.has(r.id));if(!room){ok=false;break;}proposedRoomIds.add(room.id);proposed.push({subject:item.subject,teacher:item.teacher,room:room.name,roomId:room.id,enrolment,capacity:room.capacity});}
-        if(ok)valid.push({ ...slot, rooms:proposed });
+
+    const buildSlotCandidate=(slot,preferredRoomIds=null)=>{
+      if(chosenSlots.some(y=>y.d===slot.d&&y.p===slot.p))return null;
+      const subjects=byBlock[slot.block]||[];
+      const teachers=subjects.map(x=>norm(x.teacher));
+      if(new Set(teachers).size!==teachers.length)return null;
+      if(subjects.some(x=>busy.has(`${norm(x.teacher)}|${slot.d}|${slot.p}`)))return null;
+      if(subjects.some(x=>freeAfternoonTeacherDays.has(`${norm(x.teacher)}|${slot.d}`)&&afternoonReleasePeriods.includes(slot.p)))return null;
+      if(subjects.some(x=>!mathAllowed(x.subject,slot.p)))return null;
+      const proposed=[],proposedRoomIds=new Set();
+      for(const item of subjects){
+        const enrolment=combos.filter(c=>c.subjects.some(x=>norm(x.name)===norm(item.subject))).reduce((n,c)=>n+(Number(c.enrolment)||0),0);
+        const wanted=seniorRoomTypeFor(item.subject);
+        const preferred=preferredRoomIds?.[norm(item.subject)];
+        const room=seniorRooms.find(r=>r.type===wanted&&Number(r.capacity)>=enrolment&&(!preferred||String(r.id)===String(preferred))&&!usedRooms.has(`${r.id}|${slot.d}|${slot.p}`)&&!proposedRoomIds.has(r.id));
+        if(!room)return null;
+        proposedRoomIds.add(room.id);proposed.push({subject:item.subject,teacher:item.teacher,room:room.name,roomId:room.id,enrolment,capacity:room.capacity,roomType:wanted});
       }
-      // Spread the five synchronised sessions across weekdays where possible.
-      const chosen=[];for(const slot of valid.sort((a,b)=>a.d-b.d||a.p-b.p)){if(chosen.length>=blockSessionCount)break;if(chosen.some(x=>x.d===slot.d))continue;chosen.push(slot);}
-      if(chosen.length<blockSessionCount){for(const slot of valid){if(chosen.length>=blockSessionCount)break;if(!chosen.some(x=>x.d===slot.d&&x.p===slot.p))chosen.push(slot);}}
-      if(chosen.length!==blockSessionCount){blockFailure+=`Grade ${g} Block ${block}: only ${chosen.length}/${blockSessionCount} simultaneous sessions could be allocated. Check teacher availability, qualified staff and room capacities. `;continue;}
-      chosen.forEach(slot=>{chosenSlots.push(slot);slot.rooms.forEach(r=>usedRooms.add(`${r.roomId}|${slot.d}|${slot.p}`));});
-      seniorBlockSchedule[`${g}|${block}`]=chosen.map(x=>({day:x.d,period:x.p,rooms:x.rooms}));
-      chosen.forEach(slot=>subjects.forEach(item=>seniorTeacherSlotBusy.add(`${norm(item.teacher)}|${slot.d}|${slot.p}`)));
+      return {...slot,rooms:proposed};
+    };
+
+    for(const block of ['A','B','C']){
+      const subjects=byBlock[block]||[];
+      if(!subjects.length){blockFailure+=`Grade ${g} Block ${block} has no assigned elective subjects. `;continue;}
+      const invalid=subjects.filter(x=>!Number.isInteger(Number(x.weekly))||Number(x.weekly)<1||Number(x.weekly)>8);
+      if(invalid.length){blockFailure+=`Grade ${g} Block ${block}: invalid weekly lesson count for ${invalid.map(x=>x.subject).join(', ')}. `;continue;}
+      const blockPeriodCount=Math.max(...subjects.map(x=>Number(x.weekly)||0));
+      const doubleSubjects=subjects.filter(x=>rules.double.some(s=>norm(s)===norm(x.subject)));
+      if(doubleSubjects.some(x=>Number(x.weekly)<2)){blockFailure+=`Grade ${g} Block ${block}: ${doubleSubjects.filter(x=>Number(x.weekly)<2).map(x=>x.subject).join(', ')} is marked for a double but has fewer than 2 weekly periods. `;continue;}
+      if(doubleSubjects.length&&blockPeriodCount<2){blockFailure+=`Grade ${g} Block ${block}: a double lesson needs at least two weekly block periods. `;continue;}
+
+      const blockCandidates=[];
+      for(const slot of allBlank){
+        if(chosenSlots.some(y=>y.d===slot.d&&y.p===slot.p))continue;
+        const candidate=buildSlotCandidate({...slot,block});if(candidate)blockCandidates.push(candidate);
+      }
+      const completeBlockSelection=initial=>{
+        const selected=initial.slice(),remaining=blockCandidates.filter(c=>!selected.some(x=>x.d===c.d&&x.p===c.p)),selectedDays=new Set(selected.map(x=>x.d));
+        // Prefer one period on each additional day before using a second period on an existing day.
+        for(const c of remaining){if(selected.length>=blockPeriodCount)break;if(selectedDays.has(c.d))continue;selected.push(c);selectedDays.add(c.d);}
+        if(selected.length<blockPeriodCount){for(const c of remaining){if(selected.length>=blockPeriodCount)break;if(!selected.some(x=>x.d===c.d&&x.p===c.p))selected.push(c);}}
+        return selected.length===blockPeriodCount?selected:null;
+      };
+      let chosen=null,pair=null;
+      if(doubleSubjects.length){
+        // Try every legal consecutive pair; keep the first one that also leaves
+        // enough legal periods for the rest of this stroke's weekly block.
+        for(const first of blockCandidates){
+          if(!validDoubleStarts.includes(first.p))continue;
+          const secondBase={d:first.d,p:first.p+1,block};
+          if(chosenSlots.some(y=>y.d===secondBase.d&&y.p===secondBase.p))continue;
+          const preferred=Object.fromEntries(first.rooms.map(r=>[norm(r.subject),r.roomId]));
+          const second=buildSlotCandidate(secondBase,preferred);if(!second)continue;
+          const candidatePair=[first,second],candidateSelection=completeBlockSelection(candidatePair);
+          if(candidateSelection){pair=candidatePair;chosen=candidateSelection;break;}
+        }
+        if(!chosen){blockFailure+=`Grade ${g} Block ${block}: no consecutive pair with the same compatible rooms, available qualified teachers and enough remaining legal periods could be found for the required double lesson(s). `;continue;}
+      }else chosen=completeBlockSelection([]);
+      if(!chosen){blockFailure+=`Grade ${g} Block ${block}: insufficient legal periods to allocate all ${blockPeriodCount} shared block periods. Check teacher availability, qualified staff and room capacities. `;continue;}
+
+      chosen.forEach((slot,index)=>{
+        slot.blockIndex=index;slot.doublePair=!!pair&&index<2;
+        chosenSlots.push(slot);
+        slot.rooms.forEach(r=>usedRooms.add(`${r.roomId}|${slot.d}|${slot.p}`));
+        subjects.forEach(item=>seniorTeacherSlotBusy.add(`${norm(item.teacher)}|${slot.d}|${slot.p}`));
+      });
+      seniorBlockSchedule[`${g}|${block}`]=chosen.map(x=>({day:x.d,period:x.p,rooms:x.rooms,blockIndex:x.blockIndex,doublePair:x.doublePair}));
     }
+
     const core=grid[g];
-    combos.forEach(combo=>{const cg={};for(let d=0;d<5;d++){cg[d]={};for(let p=1;p<=set.periods;p++){const base=core?.[d]?.[p];cg[d][p]=base?JSON.parse(JSON.stringify(base)):null;}}
-      for(const block of ['A','B','C']){const subject=combo.subjects.find(x=>seniorBlockFor(blockMap,x.name)===block);if(!subject)continue;const a=assignments.find(x=>x.grade===g&&norm(x.subject)===norm(subject.name));const sessions=seniorBlockSchedule[`${g}|${block}`]||[];sessions.forEach(session=>{const room=session.rooms.find(r=>norm(r.subject)===norm(subject.name));cg[session.day][session.period]={subject:subject.name,teacher:a?.teacher||'',members:[{subject:subject.name,teacher:a?.teacher||''}],elective:true,block,combination:combo.name,room:room?.room||'',roomCapacity:room?.capacity||0,roomType:seniorRoomTypeFor(subject.name),enrolment:room?.enrolment||combo.enrolment};});}
+    combos.forEach(combo=>{
+      const cg={};for(let d=0;d<5;d++){cg[d]={};for(let p=1;p<=set.periods;p++){const base=core?.[d]?.[p];cg[d][p]=base?JSON.parse(JSON.stringify(base)):null;}}
+      for(const block of ['A','B','C']){
+        const subject=combo.subjects.find(x=>seniorBlockFor(blockMap,x.name)===block);if(!subject)continue;
+        const aa=assignments.filter(x=>x.grade===g&&norm(x.subject)===norm(subject.name));const a=aa[0];
+        const weekly=aa.reduce((n,x)=>n+Number(x.weekly||0),0);const requiresDouble=rules.double.some(x=>norm(x)===norm(subject.name));
+        const sessions=seniorBlockSchedule[`${g}|${block}`]||[];
+        const doubleIndexes=new Set(requiresDouble?[0,1]:[]);
+        // Double-required subjects use the consecutive pair first, then singles.
+        let lessonIndexes=[];
+        if(requiresDouble){lessonIndexes=[0,1];for(let i=2;i<sessions.length&&lessonIndexes.length<weekly;i++)lessonIndexes.push(i);}
+        else{
+          // Prefer one single lesson per day. If all five periods are required and
+          // another subject in the stroke needs a double, both paired periods remain
+          // two distinct single lessons for this subject; they are never labelled DOUBLE.
+          const byDay=new Map();sessions.forEach((x,i)=>{if(!byDay.has(x.day))byDay.set(x.day,[]);byDay.get(x.day).push(i);});
+          for(const indexes of byDay.values()){if(lessonIndexes.length>=weekly)break;lessonIndexes.push(indexes[0]);}
+          if(lessonIndexes.length<weekly){for(let i=0;i<sessions.length&&lessonIndexes.length<weekly;i++)if(!lessonIndexes.includes(i))lessonIndexes.push(i);}
+        }
+        const lessonSet=new Set(lessonIndexes);
+        sessions.forEach((session,index)=>{
+          const room=session.rooms.find(r=>norm(r.subject)===norm(subject.name));if(!room)return;
+          if(lessonSet.has(index)){
+            const isDouble=requiresDouble&&doubleIndexes.has(index);
+            cg[session.day][session.period]={subject:subject.name,teacher:a?.teacher||'',members:[{subject:subject.name,teacher:a?.teacher||''}],elective:true,block,combination:combo.name,room:room.room,roomCapacity:room.capacity,roomType:seniorRoomTypeFor(subject.name),enrolment:room.enrolment||combo.enrolment,double:isDouble,doublePart:isDouble?(index===0?1:2):undefined};
+          }else{
+            // The learner remains with the selected option line under supervision,
+            // but this activity is NOT counted as an instructional subject lesson.
+            const activityLabel='Guided Independent Study / Elective Project';
+            cg[session.day][session.period]={subject:activityLabel,teacher:a?.teacher||'',members:[{subject:activityLabel,teacher:a?.teacher||''}],activity:true,activityLabel,activityFor:subject.name,elective:true,block,combination:combo.name,room:room.room,roomCapacity:room.capacity,roomType:seniorRoomTypeFor(subject.name),enrolment:room.enrolment||combo.enrolment};
+          }
+        });
+      }
       combinationGrid[combo.id]=cg;
     });
     if(blockFailure)failed.push(blockFailure);
-    // Record the first combination as the grade-level default view; the other streams remain separately addressable.
+    // Record the first combination as the grade-level default view; all other
+    // combinations remain separately addressable in combinationGrid.
     if(combos[0]&&combinationGrid[combos[0].id])grid[g]=combinationGrid[combos[0].id];
+
     // Allocate and capacity-check rooms for the shared core lessons as well as elective blocks.
     const totalGradeEnrolment=combos.reduce((n,c)=>n+(Number(c.enrolment)||0),0);
     for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){
@@ -1171,10 +1341,10 @@ async function generate(){
 
   for(const g of gs.filter(x=>['10','11','12'].includes(seniorGradeKey(x)))){
     const combos=seniorCombinationsFor(seniorGradeKey(g));for(const combo of combos){const cg=combinationGrid[combo.id];let occupied=0,empty=[];for(let d=0;d<5;d++)for(let p=1;p<=8;p++){if(cg?.[d]?.[p])occupied++;else empty.push(`${DAYS[d]} Lesson ${p}`);}if(occupied!==40)failed.push(`Grade ${g} / ${combo.name}: ${occupied}/40 periods occupied. Missing: ${empty.slice(0,12).join(', ')}${empty.length>12?'…':''}.`);
-      for(let d=0;d<5;d++)for(let p=1;p<=8;p++){const x=cg?.[d]?.[p];if(!x)continue;if(!x.activity){const room=seniorRooms.find(r=>r.name===x.room),members=x.members||[{subject:x.subject,teacher:x.teacher}],types=[...new Set(members.map(m=>seniorRoomTypeFor(m.subject)))],special=types.filter(t=>t!=='classroom'),expected=special.length===1?special[0]:(special.length===0?'classroom':'');if(!room||!expected||room.type!==expected||Number(room.capacity)<Number(x.enrolment))failed.push(`${combo.name}: ${members.map(m=>m.subject).join(' / ')} on ${DAYS[d]} Lesson ${p} has no valid compatible room with capacity for ${x.enrolment}.`);if(x.elective&&!seniorTeacherQualifications(x.teacher)?.some(q=>norm(q)===norm(x.subject)))failed.push(`${combo.name}: ${x.teacher} is not verified as qualified for ${x.subject}.`);}if(p<8){const y=cg?.[d]?.[p+1];if(y&&isLanguage(x.subject)&&isLanguage(y.subject))failed.push(`${combo.name}: language lessons ${x.subject} and ${y.subject} are consecutive on ${DAYS[d]} Lessons ${p}–${p+1}.`);}}
+      for(let d=0;d<5;d++)for(let p=1;p<=8;p++){const x=cg?.[d]?.[p];if(!x)continue;if(x.elective){const room=seniorRooms.find(r=>r.name===x.room),roomSubject=x.activity?(x.activityFor||x.subject):x.subject,expected=seniorRoomTypeFor(roomSubject);if(!room||room.type!==expected||Number(room.capacity)<Number(x.enrolment))failed.push(`${combo.name}: ${x.activity?'guided activity for '+roomSubject:x.subject} on ${DAYS[d]} Lesson ${p} has no valid compatible room with capacity for ${x.enrolment}.`);if(!seniorTeacherQualifications(x.teacher)?.some(q=>norm(q)===norm(roomSubject)))failed.push(`${combo.name}: ${x.teacher} is not verified as qualified to teach or supervise ${roomSubject}.`);}else if(!x.activity){const room=seniorRooms.find(r=>r.name===x.room),members=x.members||[{subject:x.subject,teacher:x.teacher}],types=[...new Set(members.map(m=>seniorRoomTypeFor(m.subject)))],special=types.filter(t=>t!=='classroom'),expected=special.length===1?special[0]:(special.length===0?'classroom':'');if(!room||!expected||room.type!==expected||Number(room.capacity)<Number(x.enrolment))failed.push(`${combo.name}: ${members.map(m=>m.subject).join(' / ')} on ${DAYS[d]} Lesson ${p} has no valid compatible room with capacity for ${x.enrolment}.`);}if(p<8){const y=cg?.[d]?.[p+1];if(y&&isLanguage(x.subject)&&isLanguage(y.subject))failed.push(`${combo.name}: language lessons ${x.subject} and ${y.subject} are consecutive on ${DAYS[d]} Lessons ${p}–${p+1}.`);}}
     }
-    const pairingForCheck=computeSeniorPairing(seniorGradeKey(g)),savedForCheck=seniorBlocks[seniorGradeKey(g)]||seniorBlocks[g],validSaved=!!savedForCheck&&pairingForCheck.ok&&Object.keys(pairingForCheck.blocks).every(n=>['A','B','C'].includes(seniorBlockFor(savedForCheck,n)))&&combos.every(c=>new Set(c.subjects.map(x=>seniorBlockFor(savedForCheck,x.name))).size===3),mapForCheck=validSaved?savedForCheck:pairingForCheck.blocks;
-    for(const block of ['A','B','C']){const subjects=[...new Set(combos.flatMap(c=>c.subjects.map(x=>x.name)))].filter(n=>seniorBlockFor(mapForCheck,n)===block),counts=new Set(subjects.map(n=>assignments.filter(a=>a.grade===g&&norm(a.subject)===norm(n)).reduce((v,a)=>v+Number(a.weekly||0),0))),expected=counts.size===1?[...counts][0]:0,sessions=seniorBlockSchedule[`${g}|${block}`]||[];if(counts.size!==1||sessions.length!==expected)failed.push(`Grade ${g} Block ${block}: ${sessions.length} synchronised sessions allocated; expected ${expected||'a matching weekly count for every block subject'}.`);const signatures=new Set(sessions.map(x=>`${x.day}|${x.period}`));if(signatures.size!==sessions.length)failed.push(`Grade ${g} Block ${block}: duplicate synchronised session slots detected.`);}
+    const pairingForCheck=computeSeniorPairing(seniorGradeKey(g)),mapForCheck=resolveSeniorBlockMap(g,pairingForCheck);
+    for(const block of ['A','B','C']){const subjects=[...new Set(combos.flatMap(c=>c.subjects.map(x=>x.name)))].filter(n=>seniorBlockFor(mapForCheck,n)===block),counts=subjects.map(n=>assignments.filter(a=>a.grade===g&&norm(a.subject)===norm(n)).reduce((v,a)=>v+Number(a.weekly||0),0)),expected=counts.length?Math.max(...counts):0,sessions=seniorBlockSchedule[`${g}|${block}`]||[];if(counts.some(n=>!Number.isInteger(n)||n<1||n>8)||sessions.length!==expected)failed.push(`Grade ${g} Block ${block}: ${sessions.length} shared block periods allocated; expected ${expected} (the highest individual subject allocation). Subject lesson counts may differ.`);const signatures=new Set(sessions.map(x=>`${x.day}|${x.period}`));if(signatures.size!==sessions.length)failed.push(`Grade ${g} Block ${block}: duplicate synchronised session slots detected.`);subjects.forEach(subject=>{const weekly=assignments.filter(a=>a.grade===g&&norm(a.subject)===norm(subject)).reduce((v,a)=>v+Number(a.weekly||0),0),isDouble=rules.double.some(x=>norm(x)===norm(subject));if(isDouble){if(weekly<2)failed.push(`Grade ${g} ${subject}: a weekly double is selected but only ${weekly} lesson(s) are assigned.`);const combo=combos.find(c=>c.subjects.some(x=>norm(x.name)===norm(subject)));const cg=combo&&combinationGrid[combo.id];let pairs=0;for(let d=0;d<5;d++)for(let p=1;p<set.periods;p++){const a=cg?.[d]?.[p],b=cg?.[d]?.[p+1];if(a?.subject&&b?.subject&&norm(a.subject)===norm(subject)&&norm(b.subject)===norm(subject)&&a.double&&b.double&&a.doublePart===1&&b.doublePart===2)pairs++;}if(pairs!==1)failed.push(`Grade ${g}: ${subject} in Block ${block} has ${pairs} verified consecutive double pairs; exactly one is required.`);}});} 
   }
   // Exact assignment count verification.
   for(const g of gs)for(const a of assignments.filter(x=>x.grade===g&&!/^ppi$/i.test(String(x.subject||'').trim()))){
@@ -1189,11 +1359,12 @@ async function generate(){
     if(actual!==a.weekly)failed.push(`${g} — ${a.subject} (${a.teacher}): expected ${a.weekly}, placed ${actual} in each applicable stream.`);
   }
   for(const g of gs)for(let d=0;d<5;d++){
+    const seniorElectives=seniorElectiveNamesByGrade[g]||new Set();
     const seen=new Map();
     for(let p=1;p<=set.periods;p++){
-      const cell=grid[g]?.[d]?.[p];if(!cell)continue;
+      const cell=grid[g]?.[d]?.[p];if(!cell||cell.activity)continue;
       for(const member of cell.members||[]){
-        const key=norm(member.subject);if(!seen.has(key))seen.set(key,new Set());seen.get(key).add(cell);
+        const key=norm(member.subject);if(seniorElectives.has(key))continue;if(!seen.has(key))seen.set(key,new Set());seen.get(key).add(cell);
       }
     }
     for(const [subject,blocks] of seen){
@@ -1236,6 +1407,7 @@ async function generate(){
     const key=norm(a.teacher);if(!teacherWorkload[key])teacherWorkload[key]={teacher:a.teacher,weekly:0,grades:new Set(),subjects:new Set()};
     teacherWorkload[key].weekly+=a.weekly;teacherWorkload[key].grades.add(a.grade);teacherWorkload[key].subjects.add(a.subject);
   });
+  const supervisedActivityKeys=new Set();Object.entries(combinationGrid).forEach(([comboId,cg])=>{const combo=seniorCombinations.find(c=>c.id===comboId);if(!combo)return;for(let d=0;d<5;d++)for(let p=1;p<=8;p++){const cell=cg?.[d]?.[p];if(!cell?.activity||!cell.teacher)continue;const key=`${combo.grade}|${norm(cell.teacher)}|${d}|${p}|${norm(cell.activityFor)}`;if(supervisedActivityKeys.has(key))continue;supervisedActivityKeys.add(key);const tkey=norm(cell.teacher);if(teacherWorkload[tkey])teacherWorkload[tkey].supervisedActivities=(teacherWorkload[tkey].supervisedActivities||0)+1;}});
   Object.values(teacherWorkload).forEach(x=>{x.grades=[...x.grades].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));x.subjects=[...x.subjects].sort();});
   const placedLessons=tasks.length-(failed.length?tasks.filter(t=>{
     let n=0;for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){const c=grid[t.grade]?.[d]?.[p];if(c&&(c.members||[]).some(m=>norm(m.teacher)===norm(t.teacher)&&norm(m.subject)===norm(t.subject)))n++;}
@@ -1244,7 +1416,7 @@ async function generate(){
   timetable={grades:gs,slots,grid,combinationGrid,seniorBlockSchedule,settings:set,gradeLessonCounts:Object.fromEntries(gs.map(g=>[g,(['10','11','12'].includes(seniorGradeKey(g))?effectiveWeeklyLoadForGrade(g):assignments.filter(a=>a.grade===g).reduce((n,a)=>n+Number(a.weekly||0),0))+(reservedPpiGrades.has(g)?1:0)])),teacherWorkload:Object.values(teacherWorkload),unplacedDiagnostics:[],generated:new Date().toISOString(),generationId,failed,mode,teacher:chosenTeacher,resultStatus,searchNodes:repairBudget,searchLimit:Math.min(16000,Math.max(6000,meta.length*90)),searchBudgetMs:Date.now()-generationStartedAt};
   if($('viewCombination')){const eligible=seniorCombinations.filter(c=>gs.includes(String(c.grade)));$('viewCombination').innerHTML=eligible.map(c=>`<option value="${esc(c.id)}">Grade ${esc(c.grade)} · ${esc(c.name)}</option>`).join('')||'<option value="">No combinations generated</option>';if(eligible.length&&!eligible.some(c=>c.id===$('viewCombination').value))$('viewCombination').value=eligible[0].id;}
   if(gs.length&&$('viewGrade')&&!gs.includes($('viewGrade').value))$('viewGrade').value=gs[0];
-  lastChecks=checkCollisions();renderTimetable();renderChecks();save();refreshAdjustmentControls();
+  lastChecks=checkCollisions();renderTimetable();renderChecks();renderTeacherWorkloadPreview();save();refreshAdjustmentControls();
   const scheduled=state.placements.filter(Boolean).length;
   const resultMessage=resultStatus==='SOLVED'
     ?`SOLVED: all ${tasks.length} assigned lessons were placed and independently checked across ${gs.length} grade(s), including the 35-lesson (PPI-inclusive) rule for Grades 4–6.`
@@ -1287,17 +1459,17 @@ for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const 
 let empty=0;for(let gg of timetable.grades)for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++)if(!timetable.grid[gg][d][p])empty++;
 const fullLoadGrades=timetable.grades.filter(gg=>isGrade46(gg)?(timetable.gradeLessonCounts?.[gg]||0)>=35:(timetable.gradeLessonCounts?.[gg]||0)>=5*timetable.settings.periods);const missing=fullLoadGrades.reduce((n,gg)=>n+Array.from({length:5},(_,d)=>Array.from({length:timetable.settings.periods},(_,i)=>timetable.grid[gg]?.[d]?.[i+1]?0:1).reduce((a,b)=>a+b,0)).reduce((a,b)=>a+b,0),0);$('summary').textContent=`Grades: ${timetable.grades.join(', ')} · ${timetable.settings.periods} lessons/day · ${timetable.settings.duration} minutes/lesson · ${empty-missing} genuinely free periods · ${missing} unplaced periods in fully loaded grades.`;applyPaymentBlur();
 }
-function renderCombinationTimetable(){const combo=seniorCombinations.find(c=>c.id===$('viewCombination').value)||seniorCombinations.find(c=>timetable.grades.includes(String(c.grade)));if(!combo){$('timetableTitle').textContent='Senior Combination Timetable';$('timetable').innerHTML='<p class="muted">No Senior School combinations are included in this generated timetable.</p>';return;}const grid=timetable.combinationGrid?.[combo.id];if(!grid){$('timetableTitle').textContent=combo.name;$('timetable').innerHTML='<p class="muted">This combination was not part of the generated timetable. Generate again including its grade.</p>';return;}const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day];$('timetableTitle').textContent=`Grade ${combo.grade} — ${combo.name} · ${day<0?'Weekly Timetable':DAYS[day]}`;let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){const cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${sl.label}</td>`;continue;}const x=grid[d]?.[sl.period];html+=x?`<td class="subject-cell ${x.elective?'stroked-cell':''}">${x.elective?`<span class="stroked-tag">BLOCK ${esc(x.block)}</span><br>`:''}${esc(x.subject)}<span class="teacher">${esc(x.teacher||'')}</span>${x.room?`<span class="teacher">Room: ${esc(x.room)}</span>`:''}</td>`:'<td><span class="pill">FREE</span></td>';}html+='</tr>';}html+='</tbody></table>';$('timetable').innerHTML=html;$('summary').textContent=`${combo.name} · enrolment ${combo.enrolment} · electives synchronised with all other Grade ${combo.grade} combinations.`;}
+function renderCombinationTimetable(){const combo=seniorCombinations.find(c=>c.id===$('viewCombination').value)||seniorCombinations.find(c=>timetable.grades.includes(String(c.grade)));if(!combo){$('timetableTitle').textContent='Senior Combination Timetable';$('timetable').innerHTML='<p class="muted">No Senior School combinations are included in this generated timetable.</p>';return;}const grid=timetable.combinationGrid?.[combo.id];if(!grid){$('timetableTitle').textContent=combo.name;$('timetable').innerHTML='<p class="muted">This combination was not part of the generated timetable. Generate again including its grade.</p>';return;}const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day];$('timetableTitle').textContent=`Grade ${combo.grade} — ${combo.name} · ${day<0?'Weekly Timetable':DAYS[day]}`;let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){const cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${sl.label}</td>`;continue;}const x=grid[d]?.[sl.period];html+=x?`<td class="subject-cell ${x.elective?'stroked-cell':''} ${x.activity?'special':''}">${x.elective?`<span class="stroked-tag">BLOCK ${esc(x.block)}</span><br>`:''}${x.double?'<span class="stroked-tag">DOUBLE '+(x.doublePart===1?'1/2':'2/2')+'</span><br>':''}${esc(x.subject)}${x.activity&&x.activityFor?`<span class="teacher">For: ${esc(x.activityFor)}</span>`:''}<span class="teacher">${esc(x.teacher||'')}</span>${x.room?`<span class="teacher">Room: ${esc(x.room)}</span>`:''}</td>`:'<td><span class="pill">FREE</span></td>';}html+='</tr>';}html+='</tbody></table>';$('timetable').innerHTML=html;$('summary').textContent=`${combo.name} · enrolment ${combo.enrolment} · electives synchronised with all other Grade ${combo.grade} combinations.`;}
 function renderMasterTimetable(){
  const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day];
  $('timetableTitle').textContent=`Master Whole-School Block Timetable — ${day<0?'Full Week':DAYS[day]}`;
  let html='<table class="timetable-matrix master-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';
  for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${activityCellLabel(sl.label,d)}</td>`;continue;}
-   const blocks=[];for(const g of timetable.grades){const seniorCombos=seniorCombinationsFor(seniorGradeKey(g));if(seniorCombos.length){for(const combo of seniorCombos){const cx=timetable.combinationGrid?.[combo.id]?.[d]?.[sl.period];if(cx?.elective)blocks.push(`<div class="master-block" style="border-left-color:#7c3aed;background:#f1eaff"><strong>${esc(combo.name)} · BLOCK ${esc(cx.block)}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);else if(cx&&!cx.activity)blocks.push(`<div class="master-block"><strong>${esc(combo.name)}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);}continue;}const x=timetable.grid[g]?.[d]?.[sl.period];if(x?.activity){blocks.push(`<div class="master-block" style="border-left-color:#13864b;background:#e1f7e9"><strong>${esc(g)} · PPI</strong><span>Personal and social development</span></div>`);}else if(x){const lines=(x.members||[{subject:x.subject,teacher:x.teacher}]).map(m=>`<span>${esc(m.subject)} — ${esc(m.teacher)}</span>`).join('');blocks.push(`<div class="master-block ${x.stroked?'stroked-cell':''}"><strong>${esc(g)}${x.stroked?' · STROKED':''}</strong>${lines}${x.double?'<em>DOUBLE</em>':''}</div>`);}else if(isGrade46(g)&&sl.end>mins('14:40')){blocks.push(`<div class="master-block" style="border-left-color:#6b45b1;background:#f1ebff"><strong>${esc(g)} · NON-FORMAL</strong><span>From 2:40 PM · Clubs · Co-curricular · Games</span></div>`);}else if((timetable.gradeLessonCounts?.[g]||0)>=5*timetable.settings.periods-(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0)){blocks.push(`<div class="master-block" style="border-left-color:#b42318;background:#fff0ef"><strong>${esc(g)}</strong><span>UNPLACED — assigned period missing</span></div>`);}}
+   const blocks=[];for(const g of timetable.grades){const seniorCombos=seniorCombinationsFor(seniorGradeKey(g));if(seniorCombos.length){for(const combo of seniorCombos){const cx=timetable.combinationGrid?.[combo.id]?.[d]?.[sl.period];if(cx?.elective&&cx.activity)blocks.push(`<div class="master-block" style="border-left-color:#0b8793;background:#e6f7f8"><strong>${esc(combo.name)} · BLOCK ${esc(cx.block)} · GUIDED ACTIVITY</strong><span>${esc(cx.subject)} for ${esc(cx.activityFor||'elective learners')}</span><span>Supervisor: ${esc(cx.teacher||'To be assigned')}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);else if(cx?.elective)blocks.push(`<div class="master-block" style="border-left-color:#7c3aed;background:#f1eaff"><strong>${esc(combo.name)} · BLOCK ${esc(cx.block)}${cx.double?' · DOUBLE':''}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);else if(cx&&!cx.activity)blocks.push(`<div class="master-block"><strong>${esc(combo.name)}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);}continue;}const x=timetable.grid[g]?.[d]?.[sl.period];if(x?.activity){blocks.push(`<div class="master-block" style="border-left-color:#13864b;background:#e1f7e9"><strong>${esc(g)} · PPI</strong><span>Personal and social development</span></div>`);}else if(x){const lines=(x.members||[{subject:x.subject,teacher:x.teacher}]).map(m=>`<span>${esc(m.subject)} — ${esc(m.teacher)}</span>`).join('');blocks.push(`<div class="master-block ${x.stroked?'stroked-cell':''}"><strong>${esc(g)}${x.stroked?' · STROKED':''}</strong>${lines}${x.double?'<em>DOUBLE</em>':''}</div>`);}else if(isGrade46(g)&&sl.end>mins('14:40')){blocks.push(`<div class="master-block" style="border-left-color:#6b45b1;background:#f1ebff"><strong>${esc(g)} · NON-FORMAL</strong><span>From 2:40 PM · Clubs · Co-curricular · Games</span></div>`);}else if((timetable.gradeLessonCounts?.[g]||0)>=5*timetable.settings.periods-(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0)){blocks.push(`<div class="master-block" style="border-left-color:#b42318;background:#fff0ef"><strong>${esc(g)}</strong><span>UNPLACED — assigned period missing</span></div>`);}}
    html+=`<td class="master-cell">${blocks.join('')||'<div class="master-empty">No class assigned</div>'}</td>`;
  }html+='</tr>'; }html+='</tbody></table>';$('timetable').innerHTML=html;
- let total=0,placed=0;for(const g of timetable.grades)for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++){total++;const x=timetable.grid[g]?.[d]?.[p];if(x&&!x.activity)placed++;}
- const counts=timetable.grades.map(g=>{let assigned=0;for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++){const x=timetable.grid[g]?.[d]?.[p];if(x&&!x.activity)assigned++;}const g46=isGrade46(g);const ppi=g46&&timetable.grid[g]?.[4]?.[1]?.activity?1:0;const expected=timetable.gradeLessonCounts?.[g]??assignments.filter(a=>a.grade===g).reduce((n,a)=>n+a.weekly,0);return {g,assigned:assigned+ppi,expected,capacity:g46?35:5*timetable.settings.periods};});
+ let total=0,placed=0;for(const g of timetable.grades)for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++){total++;const x=timetable.grid[g]?.[d]?.[p];if(x)placed++;}
+ const counts=timetable.grades.map(g=>{let assigned=0;for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++){const x=timetable.grid[g]?.[d]?.[p];if(x)assigned++;}const expected=timetable.gradeLessonCounts?.[g]??assignments.filter(a=>a.grade===g).reduce((n,a)=>n+a.weekly,0);return {g,assigned,expected,capacity:isGrade46(g)?35:5*timetable.settings.periods};});
  html+='<div style="margin-top:14px"><h3>Weekly lesson count by grade / stream</h3><table class="data-table" style="min-width:620px"><thead><tr><th>Grade / Stream</th><th>Required lessons/week (including PPI)</th><th>Placed lessons/week (including PPI)</th><th>Weekly lesson target</th><th>Status</th></tr></thead><tbody>'+counts.map(c=>`<tr><td>${esc(c.g)}</td><td>${c.expected}</td><td>${c.assigned}</td><td>${c.capacity}</td><td>${c.expected===c.capacity&&c.assigned===c.expected?'✅ Complete':c.expected<c.capacity?`⚠️ Short by ${c.capacity-c.expected}`:`❌ ${Math.max(0,c.expected-c.assigned)} unplaced`}</td></tr>`).join('')+'</tbody></table><p class="muted" style="margin-top:8px">Available class periods show the grade timetable capacity only. They do not guarantee that every lesson can be placed: teacher clashes, teacher release periods, selected double blocks, subject-specific daily frequency limits and language-to-language separation also constrains placement. If the fast search limit is reached, unplaced lessons indicate that the search did not find a complete arrangement within its time budget—not proof that no valid timetable exists.</p></div>';
  $('timetable').innerHTML=html;
  $('summary').textContent=`Whole-school master view · ${timetable.grades.length} grades/streams · ${placed} of ${total} grade-period blocks filled. The count table shows the required weekly lesson total for every grade. Grades 4–6 are complete only when 34 subject lessons plus Friday Lesson 1 PPI (35 total) are placed by 2:40 PM.`;
@@ -1732,6 +1904,24 @@ try{
  function show(){modal.classList.remove('hidden');document.body.style.overflow='hidden';closeA.focus();}
  function hide(){modal.classList.add('hidden');document.body.style.overflow='';open.focus();}
  open.addEventListener('click',function(){const menu=open.closest('.help-menu');if(menu)menu.open=false;show();});
+ closeA.addEventListener('click',hide);
+ closeB.addEventListener('click',hide);
+ modal.addEventListener('click',function(e){if(e.target===modal)hide();});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.classList.contains('hidden'))hide();});
+})();
+</script>
+
+
+<script>
+(function(){
+ const modal=document.getElementById('proTipsModal');
+ const open=document.getElementById('openProTips');
+ const closeA=document.getElementById('closeProTips');
+ const closeB=document.getElementById('closeProTipsBottom');
+ if(!modal||!open||!closeA||!closeB)return;
+ function show(){modal.classList.remove('hidden');document.body.style.overflow='hidden';closeA.focus();}
+ function hide(){modal.classList.add('hidden');document.body.style.overflow='';open.focus();}
+ open.addEventListener('click',show);
  closeA.addEventListener('click',hide);
  closeB.addEventListener('click',hide);
  modal.addEventListener('click',function(e){if(e.target===modal)hide();});
