@@ -31,7 +31,7 @@ input,select{width:100%;padding:10px;border:1px solid #b8c9e3;border-radius:7px;
 table{border-collapse:collapse;width:100%;min-width:760px}th,td{border:1px solid #cad7e9;padding:8px;text-align:center;font-size:13px}th{background:#0a579f;color:white;position:sticky;top:0;z-index:1}td.time{background:#edf4ff;font-weight:bold;min-width:115px}.table-wrap{overflow:auto;border-radius:8px}.timetable-matrix{min-width:1050px;table-layout:fixed}.timetable-matrix .day-heading,.timetable-matrix .day-name{position:sticky;left:0;z-index:2;min-width:105px;width:105px;background:#073b78;color:#fff}.timetable-matrix .slot-heading{min-width:145px;white-space:normal;line-height:1.45}.timetable-matrix .day-name{text-align:left;padding-left:12px}.timetable-matrix td{min-width:145px;height:76px}.timetable-matrix .small{color:#e5efff}
 .data-table td{background:#fff}.data-table th{position:static}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .pill{display:inline-block;border-radius:99px;padding:4px 8px;background:#e4efff;color:#13477e;font-size:12px;font-weight:bold}
-.subject-cell{font-weight:700;min-width:125px}.teacher{display:block;font-size:11px;font-weight:400;color:#334b67;margin-top:4px}.master-cell{vertical-align:top;text-align:left!important;padding:5px!important;min-width:190px!important;height:auto!important;background:#f8fbff}.master-block{display:block;background:#e8f1ff;border:1px solid #b9cfee;border-left:4px solid #0866d9;border-radius:5px;padding:5px 6px;margin:3px 0;font-size:11px;line-height:1.3}.master-block strong{display:block;color:#073b78;font-size:12px}.master-block span{display:block;color:#334b67;font-weight:400}.master-empty{color:#8795a8;font-size:11px;text-align:center}.stroked-cell{background:#e8f8ee!important;border:2px solid #13864b!important}.stroked-tag{display:inline-block;background:#13864b;color:#fff;border-radius:4px;padding:2px 5px;font-size:10px;font-weight:bold;margin-bottom:4px}.special{background:#e1f7e9!important;font-weight:bold}.lunch{background:#fff0c9!important;font-weight:1000!important;font-size:20px!important}.games{background:#e9e2ff!important;font-weight:1000!important;font-size:20px!important}.break{background:#dff5e7!important;font-weight:1000!important;font-size:20px!important}
+.subject-cell{font-weight:700;min-width:125px}.teacher{display:block;font-size:11px;font-weight:400;color:#334b67;margin-top:4px}.master-cell{vertical-align:top;text-align:left!important;padding:5px!important;min-width:190px!important;height:auto!important;background:#f8fbff}.master-block{display:block;background:#e8f1ff;border:1px solid #b9cfee;border-left:4px solid #0866d9;border-radius:5px;padding:5px 6px;margin:3px 0;font-size:11px;line-height:1.3}.master-block strong{display:block;color:#073b78;font-size:12px}.master-block span{display:block;color:#334b67;font-weight:400}.master-empty{color:#8795a8;font-size:11px;text-align:center}.stroked-cell{background:#e8f8ee!important;border:2px solid #13864b!important}.stroked-tag{display:inline-block;background:#13864b;color:#fff;border-radius:4px;padding:2px 5px;font-size:10px;font-weight:bold;margin-bottom:4px}.special{background:#e1f7e9!important;font-weight:bold}.lunch{background:#fff0c9!important;font-weight:1000!important;font-size:20px!important}.games{background:#e9e2ff!important;font-weight:1000!important;font-size:20px!important}.break{background:#dff5e7!important;font-weight:1000!important;font-size:20px!important}.assembly{background:#dff5e7!important;font-weight:1000!important;font-size:20px!important}.assembly .activity-vertical{writing-mode:vertical-rl!important;text-orientation:upright!important;letter-spacing:1px!important;font-size:15px!important}
 .activity-vertical{display:grid!important;place-items:center!important;width:100%!important;height:100%!important;min-height:100%!important;text-align:center!important;font-family:Arial,Helvetica,sans-serif!important;font-size:21px!important;font-weight:1000!important;line-height:1!important;letter-spacing:0!important;color:#000!important}
 .activity-vertical>span{display:block!important;font-weight:1000!important;color:#000!important}
 
@@ -359,7 +359,7 @@ body.auth-locked>header,body.auth-locked>.wrap{display:none!important}
   <div class="settings-group-content"><label>Grades to include</label><div class="small">Add any grade or stream name, for example 9 Red, 7A, 8 East or 6 Blue, then tick the grades to generate.</div><div class="row" style="margin-top:8px"><div><input id="newGradeName" placeholder="e.g. 9 Red or 7A" aria-label="New grade name"></div><div style="flex:0 0 auto;min-width:0"><button type="button" id="addGradeBtn">＋ Add grade</button></div></div><div id="grades" class="grid" style="grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px"></div></div>
  </section>
  <section class="settings-group settings-day"><div class="settings-group-title"><span class="settings-icon">⏰</span><div><h3>2. Daily lesson structure</h3><p>Set the opening time and the length of each teaching period.</p></div></div>
-  <div class="settings-group-content settings-fields"><div><label>School day starts</label><input id="startTime" type="time" value="08:20"></div><div><label>Lesson duration (minutes)</label><input id="duration" type="number" min="20" max="90" value="40"></div><div><label>Lessons per day</label><select id="periods"><option>8</option><option>6</option><option>7</option><option>9</option></select></div></div>
+  <div class="settings-group-content settings-fields"><div><label>Morning assembly starts</label><input id="assemblyTime" type="time" value="07:50"><p class="small">Choose the time your school wants assembly to begin.</p></div><div><label>Assembly duration (minutes)</label><input id="assemblyMins" type="number" min="5" max="120" value="20"></div><div><label>First lesson starts at (earliest)</label><input id="startTime" type="time" value="08:20"><p class="small">If assembly ends later, the first lesson automatically starts after assembly.</p></div><div><label>Lesson duration (minutes)</label><input id="duration" type="number" min="20" max="90" value="40"></div><div><label>Lessons per day</label><select id="periods"><option>8</option><option>6</option><option>7</option><option>9</option></select></div></div>
  </section>
  <section class="settings-group settings-breaks"><div class="settings-group-title"><span class="settings-icon">☕</span><div><h3>3. Health breaks and lunch</h3><p>Configure short breaks and the main mid-day break.</p></div></div>
   <div class="settings-group-content settings-fields"><div><label>Health break duration (minutes)</label><input id="breakMins" type="number" min="5" max="45" value="10"></div><div><label>Preferred first short break start</label><input id="breakTime" type="time" value="09:40"></div><div><label>Preferred later short break start (optional)</label><input id="breakTime2" type="time" value="13:50"></div><div><label>Lunch / mid-day break duration (minutes)</label><input id="lunchMins" type="number" min="20" max="120" value="60"></div><div><label>Lunch after lesson</label><select id="lunchAfter"><option>4</option><option>3</option><option>5</option><option>6</option></select></div><div><label>Preferred lunch start (optional)</label><input id="lunchTime" type="time" value="11:30"></div></div>
@@ -473,10 +473,19 @@ async function askConfirm(title,text,confirmText='Yes, continue'){ensureSwalFall
 function selectedGrades(){return [...document.querySelectorAll('#grades input:checked')].map(x=>x.value)}
 function initGrades(){const existing=[...document.querySelectorAll('#grades input')],prior=new Set(existing.filter(x=>x.checked).map(x=>x.value)),had=existing.length>0;if(window.__savedGradeSelection){prior.clear();window.__savedGradeSelection.forEach(g=>prior.add(g));}const gs=gradeListFromRecords();$('grades').innerHTML=gs.map(g=>`<label class="checkline"><input type="checkbox" value="${esc(g)}" ${(!had&&!window.__savedGradeSelection||prior.has(g))?'checked':''}> ${esc(g)}</label>`).join('');window.__savedGradeSelection=null;document.querySelectorAll('#grades input').forEach(i=>i.addEventListener('change',save));}
 function save(){try{localStorage.setItem('rasm360_timetable_v1',JSON.stringify({assignments,customGrades,customSubjectNames,localTeachers,rules,timetable,settings:getSettings(),grades:selectedGrades(),schoolBranding,adjustmentHistory,inactiveTeachers,seniorCombinations,seniorBlocks,seniorRooms}));}catch(e){}}
-function getSettings(){return {startTime:$('startTime').value,duration:+$('duration').value,periods:+$('periods').value,breakMins:+$('breakMins').value,breakTime:$('breakTime').value,breakTime2:$('breakTime2').value,lunchMins:+$('lunchMins').value,lunchAfter:+$('lunchAfter').value,lunchTime:$('lunchTime').value,gamesMins:+$('gamesMins').value,gamesTiming:$('gamesTiming').value,gamesTime:$('gamesTime').value};}
+function getSettings(){return {assemblyTime:$('assemblyTime').value,assemblyMins:+$('assemblyMins').value,startTime:$('startTime').value,duration:+$('duration').value,periods:+$('periods').value,breakMins:+$('breakMins').value,breakTime:$('breakTime').value,breakTime2:$('breakTime2').value,lunchMins:+$('lunchMins').value,lunchAfter:+$('lunchAfter').value,lunchTime:$('lunchTime').value,gamesMins:+$('gamesMins').value,gamesTiming:$('gamesTiming').value,gamesTime:$('gamesTime').value};}
 const SENIOR_PATHWAYS=['STEM','Social Sciences','Arts and Sports Science'];
-function seniorGradeKey(g){return String(g).replace(/^Grade\s*/i,'').trim();}
-function seniorCombinationsFor(g){return seniorCombinations.filter(c=>String(c.grade)===String(g));}
+function seniorGradeKey(g){
+ const raw=String(g??'').trim().replace(/^Grade\s*/i,'');
+ // Senior streams such as 10A, 10B, 11North and 12Blue must use the
+ // same grade-level elective combination catalogue as Grade 10/11/12.
+ const match=raw.match(/^(10|11|12)(?:\s*[-/]?\s*[A-Za-z][A-Za-z0-9_-]*)?$/i);
+ return match?match[1]:raw;
+}
+function seniorCombinationsFor(g){
+ const key=seniorGradeKey(g);
+ return seniorCombinations.filter(c=>seniorGradeKey(c.grade)===key);
+}
 function seniorBlockFor(blocks,name){const key=String(name||'').trim().toLowerCase();const found=Object.keys(blocks||{}).find(k=>k.toLowerCase()===key);return found?blocks[found]:undefined;}
 /* Resolve exactly three simultaneous blocks, with UNLIMITED subjects per block.
    Manual Stroke A/B/C selections take priority when every registered combination
@@ -525,7 +534,7 @@ function restoreSaved(){try{let x=JSON.parse(localStorage.getItem('rasm360_timet
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function activityCellLabel(label,dayIndex){
  const key=String(label||'').trim().toUpperCase();
- const word=key.includes('BREAK')?'BREAK':key.includes('LUNCH')?'LUNCH':key.includes('GAMES')?'GAMES':key;
+ const word=key.includes('ASSEMBLY')?'ASSEMBLY':key.includes('BREAK')?'BREAK':key.includes('LUNCH')?'LUNCH':key.includes('GAMES')?'GAMES':key;
  const letter=word.length===5&&Number.isInteger(dayIndex)?word[dayIndex]||'':word;
  return `<span class="activity-vertical" data-weekday-index="${Number.isInteger(dayIndex)?dayIndex:''}" aria-label="${esc(label)}">${esc(letter)}</span>`;
 }
@@ -715,9 +724,14 @@ function addAssignment(){
 function loadSamples(){assignments=[];const people=[['A. Wanjiku','Mathematics'],['J. Otieno','English'],['M. Njeri','Kiswahili'],['P. Kamau','Science'],['S. Achieng','Social Studies'],['D. Mwangi','CRE'],['L. Chebet','Agriculture'],['R. Kiptoo','Creative Arts'],['F. Hassan','Pre-Technical Studies'],['E. Mutua','Physical Education'],['C. Maina','ICT']];for(let g=4;g<=9;g++){people.forEach(([teacher,subject],i)=>assignments.push({teacher:teacher+' (G'+g+')',subject,grade:String(g),weekly:subject==='Mathematics'||subject==='English'?5:subject==='Kiswahili'||subject==='Science'?4:2}));}rules.double=['Mathematics','Science','Creative Arts','Pre-Technical Studies'];rules.morning=['Mathematics','English','Kiswahili','Science'];renderAll();save();showStatus('Sample assignments loaded. These are demonstration records; replace them with your actual staff and subjects.');}
 function mins(t){let [h,m]=t.split(':').map(Number);return h*60+m;}function fmt(m){let h=Math.floor(m/60),mm=m%60;return `${String(h%12||12).padStart(2,'0')}:${String(mm).padStart(2,'0')} ${h<12?'AM':'PM'}`;}
 function makeSlots(settings){
- let cur=mins(settings.startTime),slots=[],shortBreakCount=0;
+ let cur=mins(settings.assemblyTime||'07:50'),slots=[],shortBreakCount=0;
  const timedStart=(preferred)=>{if(!preferred)return cur;const value=mins(preferred);return Number.isFinite(value)?Math.max(cur,value):cur;};
  const addActivity=(kind,label,duration,preferred)=>{const start=timedStart(preferred),end=start+Math.max(0,Number(duration)||0);slots.push({kind,label,start,end});cur=end;};
+ // Morning assembly is a daily whole-school activity before Lesson 1. The school
+ // chooses its start and duration; lessons never begin until both assembly has
+ // ended and the configured earliest first-lesson time has been reached.
+ addActivity('Assembly','Assembly',settings.assemblyMins??20,settings.assemblyTime||'07:50');
+ cur=Math.max(cur,mins(settings.startTime||'08:20'));
  if(settings.gamesTiming==='before')addActivity('Games','Games',settings.gamesMins,settings.gamesTime);
  for(let p=1;p<=settings.periods;p++){
   slots.push({kind:'lesson',period:p,start:cur,end:cur+settings.duration});cur+=settings.duration;
@@ -744,7 +758,8 @@ async function generate(){
   const chosenTeacher=String($('viewTeacher').value||'').trim();
   const norm=x=>String(x||'').trim().toLowerCase();
   assignments=assignments.map(a=>({...a,teacher:String(a.teacher??'').trim(),subject:String(a.subject??'').trim(),grade:String(a.grade??'').trim().replace(/^Grade\s*/i,''),weekly:Math.max(1,Math.min(25,Math.floor(Number(a.weekly)||1)))})).filter(a=>a.teacher&&a.subject&&a.grade);
-  initGrades();renderAll();
+  // Do not redraw every setup panel during generation; that work is unrelated to scheduling.
+  initGrades();
   if(mode==='teacher'&&!chosenTeacher){showStatus('Choose a teacher first.','err');return;}
   const allGrades=[...new Set(assignments.map(a=>a.grade))].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
   let gs=mode==='selected'?selectedGrades().filter(g=>allGrades.includes(g)):allGrades;
@@ -1053,9 +1068,25 @@ async function generate(){
     if(++repairBudget>repairLimit)return false;
     if(repairBudget%500===0) await new Promise(resolve=>setTimeout(resolve,0));
     if(visited.has(id))return false;
-    const nextVisited=new Set(visited);nextVisited.add(id);
-    const options=meta[id].domain.map(c=>({c,score:candidateScore(st,id,c,seed)})).sort((a,b)=>b.score-a.score).map(x=>x.c);
-    for(const c of options){
+    const nextVisited=new Set(visited);
+    nextVisited.add(id);
+    // FAST PATH: most lessons have at least one free legal slot. Do not sort
+    // the entire domain (or allocate score wrapper objects) just to find it.
+    // Inspect candidates once, score only genuinely free slots, and place the
+    // best free slot immediately. Expensive conflict ranking is reserved for
+    // lessons that have no direct legal placement.
+    let bestFree=null,bestFreeScore=-Infinity;
+    for(const c of meta[id].domain){
+      if(blockersFor(st,id,c).length)continue;
+      const score=candidateScore(st,id,c,seed);
+      if(score>bestFreeScore){bestFree=c;bestFreeScore=score;}
+    }
+    if(bestFree){place(st,id,bestFree,journal);return true;}
+    // CONFLICT PATH: only now rank the domain for an augmenting repair chain.
+    // This avoids repeated O(domain log domain) sorting for ordinary lessons.
+    const options=meta[id].domain.map(c=>({c,score:candidateScore(st,id,c,seed)})).sort((a,b)=>b.score-a.score);
+    for(const option of options){
+      const c=option.c;
       const blockers=blockersFor(st,id,c);
       if(!blockers.length){place(st,id,c,journal);return true;}
       if(depth<=0||blockers.length>maxBranchBlockers||blockers.some(b=>nextVisited.has(b)))continue;
@@ -1077,14 +1108,16 @@ async function generate(){
     return false;
   };
   const copyIntoState=(target,source)=>{Object.keys(target).forEach(k=>delete target[k]);Object.assign(target,source);};
-  const attemptCount=10;
-  const recoveryRounds=5;
+  // Fast-first adaptive search: most schools should finish in the first one or two passes.
+  // Harder cases still receive bounded repair/recovery, without the previous very large search budget.
+  const attemptCount=6;
+  const recoveryRounds=2;
   generationProgressMax=Math.max(1,totalUnits*(attemptCount+recoveryRounds));
-  const passRepairLimit=Math.min(60000,Math.max(18000,meta.length*90));
+  const passRepairLimit=Math.min(24000,Math.max(8000,meta.length*45));
   const runAttempt=async attempt=>{
     state=makeState();repairBudget=0;
     // Escalate the node budget on every pass instead of repeating the same shallow search.
-    repairLimit=Math.min(180000,passRepairLimit*(1+attempt));
+    repairLimit=Math.min(90000,passRepairLimit*(1+attempt));
     const seed=(generationSeed+attempt*104729)>>>0;
     const remaining=meta.map(m=>m.id);
     // Scarcity-first ordering: doubles, Maths, restricted teachers and small
@@ -1095,19 +1128,22 @@ async function generate(){
       const ma=A.subjects.some(isMath)?1:0,mb=B.subjects.some(isMath)?1:0;
       const ra=(teacherLoad[A.teachers[0]]||0)/Math.max(1,A.slotFlexibility);
       const rb=(teacherLoad[B.teachers[0]]||0)/Math.max(1,B.slotFlexibility);
-      return A.domain.length-B.domain.length||pb-pa||mb-ma||rb-ra||((seed+a*31)%997)-((seed+b*31)%997);
+      const languageA=A.subjects.some(isLanguage)?1:0,languageB=B.subjects.some(isLanguage)?1:0;
+      const pressureA=(A.unit.double?4:0)+(languageA?2:0)+(ma?1:0)+(A.teachers.length>1?1:0);
+      const pressureB=(B.unit.double?4:0)+(languageB?2:0)+(mb?1:0)+(B.teachers.length>1?1:0);
+      return A.domain.length-B.domain.length||pb-pa||pressureB-pressureA||rb-ra||((seed+a*31)%997)-((seed+b*31)%997);
     });
     let placedCount=0;
     for(let k=0;k<remaining.length;k++){
       const id=remaining[k];
-      const searchDepth=Math.min(6,2+Math.floor(attempt/2));
-      const branchWidth=Math.min(9,5+Math.floor(attempt/2));
+      const searchDepth=Math.min(5,1+Math.floor(attempt/2));
+      const branchWidth=Math.min(7,4+Math.floor(attempt/2));
       await augment(state,id,searchDepth,new Set(),seed,null,branchWidth);
       // Count the live state, not successful top-level calls: a repair chain
       // can place several displaced units in one operation.
       placedCount=state.placedCount;
       if(placedCount>bestCount){bestCount=placedCount;best=state.placements.slice();}
-      if(k%12===0){
+      if(k%8===0){
         $('status').className='status ok';
         $('status').textContent=`Adaptive placement · pass ${attempt+1}/${attemptCount} · ${placedCount}/${totalUnits} lesson units secured · ${tasks.length} individual lessons tracked.`;
         const progressDone=attempt*totalUnits+k+1;updateGenerationProgress(`Optimising timetable · pass ${attempt+1}/${attemptCount}`,progressDone,generationProgressMax,generationStartedAt);
@@ -1129,10 +1165,10 @@ async function generate(){
     // partial state and focuses deeper ejection chains on the remaining units.
     // The budget scales with timetable size but is capped to keep the UI responsive.
     if(bestCount<totalUnits){
-      const recoveryRepairLimit=Math.min(240000,Math.max(60000,meta.length*240));
+      const recoveryRepairLimit=Math.min(90000,Math.max(25000,meta.length*90));
       for(let recovery=0;recovery<recoveryRounds&&bestCount<totalUnits;recovery++){
         state=rebuild(best||[]);repairBudget=0;
-        repairLimit=Math.min(300000,recoveryRepairLimit*(recovery+1));
+        repairLimit=Math.min(120000,recoveryRepairLimit*(recovery+1));
         const missing=meta.map(m=>m.id).filter(id=>!state.placements[id]);
         missing.sort((a,b)=>meta[a].domain.length-meta[b].domain.length||meta[a].unit.grade.localeCompare(meta[b].unit.grade,undefined,{numeric:true}));
         const seed=(generationSeed+900001+recovery*130363)>>>0;
@@ -1141,7 +1177,7 @@ async function generate(){
           if(state.placements[id])continue;
           // Deeper, slightly wider ejection chains are reserved for the
           // remaining unscheduled units; normal passes stay fast and bounded.
-          if(await augment(state,id,Math.min(8,5+recovery),new Set(),seed,null,Math.min(10,7+recovery))){
+          if(await augment(state,id,Math.min(6,4+recovery),new Set(),seed,null,Math.min(8,6+recovery))){
             const count=state.placedCount;
             if(count>bestCount){bestCount=count;best=state.placements.slice();}
             if(bestCount===totalUnits)break;
@@ -1243,8 +1279,11 @@ async function generate(){
       if(invalid.length){blockFailure+=`Grade ${g} Block ${block}: invalid weekly lesson count for ${invalid.map(x=>x.subject).join(', ')}. `;continue;}
       const blockPeriodCount=Math.max(...subjects.map(x=>Number(x.weekly)||0));
       const doubleSubjects=subjects.filter(x=>rules.double.some(s=>norm(s)===norm(x.subject)));
+      // Every Senior School option stroke must have exactly ONE double-required
+      // subject. Other subjects in the same stroke remain singles only.
+      if(doubleSubjects.length!==1){blockFailure+=`Grade ${g} Block ${block}: select exactly one subject for the weekly double lesson. Currently ${doubleSubjects.length} subject(s) are selected${doubleSubjects.length?`: ${doubleSubjects.map(x=>x.subject).join(', ')}`:''}. `;continue;}
       if(doubleSubjects.some(x=>Number(x.weekly)<2)){blockFailure+=`Grade ${g} Block ${block}: ${doubleSubjects.filter(x=>Number(x.weekly)<2).map(x=>x.subject).join(', ')} is marked for a double but has fewer than 2 weekly periods. `;continue;}
-      if(doubleSubjects.length&&blockPeriodCount<2){blockFailure+=`Grade ${g} Block ${block}: a double lesson needs at least two weekly block periods. `;continue;}
+      if(blockPeriodCount<2){blockFailure+=`Grade ${g} Block ${block}: a double lesson needs at least two weekly block periods. `;continue;}
 
       const blockCandidates=[];
       for(const slot of allBlank){
@@ -1453,19 +1492,38 @@ function applyPaymentBlur(){
  });
  if(locked){const notice=document.createElement('div');notice.className='payment-lock-notice';notice.innerHTML='<strong>🔒 Tuesday–Friday are locked</strong>Your timetable has been generated, but Tuesday, Wednesday, Thursday and Friday remain blurred. A school payment of <b>KSh 2,000</b> is required. Once the RASM 360 administrator verifies and approves the payment, all five days become visible automatically in this open session.';host.appendChild(notice);}
 }
+function assemblyWeekCell(d,days,label='Assembly'){if(days.length===5){if(d!==days[0])return '';return `<td class="assembly" rowspan="5" style="vertical-align:middle"><span class="activity-vertical">ASSEMBLY</span></td>`;}return `<td class="assembly"><span class="activity-vertical">ASSEMBLY</span></td>`;}
+function renderSeniorGradeCell(g,d,p){
+ const combos=seniorCombinationsFor(seniorGradeKey(g));
+ if(!combos.length)return null;
+ const cells=combos.map(combo=>({combo,x:timetable.combinationGrid?.[combo.id]?.[d]?.[p]})).filter(v=>v.x);
+ if(!cells.length)return null;
+ const electiveCells=cells.filter(v=>v.x.elective);
+ // Core lessons are common to every combination; show them once. Elective
+ // cells are shown per combination so a single-only option cannot hide another
+ // combination's independently scheduled double lesson.
+ const display=electiveCells.length?electiveCells:cells.slice(0,1);
+ const html=display.map(({combo,x})=>{
+   const badges=`${x.elective?`<span class="stroked-tag">BLOCK ${esc(x.block)}</span>`:''}${x.double?`<span class="stroked-tag">DOUBLE ${x.doublePart===1?'1/2':'2/2'}</span>`:''}`;
+   const heading=x.elective?`<strong>${esc(combo.name)}</strong>`:'';
+   const subject=x.activity?`${esc(x.subject)}${x.activityFor?`<span class="teacher">For: ${esc(x.activityFor)}</span>`:''}`:esc(x.subject);
+   return `<div class="senior-grade-option" style="padding:3px 0;${display.length>1?'border-bottom:1px solid #e5e7eb;':''}">${heading}${badges?`<div>${badges}</div>`:''}<div>${subject}</div><span class="teacher">${esc(x.teacher||'')}</span>${x.room?`<span class="teacher">Room: ${esc(x.room)}</span>`:''}</div>`;
+ }).join('');
+ return `<td class="subject-cell ${electiveCells.length?'stroked-cell':''} ${display.some(v=>v.x.activity)?'special':''}">${html}</td>`;
+}
 function renderTimetable(){if(!timetable)return;renderSchoolBranding();if($('generationMode').value==='combination'){renderCombinationTimetable();applyPaymentBlur();return;}if($('generationMode').value==='teacher'){renderTeacherTimetable();applyPaymentBlur();return;}if($('generationMode').value==='master'){renderMasterTimetable();applyPaymentBlur();return;}let g=$('viewGrade').value;if(!timetable.grades.includes(g))g=timetable.grades[0];let day=+$('viewDay').value;let days=day<0?[0,1,2,3,4]:[day];$('timetableTitle').textContent=`Grade ${g} — ${day<0?'Weekly Timetable':DAYS[day]}`;
 let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';
-for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind==='lesson'){let x=timetable.grid[g]?.[d]?.[sl.period];const expected=timetable.gradeLessonCounts?.[g]??0;const reserved=(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0);const fullLoad=isGrade46(g)?expected>=35:expected>=5*timetable.settings.periods;const emptyLabel=fullLoad?'UNPLACED':'FREE';const post240=isGrade46(g)&&sl.end>mins('14:40');const emptyContent=post240?'<span class="pill" style="background:#e9e2ff;color:#45278a">NON-FORMAL FROM 2:40</span><span class="teacher">Clubs · Co-curricular · Games</span>':`<span class="pill">${emptyLabel}</span>`;html+=`<td class="subject-cell ${x?.stroked?'stroked-cell':''} ${x?.activity?'special':''}">${x?.stroked?'<span class="stroked-tag">STROKED</span><br>':''}${x?.double?'<span class="stroked-tag">DOUBLE</span><br>':''}${x?esc(x.subject):emptyContent}${x?.teacher?`<span class="teacher">${esc(x.teacher)}</span>`:''}</td>`;}else{let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${activityCellLabel(sl.label,d)}</td>`;}}html+='</tr>'; }html+='</tbody></table>';$('timetable').innerHTML=html;
+for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind==='lesson'){const seniorCell=renderSeniorGradeCell(g,d,sl.period);if(seniorCell){html+=seniorCell;continue;}let x=timetable.grid[g]?.[d]?.[sl.period];const expected=timetable.gradeLessonCounts?.[g]??0;const reserved=(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0);const fullLoad=isGrade46(g)?expected>=35:expected>=5*timetable.settings.periods;const emptyLabel=fullLoad?'UNPLACED':'FREE';const post240=isGrade46(g)&&sl.end>mins('14:40');const emptyContent=post240?'<span class="pill" style="background:#e9e2ff;color:#45278a">NON-FORMAL FROM 2:40</span><span class="teacher">Clubs · Co-curricular · Games</span>':`<span class="pill">${emptyLabel}</span>`;html+=`<td class="subject-cell ${x?.stroked?'stroked-cell':''} ${x?.activity?'special':''}">${x?.stroked?'<span class="stroked-tag">STROKED</span><br>':''}${x?.double?'<span class="stroked-tag">DOUBLE</span><br>':''}${x?esc(x.subject):emptyContent}${x?.teacher?`<span class="teacher">${esc(x.teacher)}</span>`:''}</td>`;}else{if(sl.kind==='Assembly'){html+=assemblyWeekCell(d,days);continue;}let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${activityCellLabel(sl.label,d)}</td>`;}}html+='</tr>'; }html+='</tbody></table>';$('timetable').innerHTML=html;
 let empty=0;for(let gg of timetable.grades)for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++)if(!timetable.grid[gg][d][p])empty++;
 const fullLoadGrades=timetable.grades.filter(gg=>isGrade46(gg)?(timetable.gradeLessonCounts?.[gg]||0)>=35:(timetable.gradeLessonCounts?.[gg]||0)>=5*timetable.settings.periods);const missing=fullLoadGrades.reduce((n,gg)=>n+Array.from({length:5},(_,d)=>Array.from({length:timetable.settings.periods},(_,i)=>timetable.grid[gg]?.[d]?.[i+1]?0:1).reduce((a,b)=>a+b,0)).reduce((a,b)=>a+b,0),0);$('summary').textContent=`Grades: ${timetable.grades.join(', ')} · ${timetable.settings.periods} lessons/day · ${timetable.settings.duration} minutes/lesson · ${empty-missing} genuinely free periods · ${missing} unplaced periods in fully loaded grades.`;applyPaymentBlur();
 }
-function renderCombinationTimetable(){const combo=seniorCombinations.find(c=>c.id===$('viewCombination').value)||seniorCombinations.find(c=>timetable.grades.includes(String(c.grade)));if(!combo){$('timetableTitle').textContent='Senior Combination Timetable';$('timetable').innerHTML='<p class="muted">No Senior School combinations are included in this generated timetable.</p>';return;}const grid=timetable.combinationGrid?.[combo.id];if(!grid){$('timetableTitle').textContent=combo.name;$('timetable').innerHTML='<p class="muted">This combination was not part of the generated timetable. Generate again including its grade.</p>';return;}const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day];$('timetableTitle').textContent=`Grade ${combo.grade} — ${combo.name} · ${day<0?'Weekly Timetable':DAYS[day]}`;let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){const cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${sl.label}</td>`;continue;}const x=grid[d]?.[sl.period];html+=x?`<td class="subject-cell ${x.elective?'stroked-cell':''} ${x.activity?'special':''}">${x.elective?`<span class="stroked-tag">BLOCK ${esc(x.block)}</span><br>`:''}${x.double?'<span class="stroked-tag">DOUBLE '+(x.doublePart===1?'1/2':'2/2')+'</span><br>':''}${esc(x.subject)}${x.activity&&x.activityFor?`<span class="teacher">For: ${esc(x.activityFor)}</span>`:''}<span class="teacher">${esc(x.teacher||'')}</span>${x.room?`<span class="teacher">Room: ${esc(x.room)}</span>`:''}</td>`:'<td><span class="pill">FREE</span></td>';}html+='</tr>';}html+='</tbody></table>';$('timetable').innerHTML=html;$('summary').textContent=`${combo.name} · enrolment ${combo.enrolment} · electives synchronised with all other Grade ${combo.grade} combinations.`;}
+function renderCombinationTimetable(){const combo=seniorCombinations.find(c=>c.id===$('viewCombination').value)||seniorCombinations.find(c=>timetable.grades.includes(String(c.grade)));if(!combo){$('timetableTitle').textContent='Senior Combination Timetable';$('timetable').innerHTML='<p class="muted">No Senior School combinations are included in this generated timetable.</p>';return;}const grid=timetable.combinationGrid?.[combo.id];if(!grid){$('timetableTitle').textContent=combo.name;$('timetable').innerHTML='<p class="muted">This combination was not part of the generated timetable. Generate again including its grade.</p>';return;}const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day];$('timetableTitle').textContent=`Grade ${combo.grade} — ${combo.name} · ${day<0?'Weekly Timetable':DAYS[day]}`;let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){if(sl.kind==='Assembly'){html+=assemblyWeekCell(d,days);continue;}const cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${sl.label}</td>`;continue;}const x=grid[d]?.[sl.period];html+=x?`<td class="subject-cell ${x.elective?'stroked-cell':''} ${x.activity?'special':''}">${x.elective?`<span class="stroked-tag">BLOCK ${esc(x.block)}</span><br>`:''}${x.double?'<span class="stroked-tag">DOUBLE '+(x.doublePart===1?'1/2':'2/2')+'</span><br>':''}${esc(x.subject)}${x.activity&&x.activityFor?`<span class="teacher">For: ${esc(x.activityFor)}</span>`:''}<span class="teacher">${esc(x.teacher||'')}</span>${x.room?`<span class="teacher">Room: ${esc(x.room)}</span>`:''}</td>`:'<td><span class="pill">FREE</span></td>';}html+='</tr>';}html+='</tbody></table>';$('timetable').innerHTML=html;$('summary').textContent=`${combo.name} · enrolment ${combo.enrolment} · electives synchronised with all other Grade ${combo.grade} combinations.`;}
 function renderMasterTimetable(){
  const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day];
  $('timetableTitle').textContent=`Master Whole-School Block Timetable — ${day<0?'Full Week':DAYS[day]}`;
  let html='<table class="timetable-matrix master-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';
- for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${activityCellLabel(sl.label,d)}</td>`;continue;}
-   const blocks=[];for(const g of timetable.grades){const seniorCombos=seniorCombinationsFor(seniorGradeKey(g));if(seniorCombos.length){for(const combo of seniorCombos){const cx=timetable.combinationGrid?.[combo.id]?.[d]?.[sl.period];if(cx?.elective&&cx.activity)blocks.push(`<div class="master-block" style="border-left-color:#0b8793;background:#e6f7f8"><strong>${esc(combo.name)} · BLOCK ${esc(cx.block)} · GUIDED ACTIVITY</strong><span>${esc(cx.subject)} for ${esc(cx.activityFor||'elective learners')}</span><span>Supervisor: ${esc(cx.teacher||'To be assigned')}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);else if(cx?.elective)blocks.push(`<div class="master-block" style="border-left-color:#7c3aed;background:#f1eaff"><strong>${esc(combo.name)} · BLOCK ${esc(cx.block)}${cx.double?' · DOUBLE':''}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);else if(cx&&!cx.activity)blocks.push(`<div class="master-block"><strong>${esc(combo.name)}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);}continue;}const x=timetable.grid[g]?.[d]?.[sl.period];if(x?.activity){blocks.push(`<div class="master-block" style="border-left-color:#13864b;background:#e1f7e9"><strong>${esc(g)} · PPI</strong><span>Personal and social development</span></div>`);}else if(x){const lines=(x.members||[{subject:x.subject,teacher:x.teacher}]).map(m=>`<span>${esc(m.subject)} — ${esc(m.teacher)}</span>`).join('');blocks.push(`<div class="master-block ${x.stroked?'stroked-cell':''}"><strong>${esc(g)}${x.stroked?' · STROKED':''}</strong>${lines}${x.double?'<em>DOUBLE</em>':''}</div>`);}else if(isGrade46(g)&&sl.end>mins('14:40')){blocks.push(`<div class="master-block" style="border-left-color:#6b45b1;background:#f1ebff"><strong>${esc(g)} · NON-FORMAL</strong><span>From 2:40 PM · Clubs · Co-curricular · Games</span></div>`);}else if((timetable.gradeLessonCounts?.[g]||0)>=5*timetable.settings.periods-(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0)){blocks.push(`<div class="master-block" style="border-left-color:#b42318;background:#fff0ef"><strong>${esc(g)}</strong><span>UNPLACED — assigned period missing</span></div>`);}}
+ for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){if(sl.kind==='Assembly'){html+=assemblyWeekCell(d,days);continue;}let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${activityCellLabel(sl.label,d)}</td>`;continue;}
+   const blocks=[];for(const g of timetable.grades){const seniorCombos=seniorCombinationsFor(seniorGradeKey(g));if(seniorCombos.length){for(const combo of seniorCombos){const cx=timetable.combinationGrid?.[combo.id]?.[d]?.[sl.period];if(cx?.elective&&cx.activity)blocks.push(`<div class="master-block" style="border-left-color:#0b8793;background:#e6f7f8"><strong>${esc(combo.name)} · BLOCK ${esc(cx.block)} · GUIDED ACTIVITY</strong><span>${esc(cx.subject)} for ${esc(cx.activityFor||'elective learners')}</span><span>Supervisor: ${esc(cx.teacher||'To be assigned')}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);else if(cx?.elective)blocks.push(`<div class="master-block" style="border-left-color:#7c3aed;background:#f1eaff"><strong>${esc(combo.name)} · BLOCK ${esc(cx.block)}${cx.double?` · DOUBLE ${cx.doublePart===1?'1/2':'2/2'}`:''}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);else if(cx&&!cx.activity)blocks.push(`<div class="master-block"><strong>${esc(combo.name)}</strong><span>${esc(cx.subject)} — ${esc(cx.teacher)}</span><span>Room: ${esc(cx.room||'Not allocated')}</span></div>`);}continue;}const x=timetable.grid[g]?.[d]?.[sl.period];if(x?.activity){blocks.push(`<div class="master-block" style="border-left-color:#13864b;background:#e1f7e9"><strong>${esc(g)} · PPI</strong><span>Personal and social development</span></div>`);}else if(x){const lines=(x.members||[{subject:x.subject,teacher:x.teacher}]).map(m=>`<span>${esc(m.subject)} — ${esc(m.teacher)}</span>`).join('');blocks.push(`<div class="master-block ${x.stroked?'stroked-cell':''}"><strong>${esc(g)}${x.stroked?' · STROKED':''}</strong>${lines}${x.double?'<em>DOUBLE</em>':''}</div>`);}else if(isGrade46(g)&&sl.end>mins('14:40')){blocks.push(`<div class="master-block" style="border-left-color:#6b45b1;background:#f1ebff"><strong>${esc(g)} · NON-FORMAL</strong><span>From 2:40 PM · Clubs · Co-curricular · Games</span></div>`);}else if((timetable.gradeLessonCounts?.[g]||0)>=5*timetable.settings.periods-(/^(?:grade\s*)?[456](?:\b|[^0-9])/i.test(String(g))?1:0)){blocks.push(`<div class="master-block" style="border-left-color:#b42318;background:#fff0ef"><strong>${esc(g)}</strong><span>UNPLACED — assigned period missing</span></div>`);}}
    html+=`<td class="master-cell">${blocks.join('')||'<div class="master-empty">No class assigned</div>'}</td>`;
  }html+='</tr>'; }html+='</tbody></table>';$('timetable').innerHTML=html;
  let total=0,placed=0;for(const g of timetable.grades)for(let d=0;d<5;d++)for(let p=1;p<=timetable.settings.periods;p++){total++;const x=timetable.grid[g]?.[d]?.[p];if(x)placed++;}
@@ -1480,7 +1538,7 @@ function teacherEntriesAt(teacher,g,d,p){
   combos.forEach(combo=>{const x=timetable.combinationGrid?.[combo.id]?.[d]?.[p];if(x?.elective&&(x.teacher===teacher||(x.members||[]).some(m=>m.teacher===teacher))){const m=(x.members||[{teacher:x.teacher,subject:x.subject}]).find(m=>m.teacher===teacher);out.push({subject:m?.subject||x.subject,grade:g,stream:combo.name,block:x.block,room:x.room});}});return out;}
  const x=timetable.grid[g]?.[d]?.[p];if(x&&(x.teacher===teacher||(x.members||[]).some(m=>m.teacher===teacher))){const m=(x.members||[{teacher:x.teacher,subject:x.subject}]).find(m=>m.teacher===teacher);out.push({subject:m?.subject||x.subject,grade:g});}return out;
 }
-function renderTeacherTimetable(){const teacher=$('viewTeacher').value;if(!teacher){$('timetableTitle').textContent='Individual Teacher Timetable';$('timetable').innerHTML='<p class="muted">Select a teacher to view their timetable.</p>';return;}const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day],set=timetable.settings;$('timetableTitle').textContent=`${teacher} — ${day<0?'Weekly Timetable':DAYS[day]}`;let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${sl.label}</td>`;continue;}const entries=timetable.grades.flatMap(g=>teacherEntriesAt(teacher,g,d,sl.period));html+=entries.length?`<td class="subject-cell">${entries.map(f=>`${esc(f.subject)}<span class="teacher">Grade ${esc(f.grade)}${f.stream?' · '+esc(f.stream):''}${f.block?' · Block '+esc(f.block):''}${f.room?' · '+esc(f.room):''}</span>`).join('<hr>')}</td>`:'<td><span class="pill">FREE</span></td>';}html+='</tr>';}html+='</tbody></table>';$('timetable').innerHTML=html;let assigned=0,free=0;for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){if(timetable.grades.some(g=>teacherEntriesAt(teacher,g,d,p).length))assigned++;else free++;}$('summary').textContent=`Teacher: ${teacher} · ${assigned} teaching periods · ${free} free periods across the generated school week.`;}
+function renderTeacherTimetable(){const teacher=$('viewTeacher').value;if(!teacher){$('timetableTitle').textContent='Individual Teacher Timetable';$('timetable').innerHTML='<p class="muted">Select a teacher to view their timetable.</p>';return;}const day=+$('viewDay').value,days=day<0?[0,1,2,3,4]:[day],set=timetable.settings;$('timetableTitle').textContent=`${teacher} — ${day<0?'Weekly Timetable':DAYS[day]}`;let html='<table class="timetable-matrix"><thead><tr><th class="day-heading">Day</th>'+timetable.slots.map(sl=>`<th class="slot-heading">${sl.time}<br><span class="small">${sl.kind==='lesson'?'Lesson '+sl.period:sl.label}</span></th>`).join('')+'</tr></thead><tbody>';for(const d of days){html+=`<tr><th class="day-name">${DAYS[d]}</th>`;for(const sl of timetable.slots){if(sl.kind!=='lesson'){if(sl.kind==='Assembly'){html+=assemblyWeekCell(d,days);continue;}let cl=sl.kind==='Lunch'?'lunch':sl.kind==='Games'?'games':'break';html+=`<td class="${cl}">${sl.label}</td>`;continue;}const entries=timetable.grades.flatMap(g=>teacherEntriesAt(teacher,g,d,sl.period));html+=entries.length?`<td class="subject-cell">${entries.map(f=>`${esc(f.subject)}<span class="teacher">Grade ${esc(f.grade)}${f.stream?' · '+esc(f.stream):''}${f.block?' · Block '+esc(f.block):''}${f.room?' · '+esc(f.room):''}</span>`).join('<hr>')}</td>`:'<td><span class="pill">FREE</span></td>';}html+='</tr>';}html+='</tbody></table>';$('timetable').innerHTML=html;let assigned=0,free=0;for(let d=0;d<5;d++)for(let p=1;p<=set.periods;p++){if(timetable.grades.some(g=>teacherEntriesAt(teacher,g,d,p).length))assigned++;else free++;}$('summary').textContent=`Teacher: ${teacher} · ${assigned} teaching periods · ${free} free periods across the generated school week.`;}
 function renderChecks(){
  if(!timetable){$('checks').textContent='No timetable generated yet. Clash and scheduling checks will run when a new timetable is generated.';return;}
  let c=checkCollisions(),txt=[];
@@ -1578,7 +1636,7 @@ $('resetSeniorStrokes').onclick=async()=>{if(!await askConfirm('Restore suggeste
 $('generateBtn').onclick=async()=>{const b=$('generateBtn');if(b.disabled)return;
 if(!assignments.length){showStatus('Add teacher, subject and grade assignments before generating a timetable.','err');return;}
 if($('generationMode').value==='teacher'&&!String($('viewTeacher').value||'').trim()){showStatus('Choose a teacher before generating an individual timetable.','err');return;}
-b.disabled=true;window.__rasmGenerationBusy=true;b.textContent='⏳ Preparing timetable…';
+b.disabled=true;window.__rasmGenerationBusy=true;b.textContent='⚡ Generating timetable…';$('summary').textContent='Generation started. Checking lesson constraints and placing classes…';
 try{await generate();}
 catch(err){console.error('RASM360 timetable generation error:',err);finishGenerationProgress(false);const msg=String(err?.message||err);showStatus(`Generation stopped safely: ${msg}. Check the assignments and try again.`, 'err');}
 finally{window.__rasmGenerationBusy=false;b.textContent='⚡ Generate new timetable';b.disabled=false;}};$('deleteTimetableBtn').onclick=async()=>{if(!timetable){showStatus('There is no generated timetable to delete.','err');return;}if(!await askConfirm('Delete old timetable?','The generated timetable will be deleted. Teachers, assignments, grades and scheduling rules will be preserved.','Delete timetable'))return;timetable=null;lastChecks=[];save();$('timetableTitle').textContent='Generated timetable';$('timetable').innerHTML='<p class="muted">The old timetable has been deleted. Your teachers, assignments, grades and scheduling rules are preserved.</p>';$('summary').textContent='Old timetable deleted. Setup and scheduling rules remain unchanged.';$('checks').textContent='No timetable generated yet.';showStatus('Old timetable deleted. All setup data and scheduling rules were preserved.');};
